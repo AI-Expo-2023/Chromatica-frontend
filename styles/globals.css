@@ -87,7 +87,6 @@
   outline: none;
 
   font-family: PretendardVariable;
-  color: black;
 }
 
 html,
@@ -110,5 +109,15 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+  *{
+    color: black;
+  }
+  input{
+    background-color: white;
+    border: 1px solid gray;
+  }
+  textarea{
+    background-color: white;
   }
 }
