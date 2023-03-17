@@ -111,4 +111,14 @@ a {
   html {
     color-scheme: dark;
   }
+  *{
+    color: black;
+  }
+  input{
+    background-color: white;
+    border: 1px solid gray;
+  }
+  textarea{
+    background-color: white;
+  }
 }
