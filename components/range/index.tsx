@@ -3,10 +3,10 @@ import * as _ from "./style"
 
 type mainPropsType ={
     onChange: any;
-    value?: number;
+    value: number;
     min: number;
     max: number;
-    step: number;
+    step?: number;
     width?: string;
     label: string;
 }
