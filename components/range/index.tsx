@@ -18,7 +18,7 @@ function Range({onChange, value, min, max, step, width, label}:mainPropsType){
                 <p>{label}</p>
                 <p>{value}</p>
             </_.spaceBetween>
-            <input onChange={onChange} type="range" value={value} min={min} max={max} step={step} />
+            <_.inputRange onChange={onChange} type="range" value={value} min={min} max={max} step={step} />
         </div>
     )
 }
