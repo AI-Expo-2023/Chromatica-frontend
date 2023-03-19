@@ -1,4 +1,5 @@
 import React from "react"
+import * as _ from "./style"
 
 type mainPropsType ={
     onChange: any;
@@ -13,9 +14,10 @@ type mainPropsType ={
 function Range({onChange, value, min, max, step, width, label}:mainPropsType){
     return(
         <div>
-            <div>
-            {label}{value}
-            </div>
+            <_.spaceBetween>
+                <p>{label}</p>
+                <p>{value}</p>
+            </_.spaceBetween>
             <input onChange={onChange} type="range" value={value} min={min} max={max} step={step} />
         </div>
     )
