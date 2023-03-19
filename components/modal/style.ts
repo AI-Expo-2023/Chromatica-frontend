@@ -24,12 +24,12 @@ export const ChildrenContainer = styled.div<{
   flexDirection?: string;
 }>`
   background-color: white;
-  width: ${(props) => props.width ?? '466px'};
+  width: ${(props) => props.width ?? '450px'};
   height: ${(props) => props.height ?? ''};
   border-radius: 8px;
   z-index: 10000;
-  gap: ${(props) => props.gap ?? '52px'};
-  padding: ${(props) => props.padding ?? '40px 39px'};
+  gap: ${(props) => props.gap ?? '32px'};
+  padding: ${(props) => props.padding ?? '32px'};
   display: ${(props) => props.display ?? ''};
   justify-content: ${(props) => props.justifyContent ?? ''};
   align-items: ${(props) => props.alignItems ?? ''};
@@ -44,4 +44,5 @@ export const BackDrop = styled.div`
   left: 0;
   z-index: 9999;
   background-color: ${Theme.Gray[5]};
+  opacity: 0.8;
 `;
