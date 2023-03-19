@@ -3,15 +3,15 @@ import * as _ from "./style"
 
 type mainPropsType ={
     onChange: any;
-    value: number;
+    value?: number;
     min: number;
     max: number;
     step: number;
-    width: string;
+    width?: string;
     label: string;
 }
 
-function Range({onChange, value, min, max, step, width, label}:mainPropsType){
+function Range({onChange, value, min, max, step=1, width="100%", label}:mainPropsType){
     return(
         <div>
             <_.spaceBetween>
