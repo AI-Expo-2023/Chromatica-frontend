@@ -26,7 +26,7 @@ export const Button = styled.button`
 
             :hover{
                 transition: 100ms;
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
 
             :active{
@@ -41,7 +41,7 @@ export const Button = styled.button`
 
             :hover{
                 transition: 100ms;
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
 
             :active{
@@ -56,7 +56,7 @@ export const Button = styled.button`
 
             :hover{
                 transition: 100ms;
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
 
             :active{
@@ -72,7 +72,7 @@ export const Button = styled.button`
 
             :hover{
                 transition: 100ms;
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
 
             :active{
