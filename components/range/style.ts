@@ -14,7 +14,7 @@ export const inputRange = styled.input<{cssThumbPos:number}>`
 
     ::-webkit-slider-runnable-track {
         background: linear-gradient(to right, #8066f5 ${props=> props.cssThumbPos*100+'%'}, white ${props=> props.cssThumbPos*100+'%'});
-        border: 0;
+        border: #bfbfbf 1px solid;
         border-radius: 8px;
         width: 100%;
         height: 28px;
@@ -33,7 +33,7 @@ export const inputRange = styled.input<{cssThumbPos:number}>`
     }
     ::-moz-range-track {
         background: linear-gradient(to right, #8066f5 ${props=> props.cssThumbPos*100+'%'}, white ${props=> props.cssThumbPos*100+'%'});
-        border: 0;
+        border: #bfbfbf 1px solid;
         border-radius: 8px;
         width: 100%;
         height: 28px;
