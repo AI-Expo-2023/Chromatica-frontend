@@ -16,6 +16,7 @@ export const inputRange = styled.input<{cssThumbPos:number}>`
     background-color: transparent;
     -webkit-appearance: none;
     outline: none;
+    border: none;
 
     ::-webkit-slider-runnable-track {
         background: linear-gradient(to right, ${Theme.ThePurple} ${props=> props.cssThumbPos*100+'%'}, ${Theme.White} ${props=> props.cssThumbPos*100+'%'});
