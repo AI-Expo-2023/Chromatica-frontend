@@ -5,7 +5,7 @@ export const spaceBetween = styled.div`
     justify-content: space-between;
 `
 
-export const inputRange = styled.input`
+export const inputRange = styled.input<{cssThumbPos:number}>`
     width: 100%;
     margin: 2px 0;
     background-color: transparent;
@@ -13,7 +13,7 @@ export const inputRange = styled.input`
     outline: none;
 
     ::-webkit-slider-runnable-track {
-        background: #8066f5;
+        background: linear-gradient(to right, #8066f5 ${props=> props.cssThumbPos*100+'%'}, white ${props=> props.cssThumbPos*100+'%'});
         border: 0;
         border-radius: 8px;
         width: 100%;
@@ -32,7 +32,7 @@ export const inputRange = styled.input`
         -webkit-appearance: none;
     }
     ::-moz-range-track {
-        background: #8066f5;
+        background: linear-gradient(to right, #8066f5 ${props=> props.cssThumbPos*100+'%'}, white ${props=> props.cssThumbPos*100+'%'});
         border: 0;
         border-radius: 8px;
         width: 100%;
@@ -49,34 +49,12 @@ export const inputRange = styled.input`
         cursor: pointer;
     }
     ::-ms-track {
-    background: transparent;
-    border-color: transparent;
-    border-width: 2.8px 0;
-    color: transparent;
-    width: 100%;
-    height: 28px;
-    cursor: pointer;
-    }
-    ::-ms-fill-lower {
-        background: #6c4ef3;
-        border: 0;
-        border-radius: 16px;
-    }
-    ::-ms-fill-upper {
-        background: #8066f5;
-        border: 0;
-        border-radius: 16px;
-    }
-    ::-ms-thumb {
-        box-shadow: 0 0 8px #00000040;
-        width: 10px;
-        height: 32px;
-        background: #ffffff;
-        border: 0;
-        border-radius: 50px;
+        background: transparent;
+        border-color: transparent;
+        border-width: 2.8px 0;
+        color: transparent;
+        width: 100%;
+        height: 28px;
         cursor: pointer;
-        margin-top: 0px;
-        /*Needed to keep the Edge thumb centred*/
     }
-
 `
