@@ -1,3 +1,4 @@
+import { Theme } from "@/styles/Theme";
 import styled from "@emotion/styled";
 
 export const spaceBetween = styled.div`
@@ -13,8 +14,8 @@ export const inputRange = styled.input<{cssThumbPos:number}>`
     outline: none;
 
     ::-webkit-slider-runnable-track {
-        background: linear-gradient(to right, #8066f5 ${props=> props.cssThumbPos*100+'%'}, white ${props=> props.cssThumbPos*100+'%'});
-        border: #bfbfbf 1px solid;
+        background: linear-gradient(to right, ${Theme.ThePurple} ${props=> props.cssThumbPos*100+'%'}, ${Theme.White} ${props=> props.cssThumbPos*100+'%'});
+        border: ${Theme.Gray[75]} 1px solid;
         border-radius: 8px;
         width: 100%;
         height: 28px;
@@ -25,15 +26,15 @@ export const inputRange = styled.input<{cssThumbPos:number}>`
         margin-top: -2px;
         width: 10px;
         height: 32px;
-        background: #ffffff;
+        background: ${Theme.White};
         border: 0;
         border-radius: 50px;
         cursor: pointer;
         -webkit-appearance: none;
     }
     ::-moz-range-track {
-        background: linear-gradient(to right, #8066f5 ${props=> props.cssThumbPos*100+'%'}, white ${props=> props.cssThumbPos*100+'%'});
-        border: #bfbfbf 1px solid;
+        background: linear-gradient(to right, ${Theme.ThePurple} ${props=> props.cssThumbPos*100+'%'}, ${Theme.White} ${props=> props.cssThumbPos*100+'%'});
+        border: ${Theme.Gray[75]} 1px solid;
         border-radius: 8px;
         width: 100%;
         height: 28px;
@@ -43,7 +44,7 @@ export const inputRange = styled.input<{cssThumbPos:number}>`
         box-shadow: 0 0 8px #00000040;
         width: 10px;
         height: 32px;
-        background: #ffffff;
+        background: ${Theme.White};
         border: 0;
         border-radius: 50px;
         cursor: pointer;
