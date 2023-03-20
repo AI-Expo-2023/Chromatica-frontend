@@ -6,6 +6,10 @@ export const spaceBetween = styled.div`
     justify-content: space-between;
 `
 
+export const Divv = styled.div<{cssWidth:string}>`
+    width: ${props =>props.cssWidth};
+`
+
 export const inputRange = styled.input<{cssThumbPos:number}>`
     width: 100%;
     margin: 2px 0;

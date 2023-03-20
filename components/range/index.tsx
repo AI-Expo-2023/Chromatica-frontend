@@ -18,13 +18,13 @@ function Range({onChange, value, min, max, step=1, width="100%", label}:mainProp
     },[value]);
 
     return(
-        <div>
+        <_.Divv cssWidth={width}>
             <_.spaceBetween>
                 <p>{label}</p>
                 <p>{value}</p>
             </_.spaceBetween>
             <_.inputRange onChange={onChange} type="range" value={value} min={min} max={max} step={step} cssThumbPos={thumbPos} />
-        </div>
+        </_.Divv>
     )
 }
 
