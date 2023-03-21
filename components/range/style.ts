@@ -6,13 +6,6 @@ export const spaceBetween = styled.div`
     justify-content: space-between;
 `
 
-export const upperInput = styled.input`
-    text-align: right;
-    font-size: 16px;
-    border: none;
-    padding: 0;
-`
-
 export const Divv = styled.div<{cssWidth:string}>`
     width: ${props =>props.cssWidth};
 `
