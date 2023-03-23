@@ -1,6 +1,4 @@
-import React from "react"
 import styled from "@emotion/styled";
-import SearchIcon from "@/public/assets/image/searchIcon";
 
 export const HeaderOutBox = styled.div`
   background: rgba(255, 255, 255, 0.5);
@@ -44,28 +42,6 @@ export const Text = styled.span`
   cursor: pointer;
 `
 
-interface SearchProps {
-  change: React.Dispatch<React.SetStateAction<string>>;
-  value: string;
-  text?: string;
-}
-
-export const SearchBar = ({ change, value, text }: SearchProps) => {
-  return (
-    <SearchBox>
-      <SearchInput
-        type='text'
-        value={value}
-        onChange={(e) => change(e.target.value)}
-        placeholder={text ?? '작품 검색'}
-      />
-      <IconBox>
-        <SearchIcon />
-      </IconBox>
-    </SearchBox>
-  )
-}
-
 export const SearchBox = styled.div`
   width: 300px;
   height: 36px;
@@ -85,6 +61,9 @@ export const SearchInput = styled.input`
   color: #000000;
   background: transparent;
   border: none;
+  &::placeholder {
+    color: #808080;
+  }
 `
 
 export const IconBox = styled.div<{ width?: number, height?: number}>`
