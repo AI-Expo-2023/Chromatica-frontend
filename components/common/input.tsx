@@ -1,22 +1,18 @@
-import { Theme } from '@/styles/Theme';
+import { Theme } from '@/styles/theme/Theme';
 import styled from '@emotion/styled';
-import { Eye24Filled, EyeOff24Filled, EyeOff24Regular } from '@fluentui/react-icons';
-import { useState } from 'react';
-<Eye24Filled primaryFill="black" />;
+import { Eye24Filled, EyeOff24Filled } from '@fluentui/react-icons';
+import React, { useState } from 'react';
 
 type Props = {
   title: string;
   width?: string;
   text?: string;
   isPassword?: boolean;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-type passwordEyeType = {
-  click: () => void;
-  eyeOn?: boolean;
-};
-
-const Input = ({ title, width, text, isPassword }: Props): JSX.Element => {
+const Input = ({ title, width, text, isPassword, value, setValue }: Props): JSX.Element => {
   const [isVisable, setIsVisable] = useState<boolean>(false);
 
   return (
@@ -30,8 +26,8 @@ const Input = ({ title, width, text, isPassword }: Props): JSX.Element => {
           {isVisable ? <Eye24Filled primaryFill="gray" /> : <EyeOff24Filled primaryFill="gray" />}
         </Eye>
       )}
-      <InputTitle htmlFor="InputBox">{title}</InputTitle>
-      <InputBox id="InputBox" type={isPassword && !isVisable ? 'password' : 'text'} />
+      <InputTitle htmlFor={title}>{title}</InputTitle>
+      <InputBox id={title} value={value} onChange={(e) => setValue(e.target.value)} type={isPassword && !isVisable ? 'password' : 'text'} />
       {text && <Text>{text}</Text>}
     </Container>
   );
