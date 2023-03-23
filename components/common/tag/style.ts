@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { Theme } from '@/styles/theme/Theme';
+import { Dismiss20Filled } from '@fluentui/react-icons';
 
 type TagState = {
   basic?: boolean;
@@ -13,7 +14,7 @@ export const Tag = styled.button`
   font-weight: 400;
 
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
 
   padding: 6px 12px;
 
