@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Theme } from '@/styles/theme/Theme';
 
 export const HeaderOutBox = styled.div`
   background: rgba(255, 255, 255, 0.5);
@@ -46,7 +47,7 @@ export const SearchBox = styled.div`
   width: 300px;
   height: 36px;
   padding: 6px;
-  background: #F2F2F2;
+  background: ${Theme.Gray[5]};
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -58,11 +59,11 @@ export const SearchInput = styled.input`
   height: 24px;
   font-weight: 400;
   font-size: 18px;
-  color: #000000;
+  color: ${Theme.Black};
   background: transparent;
   border: none;
   &::placeholder {
-    color: #808080;
+    color: ${Theme.Gray[50]};
   }
 `
 
@@ -87,7 +88,7 @@ export const LoginBtn = styled.div`
   padding: 6px 12px;
   width: 71px;
   height: 33px;
-  background: #8066F5;
+  background: ${Theme.ThePurple};
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -95,6 +96,6 @@ export const LoginBtn = styled.div`
   font-weight: 400;
   font-size: 18px;
   line-height: 21px;
-  color: #FFFFFF;
+  color: ${Theme.White};
   cursor: pointer;
 `

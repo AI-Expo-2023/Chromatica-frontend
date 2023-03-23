@@ -1,5 +1,6 @@
 import React from 'react';
-import { Search16Filled } from '@fluentui/react-icons'
+import { Search24Filled } from '@fluentui/react-icons'
+import { Theme } from '@/styles/theme/Theme';
 import * as _ from './style'
 
 interface SearchProps {
@@ -18,7 +19,7 @@ const SearchBar = ({ change, value, text }: SearchProps) => {
         placeholder={text ?? '작품 검색'}
       />
       <_.IconBox>
-        <Search16Filled />
+        <Search24Filled primaryFill={Theme.Gray[50]}/>
       </_.IconBox>
     </_.SearchBox>
   )

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import LogoImg from "@/public/assets/image/logoIcon";
-import Sketch from "@/public/assets/image/AiIcon";
+import LogoImg from "@/components/common/image/logoIcon";
+import Sketch from "@/components/common/image/AiIcon";
 import { Button } from "../commons/button/button";
+import BlankProfile from '@/components/common/image/personIcon.png'
 import Search from './SearchBar'
 import * as _ from "./style"
 
 const Header = () => {
   const [login, setLogin] = useState(false);
-  const [profileImg, setProfileImg] = useState('/assets/image/personIcon.png')
+  const [profileImg, setProfileImg] = useState(BlankProfile.src);
   const [keyWord, setKeyWord] = useState('');
-
+  
   return (
     <_.HeaderOutBox>
       <_.HeaderBox>
