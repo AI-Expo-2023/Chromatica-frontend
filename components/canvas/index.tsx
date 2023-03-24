@@ -1,4 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import Range from "../common/range";
+import ColorPalette from "./colorPalette";
+import ColorRainbox from "./colorRainbow";
 import * as _ from "./style";
 /**캠버스 설정 타입 */
 type CanvasSetting = {
@@ -97,16 +100,32 @@ const Canvas = (): JSX.Element => {
     };
   }, [startPaint, paint, exitPaint]);
 
-  //canvas 설정 변수, 값변경 함수
+  // const exportCanvas = () => {
+  //   const image = canvasRef.current?.toDataURL("imgage/png");
+  //   const link = document.createElement('a');
+  //   link.href = image || "";
+  //   link.download = 'chromatica.png';
+  //   link.click();
+  // }
 
+//384 ~ 768 (0.75배) 이거에 4/3배
 
   return (
     <_.Container>
       <_.Canvas
         ref={canvasRef}
-        width={500}
-        height={500}
+        width={550}
+        height={550}
       />
+      <_.Setting>
+        <Tool settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
+        <ColorRainbox settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
+        <ColorPalette settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
+        {/* <button onClick={() => exportCanvas()}>내보내기</button> */}
+      </_.Setting>
+      <_.ToolRange>
+        <Range min={1} max={100} label={settingOptions.tool ? "브러시 너비" : "지우개 너비"} value={settingOptions.tool ? toolWidth.brush : toolWidth.eraser} onChange={(e: any) => { widthChange(e) }} />
+      </_.ToolRange>
     </_.Container>
   )
 }
