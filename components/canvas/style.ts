@@ -12,11 +12,9 @@ export const Canvas = styled.canvas`
   border: 1px solid black;
 `;
 
-export const InputContainer = styled.div`
-`
-export const Input = styled.input`
-`
-export const Range = styled.input`
+export const InputContainer = styled.div``;
+export const Input = styled.input``;
+export const Range = styled.input``;
 
 /** 그림판 설정에서 들어가는 Container */
 export const SettingContainer = styled.div`
