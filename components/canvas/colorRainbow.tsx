@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { SettingContainer } from "./style";
 import { Color24Filled } from "@fluentui/react-icons";
-import { Theme } from "@/styles/Theme";
+import { Theme } from "@/styles/theme/Theme";
 
 const ColorRainbox = ({ settingOptions, setSettingOptions }: CanvasUseState): JSX.Element => {
   return (
