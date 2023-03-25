@@ -17,10 +17,11 @@ type PropsType = {
 const Modal = ({ children, onClickToggleModal, width, height, padding, display, justifyContent, gap, flexDirection, alignItems }: PropsType): JSX.Element => {
   useEffect(() => {
     document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`;
+      position: fixed;
+      top: -${window.scrollY} px;
+      overflow - y: scroll;
+      width: 100 %;;
+    `;
     return () => {
       const scrollY = document.body.style.top;
       document.body.style.cssText = "";
@@ -30,10 +31,10 @@ const Modal = ({ children, onClickToggleModal, width, height, padding, display, 
 
 
   return (
-    <_.Container>
-      <_.ChildrenContainer width={width} height={height} padding={padding} display={display} justifyContent={justifyContent} gap={gap} flexDirection={flexDirection} alignItems={alignItems}>
+    <_.Container >
+      <_.ChildrenContainer width={width} height={height} padding={padding} display={display} justifyContent={justifyContent} gap={gap} flexDirection={flexDirection} alignItems={alignItems} >
         {children}
-      </_.ChildrenContainer>
+      </_.ChildrenContainer >
       <_.BackDrop onClick={(e: React.MouseEvent) => {
         e.preventDefault();
         onClickToggleModal();
