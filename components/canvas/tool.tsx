@@ -1,5 +1,4 @@
-import { Theme } from "@/styles/Theme";
-import styled from "@emotion/styled";
+import { Theme } from "@/styles/theme/Theme";
 import { PaintBrush24Filled, Eraser24Filled } from "@fluentui/react-icons";
 import * as _ from "./style";
 

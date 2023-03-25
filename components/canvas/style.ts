@@ -1,16 +1,20 @@
+import { Theme } from '@/styles/theme/Theme';
 import styled from '@emotion/styled';
-import { Theme } from '@/styles/Theme';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  width: 550px;
+  flex-direction: column;
+  gap: 20px;
+`;
 
 export const Canvas = styled.canvas`
   border: 1px solid black;
 `;
 
-export const Setting = styled.div`
-  display: flex;
-  gap: 8px;
-`;
+export const InputContainer = styled.div``;
+export const Input = styled.input``;
+export const Range = styled.input``;
 
 /** 그림판 설정에서 들어가는 Container */
 export const SettingContainer = styled.div`
@@ -20,4 +24,13 @@ export const SettingContainer = styled.div`
   border: 1px solid ${Theme.Gray[5]};
   border-radius: 44px;
   width: fit-content;
+`;
+
+export const ToolRange = styled.div`
+  width: 420px;
+`;
+
+export const Setting = styled.div`
+  display: flex;
+  gap: 8px;
 `;
