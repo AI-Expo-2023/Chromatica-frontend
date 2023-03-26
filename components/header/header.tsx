@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import LogoImg from "@/components/common/image/logoIcon";
 import Sketch from "@/components/common/image/AiIcon";
-import { Button } from "../commons/button/button";
+import { Button } from "../common/button/style";
 import BlankProfile from '@/components/common/image/personIcon.png'
 import Search from './SearchBar'
 import * as _ from "./style"
