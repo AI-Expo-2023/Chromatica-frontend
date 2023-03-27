@@ -1,6 +1,7 @@
 declare type CanvasOptions = {
   color: string;
   tool: boolean;
+  backgroundColor: string;
 };
 
 declare type CanvasUseState = {
@@ -21,4 +22,14 @@ declare type CanvasToolUseState = {
 declare type ToolSize = {
   brush: number;
   eraser: number;
+};
+
+declare type ToolSizeUseState = {
+  toolWidth: ToolSize;
+  setToolWidth: React.Dispatch<React.SetStateAction<ToolSize>>;
+};
+
+declare type CanvasSize = {
+  width: number;
+  height: number;
 };
