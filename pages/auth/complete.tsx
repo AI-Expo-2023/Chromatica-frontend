@@ -1,16 +1,10 @@
-import AuthBox from "@/components/common/authBox";
-import { Button } from "@/components/common/button/style";
+import CompleteC from "@/components/auth/completeC";
 import styled from "@emotion/styled";
 
 const Complete = (): JSX.Element => {
     return (
       <Contanier>
-        <AuthBox title="비밀번호 변경" sub="비밀번호가 변경되었습니다">
-          <Content>
-            <Button MainColor>로그인</Button>
-            <Button White>닫기</Button>
-          </Content>
-        </AuthBox>
+        <CompleteC />
       </Contanier>
     );
 }
@@ -23,9 +17,3 @@ const Contanier = styled.div`
     justify-content: center;
     align-items: center;
 `
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-`;

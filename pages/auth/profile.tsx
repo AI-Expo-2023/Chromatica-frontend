@@ -1,15 +1,17 @@
-import PwEmailCheckC from '@/components/auth/pwEmailCheckC';
+import ProfileC from '@/components/auth/profileC';
 import styled from '@emotion/styled';
 
-const PwEmailCheck = (): JSX.Element => {
+const Profile = (): JSX.Element => {
+  
+
   return (
     <Contanier>
-      <PwEmailCheckC />
+      <ProfileC />
     </Contanier>
   );
 };
 
-export default PwEmailCheck;
+export default Profile;
 
 const Contanier = styled.div`
   height: calc(100vh - 64px);
