@@ -20,3 +20,8 @@ export const tagOptionDiv = styled.div`
     gap: 4px;
     border-bottom: 1px solid ${Theme.Gray[75]};
 `
+
+export const tagOptionList = styled.div`
+    height: 150px;
+    overflow-y: scroll;
+`

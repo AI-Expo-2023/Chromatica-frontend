@@ -6,15 +6,15 @@ import { Theme } from "@/styles/theme/Theme";
 
 function TagSelector(){
     const [searchKeyword, setKeyword] = useState<string>('');
-    const tempData = ["띵명작","자연","사이버펑크","현대적","도시"];
+    const tempData = ["띵명작","자연","사이버펑크","현대적","도시","현대차","타이어펑크","개띵작","머리가띵","현대의적","띵"];
 
     return(
         <_.addTagMain>
             <Dismiss24Filled primaryFill={Theme.Black} />
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
-            <div className='adf'>
+            <_.tagOptionList>
                 {tempData.filter(data=> {return data.includes(searchKeyword)}).map((text)=>(<TagListOption tagName={text} key={text} />))}
-            </div>
+            </_.tagOptionList>
         </_.addTagMain>
     )
 }
