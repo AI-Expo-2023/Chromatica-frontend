@@ -1,6 +1,8 @@
 import { AddCircle20Filled, Dismiss24Filled } from '@fluentui/react-icons';
 import { useState } from 'react';
+import * as _ from './style'
 import Input from '../common/input';
+import { Theme } from "@/styles/theme/Theme";
 
 function TagSelector(){
     const [searchKeyword, setKeyword] = useState<string>('');
@@ -21,10 +23,10 @@ function TagSelector(){
 
 function TagListOption(){
     return(
-    <div>
-        <AddCircle20Filled/>
+    <_.tagOptionDiv>
+        <AddCircle20Filled color={Theme.Gray[75]}/>
         <p>태그이름</p>
-    </div>
+    </_.tagOptionDiv>
     )
 }
 
