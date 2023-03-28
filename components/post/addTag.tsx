@@ -6,26 +6,24 @@ import { Theme } from "@/styles/theme/Theme";
 
 function TagSelector(){
     const [searchKeyword, setKeyword] = useState<string>('');
+    const tempData = ["띵명작","자연","사이버펑크","현대적","도시"]
 
     return(
         <div>
             <Dismiss24Filled />
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
             <div className='adf'>
-                <TagListOption/>
-                <TagListOption/>
-                <TagListOption/>
-                <TagListOption/>
+                {tempData.map((text)=>(<TagListOption tagName={text}/>))}
             </div>
         </div>
     )
 }
 
-function TagListOption(){
+function TagListOption({tagName}:string){
     return(
     <_.tagOptionDiv>
         <AddCircle20Filled color={Theme.Gray[75]}/>
-        <p>태그이름</p>
+        <p>{tagName}</p>
     </_.tagOptionDiv>
     )
 }
