@@ -18,4 +18,3 @@ const Contanier = styled.div`
     justify-content: center;
     align-items: center;
 `;
-
