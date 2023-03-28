@@ -6,7 +6,7 @@ import { Theme } from "@/styles/theme/Theme";
 
 function TagSelector(){
     const [searchKeyword, setKeyword] = useState<string>('');
-    const tempData = ["띵명작","자연","사이버펑크","현대적","도시"]
+    const tempData = ["띵명작","자연","사이버펑크","현대적","도시"];
 
     return(
         <div>
