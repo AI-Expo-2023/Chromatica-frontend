@@ -10,7 +10,7 @@ function TagSelector(){
 
     return(
         <div>
-            <Dismiss24Filled />
+            <Dismiss24Filled primaryFill={Theme.Black} />
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
             <div className='adf'>
                 {tempData.map((text)=>(<TagListOption tagName={text} key={text} />))}
@@ -22,7 +22,7 @@ function TagSelector(){
 function TagListOption({tagName}:string){
     return(
     <_.tagOptionDiv>
-        <AddCircle20Filled color={Theme.Gray[75]}/>
+        <AddCircle20Filled primaryFill={Theme.Gray[25]}/>
         <p>{tagName}</p>
     </_.tagOptionDiv>
     )
