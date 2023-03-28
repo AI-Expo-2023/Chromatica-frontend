@@ -9,13 +9,13 @@ function TagSelector(){
     const tempData = ["띵명작","자연","사이버펑크","현대적","도시"];
 
     return(
-        <div>
+        <_.addTagMain>
             <Dismiss24Filled primaryFill={Theme.Black} />
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
             <div className='adf'>
                 {tempData.filter(data=> {return data.includes(searchKeyword)}).map((text)=>(<TagListOption tagName={text} key={text} />))}
             </div>
-        </div>
+        </_.addTagMain>
     )
 }
 
