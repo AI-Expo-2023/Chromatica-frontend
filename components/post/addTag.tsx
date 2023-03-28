@@ -13,7 +13,7 @@ function TagSelector(){
             <Dismiss24Filled />
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
             <div className='adf'>
-                {tempData.map((text)=>(<TagListOption tagName={text}/>))}
+                {tempData.map((text)=>(<TagListOption tagName={text} key={text} />))}
             </div>
         </div>
     )
