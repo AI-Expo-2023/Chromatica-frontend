@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import LogoImg from "@/components/common/image/logoIcon";
-import Sketch from "@/components/common/image/AiIcon";
+import LogoIcon from "@/public/assets/image/logoIcon.png";
+import AiIcon from "@/public/assets/image/AiIcon_Black.png";
 import { Button } from "../common/button/style";
-import BlankProfile from '@/components/common/image/personIcon.png'
+import BlankProfile from '@/public/assets/image/personIcon.png'
 import Search from './SearchBar'
 import * as _ from "./style"
 
@@ -17,15 +17,13 @@ const Header = () => {
       <_.HeaderBox>
         <_.BetweenBox gap={20}>
           <Link href='/'>
-            <_.IconBox width={124} height={36}>
-              <LogoImg width={124} height={36} fill='black'/>
-            </_.IconBox>
+            <_.Img width={124} height={36} src={LogoIcon.src} />
           </Link>
           <_.BetweenBox gap={24}>
             <_.Text>갤러리</_.Text>
             <_.BetweenCursor gap={8}>
               <_.Text>스케치</_.Text>
-              <Sketch/>
+              <_.Img width={21} height={21} src={AiIcon.src}/>
             </_.BetweenCursor>
           </_.BetweenBox>
         </_.BetweenBox>

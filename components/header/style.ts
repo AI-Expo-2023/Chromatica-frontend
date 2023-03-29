@@ -99,3 +99,13 @@ export const LoginBtn = styled.div`
   color: ${Theme.White};
   cursor: pointer;
 `
+
+export const Img = styled.img<{ width?: number, height?: number}>`
+  width: ${(props) => props.width ?? 24}px;
+  height: ${(props) => props.height ?? 24}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  object-fit: scale-down;
+`
