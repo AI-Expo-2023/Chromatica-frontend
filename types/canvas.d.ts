@@ -33,3 +33,13 @@ declare type CanvasSize = {
   width: number;
   height: number;
 };
+
+declare type AiSetting = {
+  quality: number;
+  count: number;
+};
+
+declare type AiSettingUseState = {
+  aiSetting: AiSetting;
+  setAiSetting: React.Dispatch<React.SetStateAction<AiSetting>>;
+};
