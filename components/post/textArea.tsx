@@ -32,11 +32,13 @@ const InputTitle = styled.label`
     font-weight: bold;
 `;
 
-const InputBox = styled.input`
+const InputBox = styled.textarea`
     height: 47px;
     border: 1px solid ${Theme.Gray[75]};
     border-radius: 8px;
     padding: 13px 44px 13px 11px;
     font-size: 18px;
     margin: 4px 0;
+    height: 200px;
+    resize: none;
 `
