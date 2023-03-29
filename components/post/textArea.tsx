@@ -6,21 +6,18 @@ type Props = {
     title: string;
     width?: string;
     text?: string;
-    isPassword?: boolean;
     value: string;
     setValue: React.Dispatch<React.SetStateAction<string>>;
     };
 
-export const TextArea = ({ title, width, text, isPassword, value, setValue }: Props): JSX.Element => {
-    const [isVisable, setIsVisable] = useState<boolean>(false);
-
+export const TextArea = ({ title, width, text, value, setValue }: Props): JSX.Element => {
     return (
         <Container width={width}>
         <InputTitle htmlFor={title}>{title}</InputTitle>
-        <InputBox id={title} value={value} onChange={(e) => setValue(e.target.value)} type={isPassword && !isVisable ? 'password' : 'text'} />
+        <InputBox id={title} value={value} onChange={(e) => setValue(e.target.value)}/>
         </Container>
     );
-    };
+};
 
     const Container = styled.div<{ width?: string }>`
     display: flex;
