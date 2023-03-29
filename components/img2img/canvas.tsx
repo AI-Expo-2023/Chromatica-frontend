@@ -1,37 +1,24 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import ColorPalette from "./colorPalette";
-import ColorRainbox from "./colorRainbow";
+import React, { useCallback, useEffect, useState } from "react";
 import * as _ from "./style";
-import Tool from "./tool";
 
 /**마우스 좌표값 타입*/
 type Coordinate = {
   x: number;
   y: number;
-}
+};
+
+type Props = {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  settingOptions: CanvasOptions;
+  toolWidth: ToolSize;
+  canvasSize: CanvasSize;
+  update?: boolean;
+};
 
 /** 그림판 */
-const Canvas = (): JSX.Element => {
-  const canvasRef = useRef<HTMLCanvasElement>(null); //ref -> 값이 변경되어도 화면은 바뀌지 않음
+const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasSize, update }): JSX.Element => {
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined); //mouse down시 마우스 포인터 x,y 위치
   const [isPainting, setIsPainting] = useState<boolean>(false);  //현재 그림이 그려지는 상태인지 boolean으로 보여주기
-
-  //canvas 설정 변수, 값변경 함수
-  const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
-    color: "#000000",
-    tool: true,
-  });
-
-  const [toolWidth, setToolWidth] = useState({
-    brush: 5,
-    eraser: 5,
-  })
-
-  const widthChange = (e: any) => {
-    settingOptions.tool ?
-      setToolWidth({ ...toolWidth, brush: e.target.value }) :
-      setToolWidth({ ...toolWidth, eraser: e.target.value })
-  }
 
   /**mouse 포인터의 위치를 구하는 함수 */
   const getCoordinates = (e: MouseEvent): Coordinate | undefined => {
@@ -73,8 +60,8 @@ const Canvas = (): JSX.Element => {
     const ctx = canvas.getContext("2d");
 
     if (ctx) {
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.strokeStyle = settingOptions.color;
+      ctx.globalCompositeOperation = update ? "destination-out" : "source-over";
+      ctx.strokeStyle = settingOptions.backgroundColor;
       ctx.lineJoin = 'round';
       ctx.lineWidth = toolWidth.eraser;
 
@@ -123,15 +110,16 @@ const Canvas = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (canvasRef.current) {
+    if (canvasRef.current && !update) {
       const canvas: HTMLCanvasElement = canvasRef.current;
       const ctx = canvas.getContext("2d");
       if (ctx?.fillStyle) {
-        ctx.fillStyle = "white"
+        ctx.fillStyle = settingOptions.backgroundColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height)
       }
     }
-  }, [])
+  }, [settingOptions.backgroundColor]);
+
   useEffect(() => {
     if (!canvasRef.current) {
       return;
@@ -149,28 +137,13 @@ const Canvas = (): JSX.Element => {
     };
   }, [startPaint, paint, exitPaint]);
 
-  const exportCanvas = () => {
-    const image = canvasRef.current?.toDataURL("imgage/png");
-    const link = document.createElement('a');
-    link.href = image || "";
-    link.download = 'chromatica.png';
-    link.click();
-  }
-
   return (
     <_.Container>
       <_.Canvas
         ref={canvasRef}
-        width={500}
-        height={500}
+        width={canvasSize.width * 0.75}
+        height={canvasSize.height * 0.75}
       />
-      <_.Setting>
-        <Tool settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
-        <ColorRainbox settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
-        <ColorPalette settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
-        <button onClick={() => exportCanvas()}>내보내기</button>
-      </_.Setting>
-      <input type="range" max={100} min={1} value={settingOptions.tool ? toolWidth.brush : toolWidth.eraser} onChange={(e) => widthChange(e)} />
     </_.Container>
   )
 }
