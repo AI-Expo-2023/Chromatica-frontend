@@ -29,3 +29,8 @@ export const SettingContainer = styled.div`
 export const ToolRange = styled.div`
   width: 420px;
 `;
+
+export const Setting = styled.div`
+  display: flex;
+  gap: 8px;
+`;

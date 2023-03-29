@@ -1,4 +1,4 @@
-import { Theme } from '../../styles/theme/Theme';
+import { Theme } from '../../../styles/theme/Theme';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
