@@ -12,7 +12,7 @@ type Props = {
 /** 키워드를 입력하고 AI에게 전송하여 사진을 받아오는 곳 */
 const AIResponse = ({ canvasRef }: Props): JSX.Element => {
   const [aiKeyword, setAiKeyword] = useState<string>("");
-  const [aiImg, setAiImg] = useState<string[]>(["/assets/Rectangle.png", "/assets/Rectangle.png", "/assets/Rectangle.png"]);
+  const [aiImg, setAiImg] = useState<string[]>([]);
   const [selectImg, setSelectImg] = useState<number>(1);
   const [openDownloadModal, setOpenDownloadModal] = useState<boolean>(false);
 
