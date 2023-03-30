@@ -4,13 +4,17 @@ import { Dismiss20Filled } from "@fluentui/react-icons"
 
 type tagType = {
     data: string;
-    onClick?: ()=>void;
+    array: string[];
+    setArray: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const RemovableTag = ({data, onClick}:tagType)=>{
+export const RemovableTag = ({data, array, setArray}:tagType)=>{
+    function arrayMod(){
+        setArray(array.filter((tag)=>{return tag != data}))
+    }
     return(
         <TagContainer>
-            <button>
+            <button onClick={arrayMod}>
                 <Dismiss20Filled primaryFill={Theme.Gray[50]} />
             </button>
             <p>{data}</p>

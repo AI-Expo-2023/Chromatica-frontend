@@ -19,7 +19,7 @@ export default function PostPage(){
     const [title, setTitle] = useState<string>('');
     const [Desc, setDesc] = useState<string>('');
     const [Photo, setPhoto] = useState<string>('');
-    const [TagList, setTagList] = useState<string[]>(['gt-line','abc']);
+    const [TagList, setTagList] = useState<string[]>(["띵명작","자연","사이버펑크","현대적","도시"]);
 
     const [isTSenabled, setTSstatus] = useState<boolean>(false);
 
@@ -30,9 +30,9 @@ export default function PostPage(){
             <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
             <Horizonal>
                 <Button onClick={()=>setTSstatus(!isTSenabled)}><Add20Filled primaryFill={Theme.Black}/>태그 추가</Button>
-                {isTSenabled ? <TagSelector /> : null}
+                {isTSenabled ? <TagSelector close={setTSstatus}/> : null}
                 {TagList.map((data)=>
-                    {return <RemovableTag data={data}/>;
+                    {return <RemovableTag data={data} array={TagList} setArray={setTagList} />;
                 })}
             </Horizonal>
         </>
