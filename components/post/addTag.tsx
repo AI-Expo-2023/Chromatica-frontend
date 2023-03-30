@@ -6,10 +6,12 @@ import { Theme } from "@/styles/theme/Theme";
 import styled from '@emotion/styled';
 
 interface aa {
-    close:React.Dispatch<React.SetStateAction<boolean>>
+    close:React.Dispatch<React.SetStateAction<boolean>>;
+    array: string[];
+    setArray: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function TagSelector({close}:aa){
+function TagSelector({close, array, setArray}:aa){
     const [searchKeyword, setKeyword] = useState<string>('');
     const tempData = ["띵명작","자연","사이버펑크","현대적","도시","현대차","타이어펑크","개띵작","머리가띵","현대의적","띵"];
     return(
