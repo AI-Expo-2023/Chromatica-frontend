@@ -27,7 +27,7 @@ function TagSelector({close, array, setArray}:main){
             </IconButton>
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
             <_.tagOptionList>
-                {tempData.filter(data=> {return data.includes(searchKeyword)}).map((text)=>(<TagListOption tagName={text} key={text} />))}
+                {tempData.filter(data=> {return data.includes(searchKeyword)}).map((text)=>(<TagListOption tagName={text} array={array} setArray={setArray} key={text} />))}
             </_.tagOptionList>
         </_.addTagMain>
     )
