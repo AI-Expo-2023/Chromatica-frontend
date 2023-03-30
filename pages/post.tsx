@@ -49,4 +49,5 @@ const Horizonal = styled.div`
     flex-direction: row;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
 `
