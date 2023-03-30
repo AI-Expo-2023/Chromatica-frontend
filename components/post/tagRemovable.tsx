@@ -24,6 +24,7 @@ const TagContainer = styled.div`
     padding: 6px 12px;
     display: flex;
     align-items: center;
+    gap: 4px;
 
     & > button{
         background: none;
@@ -32,5 +33,6 @@ const TagContainer = styled.div`
     }
     &>p{
         line-height: 20px;
+        font-size: 18px;
     }
 `
