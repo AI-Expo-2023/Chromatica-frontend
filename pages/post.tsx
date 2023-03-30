@@ -30,7 +30,7 @@ export default function PostPage(){
             <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
             <Horizonal>
                 <Button onClick={()=>setTSstatus(!isTSenabled)}><Add20Filled primaryFill={Theme.Black}/>태그 추가</Button>
-                {isTSenabled ? <TagSelector close={setTSstatus}/> : null}
+                {isTSenabled ? <TagSelector close={setTSstatus} array={TagList} setArray={setTagList} /> : null}
                 {TagList.map((data)=>
                     {return <RemovableTag data={data} array={TagList} setArray={setTagList} />;
                 })}
