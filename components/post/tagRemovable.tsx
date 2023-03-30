@@ -13,7 +13,7 @@ export const RemovableTag = ({data, onClick}:tagType)=>{
             <button>
                 <Dismiss20Filled primaryFill={Theme.Gray[50]} />
             </button>
-            {data}
+            <p>{data}</p>
         </TagContainer>
     )
 }
@@ -28,5 +28,9 @@ const TagContainer = styled.div`
     & > button{
         background: none;
         border: none;
+        height: 20px;
+    }
+    &>p{
+        line-height: 20px;
     }
 `
