@@ -30,6 +30,7 @@ const TagContainer = styled.div`
         background: none;
         border: none;
         height: 20px;
+        cursor: pointer;
     }
     &>p{
         line-height: 20px;
