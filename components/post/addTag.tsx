@@ -33,10 +33,17 @@ function TagSelector({close, array, setArray}:main){
     )
 }
 
-function TagListOption({tagName}:option){
+function TagListOption({tagName, array, setArray}:option){
+    function addTag(){
+        console.log(array);
+        setArray([...array,tagName]);
+    }
+
     return(
     <_.tagOptionDiv>
-        <AddCircle20Filled primaryFill={Theme.Gray[25]}/>
+        <IconButton onClick={addTag}>
+            <AddCircle20Filled primaryFill={Theme.Gray[25]}/>
+        </IconButton>
         <p>{tagName}</p>
     </_.tagOptionDiv>
     )
