@@ -9,9 +9,12 @@ export const addTagMain = styled.div`
     border: 1px solid ${Theme.Gray[5]};
     border-radius: 8px;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    background-color: ${Theme.White};
+    transform: translate(0,-55%);
 
     width: 250px;
     height: auto;
+    position: absolute;
 `
 
 export const tagOptionDiv = styled.div`
