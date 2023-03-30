@@ -72,3 +72,8 @@ export const inputRange = styled.input<{ cssThumbPos: number }>`
     cursor: pointer;
   }
 `;
+
+export const Text = styled.p`
+  font-size: 14px;
+  color: ${Theme.Gray[50]};
+`;
