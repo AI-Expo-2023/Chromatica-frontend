@@ -25,7 +25,7 @@ export default function PostPage(){
 
     return(
         <>
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/6152bc164687275.63fb405a39dda.jpg" alt="업로드하려는 이미지 미리 보기" width='800' height='500' />
+            <PostPreview src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/6152bc164687275.63fb405a39dda.jpg" alt="업로드하려는 이미지 미리 보기" />
             <Input value={title} setValue={setTitle} title='제목' width="100%" />
             <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
             <Horizonal>
@@ -38,6 +38,11 @@ export default function PostPage(){
         </>
     )
 }
+
+const PostPreview = styled.img`
+    border-radius: 8px;
+    height: 500px;
+`
 
 const Horizonal = styled.div`
     display: flex;
