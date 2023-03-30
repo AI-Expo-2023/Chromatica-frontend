@@ -18,7 +18,7 @@ const Input = ({ title, width, text, isPassword, value, setValue }: Props): JSX.
   return (
     <Container width={width}>
       <InputTitle htmlFor={title}>{title}</InputTitle>
-      <InputBox id={title} value={value} onChange={(e) => setValue(e.target.value)} type={isPassword && !isVisable ? 'password' : 'text'} />
+      <InputBox id={title} value={value} onChange={(e) => setValue(e.target.value)} type={isPassword && !isVisable ? 'password' : 'text'} autoComplete="off" />
       {isPassword && (
         <Eye
           onClick={() => {
