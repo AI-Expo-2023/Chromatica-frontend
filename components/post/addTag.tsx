@@ -35,8 +35,8 @@ function TagSelector({close, array, setArray}:main){
 
 function TagListOption({tagName, array, setArray}:option){
     function addTag(){
-        if(array.includes(tagName)) {
-            alert('같은 태그는 한 번만 추가할 수 있습니다');
+        if(array.length>4) {
+            alert('태그는 5개까지만 추가할 수 있습니다');
             return null;
         }
         setArray([...array,tagName]);
