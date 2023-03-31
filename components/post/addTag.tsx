@@ -42,14 +42,17 @@ function TagListOption({tagName, array, setArray}:option){
         setArray([...array,tagName]);
     }
 
-    return(
-    <_.tagOptionDiv>
-        <IconButton onClick={addTag}>
-            <AddCircle20Filled primaryFill={Theme.Gray[25]}/>
-        </IconButton>
-        <p>{tagName}</p>
-    </_.tagOptionDiv>
-    )
+    if(!array.includes(tagName)){
+        return(
+        <_.tagOptionDiv>
+            <IconButton onClick={addTag}>
+                <AddCircle20Filled primaryFill={Theme.Gray[25]}/>
+            </IconButton>
+            <p>{tagName}</p>
+        </_.tagOptionDiv>
+        )
+    }
+    else return null;
 }
 
 const IconButton = styled.button`
