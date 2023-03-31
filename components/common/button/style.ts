@@ -23,6 +23,8 @@ export const Button = styled.button`
   border-radius: 8px;
 
   padding: 6px 12px;
+  display: flex;
+  gap: 8px;
 
   ${(props: ButtonType) =>
     props.Width
