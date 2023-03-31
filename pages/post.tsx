@@ -19,7 +19,7 @@ export default function PostPage(){
     const [title, setTitle] = useState<string>('');
     const [Desc, setDesc] = useState<string>('');
     const [Photo, setPhoto] = useState<string>('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/6152bc164687275.63fb405a39dda.jpg');
-    const [TagList, setTagList] = useState<string[]>(["띵명작","자연","사이버펑크","현대적","도시"]);
+    const [TagList, setTagList] = useState<string[]>([]);
 
     const [isTSenabled, setTSstatus] = useState<boolean>(false);
 
