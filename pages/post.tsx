@@ -24,20 +24,36 @@ export default function PostPage(){
     const [isTSenabled, setTSstatus] = useState<boolean>(false);
 
     return(
-        <>
-            <PostPreview src={Photo} alt="업로드하려는 이미지 미리 보기" />
-            <Input value={title} setValue={setTitle} title='제목' width="100%" />
-            <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
-            <Horizonal>
-                <Button onClick={()=>setTSstatus(!isTSenabled)}><Add20Filled primaryFill={Theme.Black}/>태그 추가</Button>
-                {isTSenabled ? <TagSelector close={setTSstatus} array={TagList} setArray={setTagList} /> : null}
-                {TagList.map((data)=>{
-                    return <RemovableTag key={data} data={data} array={TagList} setArray={setTagList} />;
-                })}
-            </Horizonal>
-        </>
+        <CenterContainer>
+            <PaddingContainer>
+                <PostPreview src={Photo} alt="업로드하려는 이미지 미리 보기" />
+                <Input value={title} setValue={setTitle} title='제목' width="100%" />
+                <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
+                <Horizonal>
+                    <Button onClick={()=>setTSstatus(!isTSenabled)}><Add20Filled primaryFill={Theme.Black}/>태그 추가</Button>
+                    {isTSenabled ? <TagSelector close={setTSstatus} array={TagList} setArray={setTagList} /> : null}
+                    {TagList.map((data)=>{
+                        return <RemovableTag key={data} data={data} array={TagList} setArray={setTagList} />;
+                    })}
+                </Horizonal>
+            </PaddingContainer>
+        </CenterContainer>
     )
 }
+
+const PaddingContainer = styled.div`
+    width: 1300px;
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 20px;
+`
+
+const CenterContainer = styled.div`
+    display: flex;
+    justify-content: center;
+`
 
 const PostPreview = styled.img`
     border-radius: 8px;
