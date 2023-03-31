@@ -43,7 +43,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -58,7 +58,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -73,7 +73,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -88,7 +88,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -103,7 +103,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -118,7 +118,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
