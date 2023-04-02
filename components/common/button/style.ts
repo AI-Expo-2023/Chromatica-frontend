@@ -23,6 +23,8 @@ export const Button = styled.button`
   border-radius: 8px;
 
   padding: 6px 12px;
+  display: flex;
+  gap: 8px;
 
   ${(props: ButtonType) =>
     props.Width
@@ -41,7 +43,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -56,7 +58,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -71,7 +73,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -86,7 +88,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -101,7 +103,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
@@ -116,7 +118,7 @@ export const Button = styled.button`
 
           :hover {
             transition: 100ms;
-            transform: scale(1.05);
+            filter: brightness(120%);
           }
 
           :active {
