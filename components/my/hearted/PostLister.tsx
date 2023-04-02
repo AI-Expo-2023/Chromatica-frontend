@@ -1,28 +1,24 @@
 import RankCard from "@/components/common/RankCard/RankCard"
 import styled from "@emotion/styled";
 
-export const PostLister = ()=>{
-    const photo = '';
+interface propsType{
+    data: postDataType[];
+}
+
+interface postDataType {
+    photo: string;
+    user: string;
+    head: string;
+    like: number;
+}
+
+export const PostLister = ({data}:propsType)=>{
+    console.log(data);
     return(
         <SixHorizon>
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
-            <RankCard head="티모대위 출동" like={32} name="구른다슈레기물안경" photo="asdf" rank={3} />
+            {data.map((aa)=>
+                (<RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} />
+            ))}
         </SixHorizon>
     )
 }
