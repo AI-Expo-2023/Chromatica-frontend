@@ -6,12 +6,57 @@ import { useState } from "react";
 const MyHearted = ()=>{
     const [pageNum,setPageNum] = useState<number>(1);
 
+    const ddtt = [
+        {
+            photo:'adfs',
+            user:'구른다슈레기물안경',
+            like:22,
+            head: '티모대위 출동',
+        },
+        {
+            photo:'adfs',
+            user:'구른다슈레기물안경',
+            like:23,
+            head: '티모대위 출동',
+        },
+        {
+            photo:'adfs',
+            user:'구른다슈레기물안경',
+            like:222,
+            head: '티모대위 출동',
+        },
+        {
+            photo:'asdfsdfg',
+            user:'구른다슈레기물안경',
+            like:22,
+            head: '티모대위 출동',
+        },
+        {
+            photo:'adfs',
+            user:'구른다슈레기물안경',
+            like:422,
+            head: '티모대위 출동',
+        },
+        {
+            photo:'adfs',
+            user:'구른다슈레기물안경',
+            like:2,
+            head: '티모대위 출동',
+        },
+        {
+            photo:'adfs',
+            user:'구른다슈레기물안경',
+            like:29,
+            head: '티모대위 출동',
+        },
+    ]
+
     return(
         <>
             <Title>
                 좋아요 누른 작품
             </Title>
-            <PostLister />
+            <PostLister data={ddtt} />
             <Pagination value={pageNum} change={setPageNum} end={30}/>
         </>
     )
