@@ -2,10 +2,10 @@ import * as _ from "./style"
 import { Button } from "../../common/button/style";
 import router from 'next/router'
 
-const MyInfo = () => {
+const MyInfo = ():JSX.Element => {
 
     const ProfileChange = () => {
-        router.push("/auth/profile");
+        router.push("/profileChange");
     }
 
     const PwChange = () =>{
