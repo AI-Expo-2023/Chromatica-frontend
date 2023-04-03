@@ -16,8 +16,9 @@ interface postDataType {
 export const PostLister = ({data, pageNum}:propsType)=>{
     return(
         <SixHorizon>
-            {data.map((aa)=>
-                (<RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} />
+            {data
+                .slice((pageNum-1)*18,(pageNum-1)*18+18)
+                .map((aa)=>(<RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} />
             ))}
         </SixHorizon>
     )
