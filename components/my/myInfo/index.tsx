@@ -5,7 +5,7 @@ import router from 'next/router'
 const MyInfo = ():JSX.Element => {
 
     const ProfileChange = () => {
-        router.push("/profileChange");
+        router.push("/my/profileChange");
     }
 
     const PwChange = () =>{
