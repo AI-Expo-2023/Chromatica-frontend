@@ -4,18 +4,16 @@ import { Theme } from '@/styles/theme/Theme';
 import * as _ from './style'
 
 interface SearchProps {
-  change: React.Dispatch<React.SetStateAction<string | string[] | undefined>>;
-  value: string | string[] | undefined;
-  update: () => void;
+  change: React.Dispatch<React.SetStateAction<string>>;
+  value: string;
 }
 
-const SearchBar = ({ change, value, update }: SearchProps) => {
+const SearchBar = ({ change, value }: SearchProps) => {
   return (
     <_.SearchBox>
       <_.SearchInput
         type='text'
         value={value}
-        onKeyDown={(e) => {if(e.key === 'Enter') update()}}
         onChange={(e) => change(e.target.value)}
         placeholder='이미지 검색'
       />
