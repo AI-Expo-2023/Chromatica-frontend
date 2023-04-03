@@ -23,7 +23,7 @@ export const PostLister = ({data}:propsType)=>{
 }
 
 const SixHorizon = styled.div`
-    width: 1300px;
+    max-width: 1300px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
