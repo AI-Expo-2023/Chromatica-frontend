@@ -14,11 +14,12 @@ interface postDataType {
 }
 
 export const PostLister = ({data, pageNum}:propsType)=>{
+    console.log((pageNum-1)*18,(pageNum-1)*18+17);
     return(
         <SixHorizon>
             {data
-                .slice((pageNum-1)*18,(pageNum-1)*18+18)
-                .map((aa)=>(<RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} />
+                .map((aa, index)=>(
+                    <RankCard head={aa.head+index} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} />
             ))}
         </SixHorizon>
     )
