@@ -218,7 +218,7 @@ const MyHearted = ()=>{
             <Title>
                 좋아요 누른 작품
             </Title>
-            <PostLister data={ddtt} />
+            <PostLister data={ddtt} pageNum={pageNum}/>
             <Pagination value={pageNum} change={setPageNum} end={Math.ceil(ddtt.length/18)}/>
         </>
     )
