@@ -13,7 +13,6 @@ interface postDataType {
 }
 
 export const PostLister = ({data}:propsType)=>{
-    console.log(data);
     return(
         <SixHorizon>
             {data.map((aa)=>
