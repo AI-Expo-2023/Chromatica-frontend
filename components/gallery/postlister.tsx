@@ -19,7 +19,7 @@ export const PostListerWithSort = ({data, sort}:propsType)=>{
         <SixHorizon>
             {data
                 .map((aa, index)=>(
-                    <RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} rank={sort=='popular' ? index : undefined}/>
+                    <RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} rank={sort=='popular' ? index+1 : undefined}/>
             ))}
         </SixHorizon>
     )
