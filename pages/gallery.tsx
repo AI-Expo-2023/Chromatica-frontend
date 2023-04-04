@@ -28,7 +28,7 @@ export default function Gallery() {
 
     return(
         <>
-            <PostListerWithSort sort={Sort} data={dta}/>
+            <PostListerWithSort sort={Sort==='new' || Sort === 'popular' ? Sort : 'new'} data={dta}/>
         </>
     );
 }
