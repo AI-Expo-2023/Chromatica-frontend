@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 
 interface propsType{
     data: postDataType[];
-    pageNum: number;
+    pageNum?: number;
+    sort: string;
 }
 
 interface postDataType {
@@ -13,8 +14,7 @@ interface postDataType {
     like: number;
 }
 
-export const PostLister = ({data, pageNum}:propsType)=>{
-    console.log((pageNum-1)*18,(pageNum-1)*18+17);
+export const PostListerWithSort = ({data, pageNum, sort}:propsType)=>{
     return(
         <SixHorizon>
             {data
