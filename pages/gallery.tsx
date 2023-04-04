@@ -19,7 +19,7 @@ export default function Gallery() {
 ]//임시데이터
 
     const Router = useRouter();
-    const [Sort, setSort] = useState<string | string[] | undefined>(Router.query.sort);
+    const [Sort, setSort] = useState<string>(Router.query.sort as string);
     return(
         <>
             <PostListerWithSort sort={Sort} data={dta}/>
