@@ -1,4 +1,5 @@
 import { PostListerWithSort } from "@/components/gallery/postlister";
+import { SortSelecter } from "@/components/gallery/sortSelect";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -28,6 +29,7 @@ export default function Gallery() {
 
     return(
         <>
+            <SortSelecter sort={Sort} setSort={setSort} />
             <PostListerWithSort sort={Sort==='new' || Sort === 'popular' ? Sort : 'new'} data={dta}/>
         </>
     );
