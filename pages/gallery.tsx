@@ -1,6 +1,6 @@
 import { PostListerWithSort } from "@/components/gallery/postlister";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Gallery() {
     const dta = [
@@ -18,8 +18,14 @@ export default function Gallery() {
         },
 ]//임시데이터
 
-    const Router = useRouter();
-    const [Sort, setSort] = useState<string>(Router.query.sort as string);
+    const {query, isReady} = useRouter();
+    const [Sort, setSort] = useState<string>(query.sort as string);
+    useEffect(()=>{
+        if(isReady===false) return;
+        setSort(query.sort as string);
+        console.log(query);
+    },[isReady])
+
     return(
         <>
             <PostListerWithSort sort={Sort} data={dta}/>
