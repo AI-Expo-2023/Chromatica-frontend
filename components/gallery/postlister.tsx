@@ -14,7 +14,7 @@ interface postDataType {
     like: number;
 }
 
-export const PostListerWithSort = ({data, pageNum, sort}:propsType)=>{
+export const PostListerWithSort = ({data, sort}:propsType)=>{
     return(
         <SixHorizon>
             {data
