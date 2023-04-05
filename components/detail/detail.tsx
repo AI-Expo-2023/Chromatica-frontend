@@ -12,6 +12,7 @@ interface DetailProps {
 const Detail = ({ word }: DetailProps) => {
   const [keyWord, setKeyWord] = useState<string | string[] | undefined>('');
   const [like, setLike] = useState<boolean>(false);
+  const [TagData, setTag] = useState<string[]>(['예시 태그']);
 
   useEffect(() => {
     setKeyWord(word);
@@ -24,9 +25,9 @@ const Detail = ({ word }: DetailProps) => {
         <_.Img />
         <_.Text weight={800} size={24}>그저 제목일 뿐임</_.Text>
         <_.GapBox>
-          <Tag basic={true}>그저 태그</Tag>
-          <Tag basic={true}>그저 태그</Tag>
-          <Tag basic={true}>그저 태그</Tag>
+          {
+            TagData.map((data, index) => <Tag key={index} basic={true}>{data}</Tag>)
+          }
         </_.GapBox>
         <_.GapBox>
           <_.ImgCircle width={28} height={28} />
