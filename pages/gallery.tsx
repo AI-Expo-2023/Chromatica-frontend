@@ -1,4 +1,4 @@
-import { PostListerWithSort } from "@/components/gallery/postlister";
+import { PostListerWithSort } from "@/components/gallery/postListerSortable";
 import { SortSelecter } from "@/components/gallery/sortSelect";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
