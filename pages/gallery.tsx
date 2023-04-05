@@ -5,21 +5,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function Gallery() {
-    const dta = [
-        {
-            head:'teemodawee',
-            user:'vayne',
-            like: 99,
-            photo: 'as2df',
-        },
-        {
-            head:'teemdodawee',
-            user:'vayne',
-            like: 99,
-            photo: 'asdf',
-        },
-]//임시데이터
-
     const {query, isReady} = useRouter();
     const [Sort, setSort] = useState<string>(query.sort as string);
     const [Page, setPage] = useState<number>(1);
