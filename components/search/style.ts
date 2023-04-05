@@ -75,6 +75,10 @@ export const Cover = styled.div`
 `
 
 export const Center = styled.div`
+  width: 100%;
+  height: 24px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
 `
