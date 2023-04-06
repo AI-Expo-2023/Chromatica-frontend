@@ -1,6 +1,7 @@
 declare type CanvasOptions = {
   color: string;
   tool: boolean;
+  paint?: boolean;
   backgroundColor: string;
 };
 

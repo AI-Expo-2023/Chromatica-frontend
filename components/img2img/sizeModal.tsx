@@ -33,7 +33,7 @@ const SizeModal = ({ canvasSize, setCanvasSize, settingOptions, setSettingOption
         isOpenModal &&
         <Modal onClickToggleModal={onClickToggleModal} width="450px" display="flex" gap="32px" flexDirection="column" background>
           <Title>
-            <h1>캠버스 설정</h1>
+            <h1>캔버스 설정</h1>
             <p>스케치할 그림판의 크기, 컬러 설정</p>
           </Title>
           <SizeContainer>
