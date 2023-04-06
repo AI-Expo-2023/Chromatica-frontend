@@ -40,22 +40,3 @@ export const SettingContainer = styled.div`
   border-radius: 44px;
   width: fit-content;
 `;
-
-// export const PageContainer = styled.div`
-//   display: flex;
-//   gap: 12px;
-//   margin-top: 20px;
-//   > button {
-//     background-color: white;
-//     border: none;
-//     font-size: 20px;
-//     &:first-child {
-//       font-weight: bold;
-//       text-decoration: underline;
-//       text-underline-offset: 5px;
-//     }
-//     &:last-child {
-//       cursor: pointer;
-//     }
-//   }
-// `;
