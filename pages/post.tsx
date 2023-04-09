@@ -1,12 +1,13 @@
 import Input from "@/components/common/input";
-import TagSelector from "@/components/post/addTag";
+import TagSelector from "@/components/post/tagAdderDropdown";
 import { useState } from "react";
 import { Button } from "@/components/common/button/style";
 import { Add20Filled } from "@fluentui/react-icons";
 import { Theme } from "@/styles/theme/Theme";
 import { TextArea } from "@/components/post/textArea";
-import { RemovableTag } from "@/components/post/tagRemovable";
+import { RemovableTag } from "@/components/post/tagComponent";
 import styled from "@emotion/styled";
+import { TagAdder } from "@/components/post/tagAdder";
 
 type postType = {
     photo: string;
@@ -30,11 +31,7 @@ export default function PostPage(){
                 <Input value={title} setValue={setTitle} title='제목' width="100%" />
                 <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
                 <Horizonal>
-                    <Button onClick={()=>setTSstatus(!isTSenabled)}><Add20Filled primaryFill={Theme.Black}/>태그 추가</Button>
-                    {isTSenabled ? <TagSelector close={setTSstatus} array={TagList} setArray={setTagList} /> : null}
-                    {TagList.map((data)=>{
-                        return <RemovableTag key={data} data={data} array={TagList} setArray={setTagList} />;
-                    })}
+                    <TagAdder TagList={TagList} isTSenabled={isTSenabled} setTagList={setTagList} setTSstatus={setTSstatus}/>
                 </Horizonal>
             </PaddingContainer>
         </CenterContainer>
