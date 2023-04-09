@@ -1,11 +1,6 @@
 import Input from "@/components/common/input";
-import TagSelector from "@/components/post/tagAdderDropdown";
 import { useState } from "react";
-import { Button } from "@/components/common/button/style";
-import { Add20Filled } from "@fluentui/react-icons";
-import { Theme } from "@/styles/theme/Theme";
 import { TextArea } from "@/components/post/textArea";
-import { RemovableTag } from "@/components/post/tagComponent";
 import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
 
