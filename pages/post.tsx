@@ -3,6 +3,7 @@ import { useState } from "react";
 import { TextArea } from "@/components/post/textArea";
 import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
+import { Button } from "@/components/common/button/style";
 
 type postType = {
     photo: string;
@@ -24,6 +25,7 @@ export default function PostPage(){
                 <Input value={title} setValue={setTitle} title='제목' width="100%" />
                 <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
                 <TagAdder TagList={TagList} setTagList={setTagList}/>
+                <Button MainColor>게시</Button>
             </PaddingContainer>
         </CenterContainer>
     )
