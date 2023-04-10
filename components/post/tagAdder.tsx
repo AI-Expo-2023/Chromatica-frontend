@@ -13,8 +13,7 @@ interface tagAdderProps{
 }
 
 export const TagAdder = ({isTSenabled, setTSstatus, TagList, setTagList}:tagAdderProps) => {
-    function handleOutsideClick(e) {
-        console.log(e);
+    function handleOutsideClick(e){
         if (e.target.closest('.tag-selector') === null) {
             setTSstatus(false);
         }
