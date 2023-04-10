@@ -17,8 +17,6 @@ export default function PostPage(){
     const [Photo, setPhoto] = useState<string>('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/6152bc164687275.63fb405a39dda.jpg');
     const [TagList, setTagList] = useState<string[]>([]);
 
-    const [isTSenabled, setTSstatus] = useState<boolean>(false);
-
     return(
         <CenterContainer>
             <PaddingContainer>
@@ -26,7 +24,7 @@ export default function PostPage(){
                 <Input value={title} setValue={setTitle} title='제목' width="100%" />
                 <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
                 <Horizonal>
-                    <TagAdder TagList={TagList} isTSenabled={isTSenabled} setTagList={setTagList} setTSstatus={setTSstatus}/>
+                    <TagAdder TagList={TagList} setTagList={setTagList}/>
                 </Horizonal>
             </PaddingContainer>
         </CenterContainer>

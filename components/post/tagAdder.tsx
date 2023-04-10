@@ -3,16 +3,15 @@ import { Button } from "../common/button/style"
 import { Theme } from "@/styles/theme/Theme"
 import { RemovableTag } from "./tagComponent"
 import TagSelector from "./tagAdderDropdown"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface tagAdderProps{
-    isTSenabled: boolean;
-    setTSstatus: React.Dispatch<React.SetStateAction<boolean>>;
     TagList: string[];
     setTagList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const TagAdder = ({isTSenabled, setTSstatus, TagList, setTagList}:tagAdderProps) => {
+export const TagAdder = ({TagList, setTagList}:tagAdderProps) => {
+    const [isTSenabled, setTSstatus] = useState<boolean>(false);
     function handleOutsideClick(e){
         if (e.target.closest('.tag-selector') === null) {
             setTSstatus(false);
