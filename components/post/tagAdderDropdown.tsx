@@ -6,7 +6,7 @@ import { Theme } from "@/styles/theme/Theme";
 import styled from '@emotion/styled';
 
 interface main {
-    close:React.Dispatch<React.SetStateAction<boolean>>;
+    setTSstatus:React.Dispatch<React.SetStateAction<boolean>>;
     array: string[];
     setArray: React.Dispatch<React.SetStateAction<string[]>>;
 }
@@ -17,14 +17,14 @@ interface option{
     setArray: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function TagSelector({close, array, setArray}:main){
+function TagSelector({setTSstatus, array, setArray}:main){
     const [searchKeyword, setKeyword] = useState<string>('');
     const tempData = ["띵명작","자연","사이버펑크","현대적","도시","현대차","타이어펑크","개띵작","머리가띵","현대의적","띵"];
     const dropdownRef = useRef(null);
 
     function outsideClickHandler(e){
         console.log(dropdownRef);
-        if(dropdownRef.current && !dropdownRef.current.contains(e.target)) close(false);
+        if(dropdownRef.current && !dropdownRef.current.contains(e.target)) setTSstatus(false);
     }
     useEffect(()=>{
         window.addEventListener("click",outsideClickHandler);
@@ -35,7 +35,7 @@ function TagSelector({close, array, setArray}:main){
 
     return(
         <_.addTagMain ref={dropdownRef}>
-            <IconButton onClick={()=>close(false)}>
+            <IconButton onClick={()=>setTSstatus(false)}>
                 <Dismiss24Filled primaryFill={Theme.Black} />
             </IconButton>
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
