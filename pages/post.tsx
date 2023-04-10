@@ -23,9 +23,7 @@ export default function PostPage(){
                 <PostPreview src={Photo} alt="업로드하려는 이미지 미리 보기" />
                 <Input value={title} setValue={setTitle} title='제목' width="100%" />
                 <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
-                <Horizonal>
-                    <TagAdder TagList={TagList} setTagList={setTagList}/>
-                </Horizonal>
+                <TagAdder TagList={TagList} setTagList={setTagList}/>
             </PaddingContainer>
         </CenterContainer>
     )
@@ -48,12 +46,4 @@ const CenterContainer = styled.div`
 const PostPreview = styled.img`
     border-radius: 8px;
     height: 500px;
-`
-
-const Horizonal = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
 `
