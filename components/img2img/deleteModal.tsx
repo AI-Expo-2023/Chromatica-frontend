@@ -13,10 +13,11 @@ type Props = {
   setOpenModal: React.Dispatch<React.SetStateAction<ModalType>>;
   canvasRef: React.RefObject<HTMLCanvasElement>;
   settingOptions: CanvasOptions;
+  update: boolean;
 }
 
 /** 그림판을 완전히 지우는 것에 대한 모달 */
-const DeleteModal = ({settingOptions, canvasRef, openModal, setOpenModal }: Props): JSX.Element => {
+const DeleteModal = ({ settingOptions, canvasRef, openModal, setOpenModal, update }: Props): JSX.Element => {
   const onClick = () => {
     setOpenModal({ ...openModal, delete: !openModal.delete });
   }
@@ -25,9 +26,12 @@ const DeleteModal = ({settingOptions, canvasRef, openModal, setOpenModal }: Prop
     if (canvasRef.current) {
       const canvas: HTMLCanvasElement = canvasRef.current;
       const ctx = canvas.getContext("2d");
-      if (ctx?.fillStyle) {
-        console.log("asdsad")
+      if (ctx?.fillStyle && !update) {
         ctx.fillStyle = settingOptions.backgroundColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+      }
+      if (ctx?.fillStyle && update) {
+        ctx.fillStyle = "rbga(0,0,0,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height)
       }
     }

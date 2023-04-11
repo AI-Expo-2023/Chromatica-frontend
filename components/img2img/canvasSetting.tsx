@@ -10,7 +10,7 @@ type Props = {
   aiSetting: AiSetting;
   setAiSetting: React.Dispatch<React.SetStateAction<AiSetting>>;
   settingOptions: CanvasOptions;
-  update ?: boolean;
+  update?: boolean;
 }
 
 /** 캠버스의 삭제 버튼과 상세 설정 버튼이 있음 */
@@ -30,7 +30,7 @@ const CanvasSetting = ({ update, canvasRef, aiSetting, setAiSetting, settingOpti
   return (
     <>
       {openModal.setting && <SettingModal openModal={openModal} setOpenModal={setOpenModal} aiSetting={aiSetting} setAiSetting={setAiSetting} />}
-      {openModal.delete && <DeleteModal settingOptions={settingOptions} canvasRef={canvasRef} openModal={openModal} setOpenModal={setOpenModal} />}
+      {openModal.delete && <DeleteModal settingOptions={settingOptions} canvasRef={canvasRef} openModal={openModal} setOpenModal={setOpenModal} update={update ? true : false} />}
       <Container>
         {!update && <SettingContainer onClick={() => onClickDelete()}> <Delete24Filled /> </SettingContainer>}
         <SettingContainer onClick={() => onClickSetting()}><Settings24Filled /></SettingContainer>
