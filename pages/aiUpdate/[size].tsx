@@ -12,7 +12,7 @@ import FilterModal from "@/components/img2img/filterModal";
 
 const AiUpdate = () => {
   /**여기에 사진 주소 넣어야함 */
-  const imgData = "";
+  const [imgData, setImgData] = useState("https://avatars.githubusercontent.com/u/102589413?v=4");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
     color: "#FADD75",
@@ -34,7 +34,11 @@ const AiUpdate = () => {
   const [filter, setFilter] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
-
+  useEffect(() => {
+    const imgData = localStorage.getItem("imgData");
+    setImgData(imgData || "");
+  }, []);
+  
   useEffect(() => {
     if (!router.isReady) return;
     const size = `${router.query.size}`.split(".", 2);
@@ -45,7 +49,7 @@ const AiUpdate = () => {
     if (imgBackground?.style) {
       imgBackground.style.width = `${width * 0.75}px`;
       imgBackground.style.height = `${height * 0.75}px`;
-      imgBackground.src = "";
+      imgBackground.src = imgData;
     }
     const img = new Image();
     img.src = imgData;
@@ -76,7 +80,7 @@ const AiUpdate = () => {
           </_.CanvasTools>
           <ToolSize toolWidth={toolWidth} setToolWidth={setToolWidth} settingOptions={settingOptions} />
         </CanvasPaint>
-        <AIResponse canvasRef={canvasRef} />
+        <AIResponse filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
       </_.Conatiner>
     </>
   )
