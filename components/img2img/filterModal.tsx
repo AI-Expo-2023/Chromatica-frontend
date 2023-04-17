@@ -17,7 +17,7 @@ const FilterModal = ({ filter, setFilter, openModadl, setOpenModal }: Props): JS
     <>
       {
         openModadl &&
-        <Modal onClickToggleModal={onClick} display="flex" flexDirection="column" >
+        <Modal onClickToggleModal={onClick} display="flex" flexDirection="column" background>
           <h1>필터</h1>
           <ButtonContainer >
             {
@@ -29,8 +29,7 @@ const FilterModal = ({ filter, setFilter, openModadl, setOpenModal }: Props): JS
             }
           </ButtonContainer>
           <ButtonContainer>
-            <Buttons onClick={()=> setOpenModal(false)}>닫기</Buttons>
-            <Buttons MainColor>적용</Buttons>
+            <Buttons MainColor onClick={() => onClick()}>적용</Buttons>
           </ButtonContainer>
         </Modal>
       }

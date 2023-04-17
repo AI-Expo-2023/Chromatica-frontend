@@ -27,18 +27,12 @@ const I2i = (): JSX.Element => {
   });
   const [aiSetting, setAiSetting] = useState<AiSetting>({
     quality: 20,
-    count: 4
+    count: 2
   })
 
-  const pageChange = () => {
-    if (confirm("키워드를 이미지로 페이지로 이동하시겠습니까?")) {
-      //페이지 이동코드 작성
-    }
-  };
 
   return (
     <>
-      {/* 시작 설정 모달 */}
       <SizeModal canvasSize={canvasSize} setCanvasSize={setCanvasSize} settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
       <_.DisplayBox>
 
@@ -58,7 +52,7 @@ const I2i = (): JSX.Element => {
               </_.CanvasTools>
               <ToolSize toolWidth={toolWidth} setToolWidth={setToolWidth} settingOptions={settingOptions} />
             </_.CanvasContainer>
-            <AIResponse canvasRef={canvasRef} />
+            <AIResponse canvasSize={canvasSize} aiSetting={aiSetting} canvasRef={canvasRef} update={false} />
           </div>
         </_.Container>
       </_.DisplayBox>
