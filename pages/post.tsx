@@ -4,6 +4,7 @@ import { TextArea } from "@/components/post/textArea";
 import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
 import { Button } from "@/components/common/button/style";
+import Image from "next/image";
 
 type postType = {
     photo: string;
@@ -25,7 +26,7 @@ export default function PostPage(){
     return(
         <CenterContainer>
             <PaddingContainer>
-                <PostPreview src={Photo} alt="업로드하려는 이미지 미리 보기" />
+                <PostPreview src={Photo} placeholder="empty" fill alt="업로드하려는 이미지 미리 보기" />
                 <Input value={title} setValue={setTitle} title='제목' width="100%" />
                 <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
                 <TagAdder TagList={TagList} setTagList={setTagList}/>
@@ -49,7 +50,9 @@ const CenterContainer = styled.div`
     justify-content: center;
 `
 
-const PostPreview = styled.img`
+const PostPreview = styled(Image)`
+    position: initial !important;
     border-radius: 8px;
-    height: 500px;
+    height: 500px !important;
+    width: auto !important;
 `
