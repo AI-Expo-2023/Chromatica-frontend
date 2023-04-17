@@ -1,5 +1,5 @@
 import Input from "@/components/common/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextArea } from "@/components/post/textArea";
 import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
@@ -17,6 +17,10 @@ export default function PostPage(){
     const [Desc, setDesc] = useState<string>('');
     const [Photo, setPhoto] = useState<string>('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/6152bc164687275.63fb405a39dda.jpg');
     const [TagList, setTagList] = useState<string[]>([]);
+
+    useEffect(()=>{
+        setPhoto(localStorage.getItem('imageData') as string);
+    },[]);
 
     return(
         <CenterContainer>
