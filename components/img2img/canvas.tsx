@@ -1,37 +1,24 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import ColorPalette from "./colorPalette";
-import ColorRainbox from "./colorRainbow";
+import React, { useCallback, useEffect, useState } from "react";
 import * as _ from "./style";
-import Tool from "./tool";
 
 /**마우스 좌표값 타입*/
 type Coordinate = {
   x: number;
   y: number;
-}
+};
+
+type Props = {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  settingOptions: CanvasOptions;
+  toolWidth: ToolSize;
+  canvasSize: CanvasSize;
+  update?: boolean;
+};
 
 /** 그림판 */
-const Canvas = (): JSX.Element => {
-  const canvasRef = useRef<HTMLCanvasElement>(null); //ref -> 값이 변경되어도 화면은 바뀌지 않음
+const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasSize, update }): JSX.Element => {
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined); //mouse down시 마우스 포인터 x,y 위치
   const [isPainting, setIsPainting] = useState<boolean>(false);  //현재 그림이 그려지는 상태인지 boolean으로 보여주기
-
-  //canvas 설정 변수, 값변경 함수
-  const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
-    color: "#000000",
-    tool: true,
-  });
-
-  const [toolWidth, setToolWidth] = useState({
-    brush: 5,
-    eraser: 5,
-  })
-
-  const widthChange = (e: any) => {
-    settingOptions.tool ?
-      setToolWidth({ ...toolWidth, brush: e.target.value }) :
-      setToolWidth({ ...toolWidth, eraser: e.target.value })
-  }
 
   /**mouse 포인터의 위치를 구하는 함수 */
   const getCoordinates = (e: MouseEvent): Coordinate | undefined => {
@@ -73,8 +60,8 @@ const Canvas = (): JSX.Element => {
     const ctx = canvas.getContext("2d");
 
     if (ctx) {
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.strokeStyle = settingOptions.color;
+      ctx.globalCompositeOperation = update ? "destination-out" : "source-over";
+      ctx.strokeStyle = settingOptions.backgroundColor;
       ctx.lineJoin = 'round';
       ctx.lineWidth = toolWidth.eraser;
 
@@ -85,7 +72,7 @@ const Canvas = (): JSX.Element => {
 
       ctx.stroke();
     }
-  }
+  };
 
   const startPaint = useCallback((e: MouseEvent) => {
     const coordinates = getCoordinates(e);
@@ -93,14 +80,12 @@ const Canvas = (): JSX.Element => {
       setIsPainting(true);
       setMousePosition(coordinates);
     }
-  }, [])
+  }, []);
+
 
   const paint = useCallback(
     (e: MouseEvent) => {
-      // e.preventDefault();   // drag 방지
-      // e.stopPropagation();  // drag 방지
-
-      if (isPainting && settingOptions.tool) {
+      if (!(isPainting && settingOptions.paint) && isPainting && settingOptions.tool) {
         const newMousePosition = getCoordinates(e);
         if (mousePosition && newMousePosition) {
           drawLine(mousePosition, newMousePosition);
@@ -111,27 +96,72 @@ const Canvas = (): JSX.Element => {
         if (mousePosition && newMousePosition) {
           clearLine(mousePosition, newMousePosition);
           setMousePosition(newMousePosition);
-
         }
       }
     },
     [isPainting, mousePosition]
   );
 
+  const fill = (x: number, y: number, fillColor: string) => {
+    if (canvasRef.current) {
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      const pixelData = ctx?.getImageData(x, y, 1, 1);
+      const color = `rbg(${pixelData?.data[0]},${pixelData?.data[1]},${pixelData?.data[2]})`;
+      floodFill(x, y, color, fillColor);
+    }
+  }
+
+  const floodFill = (x: number, y: number, orginalColor: string, fillColor: string) => {
+    if (!canvasRef.current) return;
+
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const pixelStack: [number, number][] = [[x, y]];
+    const pixelData = ctx.getImageData(x, y, 1, 1);
+    const originalColor = `rbg(${pixelData?.data[0]},${pixelData?.data[1]},${pixelData?.data[2]})`;
+
+    while (pixelStack.length > 0) {
+      const [x, y] = pixelStack.pop()!; //!는 ts에게 무조건 값이 들어가 있으니까 걱정하지 말라는 의미
+      const pixelData = ctx.getImageData(x, y, 1, 1);
+      const color = `rbg(${pixelData?.data[0]},${pixelData?.data[1]},${pixelData?.data[2]})`;
+      if (color !== originalColor) continue;
+
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(x, y, 1, 1);
+
+      pixelStack.push([x - 1, y]);
+      pixelStack.push([x + 1, y]);
+      pixelStack.push([x, y - 1]);
+      pixelStack.push([x, y + 1]);
+    }
+  }
+  const painting = useCallback((e: MouseEvent) => {
+    if (isPainting && settingOptions.paint) {
+      const newMousePosition = getCoordinates(e);
+      if (newMousePosition) {
+        fill(newMousePosition.x, newMousePosition.y, settingOptions.color);
+      }
+    }
+  }, [isPainting, mousePosition]);
+
   const exitPaint = useCallback(() => {
     setIsPainting(false);
   }, []);
 
+
   useEffect(() => {
-    if (canvasRef.current) {
+    if (canvasRef.current && !update) {
       const canvas: HTMLCanvasElement = canvasRef.current;
       const ctx = canvas.getContext("2d");
       if (ctx?.fillStyle) {
-        ctx.fillStyle = "white"
+        ctx.fillStyle = settingOptions.backgroundColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height)
       }
     }
-  }, [])
+  }, [settingOptions.backgroundColor]);
+
   useEffect(() => {
     if (!canvasRef.current) {
       return;
@@ -140,38 +170,27 @@ const Canvas = (): JSX.Element => {
     canvas.addEventListener('mousedown', startPaint);
     canvas.addEventListener('mousemove', paint);
     canvas.addEventListener('mouseup', exitPaint);
+    canvas.addEventListener('click', painting);
     // canvas.addEventListener('mouseleave', exitPaint);
     return () => {
       canvas.removeEventListener('mousedown', startPaint);
       canvas.removeEventListener('mousemove', paint);
       canvas.removeEventListener('mouseup', exitPaint);
+      canvas.addEventListener('click', painting);
       // canvas.removeEventListener('mouseleave', exitPaint);
     };
   }, [startPaint, paint, exitPaint]);
 
-  const exportCanvas = () => {
-    const image = canvasRef.current?.toDataURL("imgage/png");
-    const link = document.createElement('a');
-    link.href = image || "";
-    link.download = 'chromatica.png';
-    link.click();
-  }
-
   return (
-    <_.Container>
-      <_.Canvas
-        ref={canvasRef}
-        width={500}
-        height={500}
-      />
-      <_.Setting>
-        <Tool settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
-        <ColorRainbox settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
-        <ColorPalette settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
-        <button onClick={() => exportCanvas()}>내보내기</button>
-      </_.Setting>
-      <input type="range" max={100} min={1} value={settingOptions.tool ? toolWidth.brush : toolWidth.eraser} onChange={(e) => widthChange(e)} />
-    </_.Container>
+    <>
+      <_.Container update={update ? true : false}>
+        <_.Canvas
+          ref={canvasRef}
+          width={canvasSize.width * 0.75}
+          height={canvasSize.height * 0.75}
+        />
+      </_.Container>
+    </>
   )
 }
 
