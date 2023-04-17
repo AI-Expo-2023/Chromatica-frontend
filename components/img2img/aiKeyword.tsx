@@ -8,6 +8,7 @@ import axios from "axios";
 import DownloabModal from "./downloabModal";
 
 import { useState } from "react";
+import Router from "next/router";
 
 type Props = {
   canvasRef: React.RefObject<HTMLCanvasElement>;
@@ -26,27 +27,24 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
   const [aiImg, setAiImg] = useState<string[]>([]);
   const [selectImg, setSelectImg] = useState<number>(1);
   const [openDownloadModal, setOpenDownloadModal] = useState<boolean>(false);
+  const [loading, setLoding] = useState(false);
 
   const makeImg = () => {
     if (aiKeyword == "") {
       alert("키워드를 입력해주세요")
     } else {
+      setLoding(true);
+      setAiImg([]);
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
       const img = new Image();
       if (canvas) {
-        img.src = canvas.toDataURL();
+        img.src = canvas.toDataURL("image/jpg");
         img.onload = () => {
           ctx?.drawImage(img, 0, 0);
           handleSubmit(canvas.toDataURL())
         }
       }
-
-
-      
-
-      alert(`열심히 AI가 이미지를 만들고 있어요!
-      최대한 빨리 만들어 볼게요😊`)
     }
   }
 
@@ -70,21 +68,23 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
 
       axios.post(`${BASEURL}/inpaint/keyword`, formData)
         .then((res) => {
+          setLoding(false);
           console.log(res.data)
         })
         .catch((err) => {
+          setLoding(false);
           console.error(err)
         })
     } else {
-      console.log(dataURL)
-      formData.append('base_img', dataURL);
+      formData.append('base_img', dataURL.split(",")[1]);
       formData.append('W', String(canvasSize.width));
       formData.append('H', String(canvasSize.height));
-      formData.append('format', "png");
+      formData.append('format', "jpg");
       formData.append('samples', String(aiSetting.count));
 
       axios.post(`${BASEURL}/img2img/keyword`, formData)
         .then((res) => {
+          setAiImg(res.data)
           console.log(res.data)
         })
         .catch((err) => {
@@ -114,8 +114,8 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
   }
 
   const updateImg = () => {
-
-    // localStorage.setItem("imgData", aiImg[selectImg-1]);
+    localStorage.setItem("imgData", aiImg[selectImg - 1]);
+    Router.push(`aiUpdate/${canvasSize.width}.${canvasSize.height}`)
   }
   return (
     <>
@@ -123,6 +123,11 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
       <Container>
         <Input title="키워드" value={aiKeyword} setValue={setAiKeyword} text="쉼표(반점)으로 구분해 입력하세요" width="512px" />
         <Button MainColor onClick={() => makeImg()}>생성</Button>
+        {(loading && !aiImg[0]) && <LoadingContainer>
+          <LoadingImg src="/assets/loading.gif" />
+          <p>이미지를 생성하고 있습니다. 잠시만 기다려주세요</p>
+        </LoadingContainer>
+        }
         {
           aiImg[0] &&
           <>
@@ -134,7 +139,7 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
                 <ImgContainer>
                   {aiImg.map((e, i) => {
                     return (
-                      <AiImage src={e} onClick={() => { setSelectImg(i + 1) }} select={selectImg == i + 1 ? true : false} />
+                      <AiImage key={e} src={e} onClick={() => { setSelectImg(i + 1) }} select={selectImg == i + 1 ? true : false} />
                     )
                   })}
                 </ImgContainer>
@@ -203,4 +208,17 @@ const ButtonContainer = styled.div`
     justify-content: center;
     gap: 4px;
   }
+`
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &>p{
+    margin-top: 10px;
+    font-weight: bold;
+    color: ${Theme.ThePurple}
+  }
+`
+const LoadingImg = styled.img`
+  width: 100px;
 `

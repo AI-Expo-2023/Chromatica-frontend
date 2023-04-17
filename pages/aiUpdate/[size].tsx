@@ -12,7 +12,7 @@ import FilterModal from "@/components/img2img/filterModal";
 
 const AiUpdate = () => {
   /**여기에 사진 주소 넣어야함 */
-  const [imgData, setImgData] = useState("https://avatars.githubusercontent.com/u/102589413?v=4");
+  const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
     color: "#FADD75",
