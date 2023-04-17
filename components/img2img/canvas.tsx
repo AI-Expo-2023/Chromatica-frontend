@@ -149,8 +149,7 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
   const exitPaint = useCallback(() => {
     setIsPainting(false);
   }, []);
-
-
+  
   useEffect(() => {
     if (canvasRef.current && !update) {
       const canvas: HTMLCanvasElement = canvasRef.current;
