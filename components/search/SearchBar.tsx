@@ -4,8 +4,8 @@ import { Theme } from '@/styles/theme/Theme';
 import * as _ from './style'
 
 interface SearchProps {
-  change: React.Dispatch<React.SetStateAction<string>>;
-  value: string;
+  change: React.Dispatch<React.SetStateAction<string | string[] | undefined>>;
+  value: string | string[] | undefined;
   update: () => void;
 }
 

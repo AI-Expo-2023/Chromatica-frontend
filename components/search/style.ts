@@ -1,29 +1,19 @@
 import styled from "@emotion/styled";
 import { Theme } from '@/styles/theme/Theme';
-import { Button } from "../common/button/style";
 
 export const Container = styled.div`
   width: 100%;
-  margin-top: 17.2vh;
   display: flex;
   justify-content: center;
-`
-
-export const Img = styled.img<{ width?: number, height?: number}>`
-  width: ${(props) => props.width ?? 24}px;
-  height: ${(props) => props.height ?? 24}px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  object-fit: scale-down;
+  margin-top: 20px;
 `
 
 export const MainBox = styled.div`
-  min-width: 500px;
   width: 1300px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 20px;
 `
 
 export const SearchOutBox = styled.div`
@@ -66,44 +56,29 @@ export const IconBox = styled.div<{ width?: number, height?: number}>`
   cursor: pointer;
 `
 
-export const SketchBtn = styled(Button)`
-  border-radius: 16px;
-  padding: 16px;
+export const SearchMainBox = styled.div`
+  min-width: 200px;
+  width: 100%;
   display: flex;
-  gap: 12px;
-  min-width: 150px;
+  flex-wrap: wrap;
+  gap: 20px;
 `
 
-export const SketchBox = styled.div`
+export const Left = styled.div`
+  width: 100%;
   display: flex;
-  gap: 4px;
 `
 
-export const SketchText = styled.span`
-  font-weight: 800;
-  font-size: 20px;
-  color: ${Theme.White}
-`
-
-export const BestOutBox = styled.div`
+export const Cover = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-export const BestTitleBox = styled.div`
+export const Center = styled.div`
+  width: 100%;
+  height: 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 12px;
-`
-
-export const Title = styled.span`
-  font-weight: 800;
-  font-size: 24px;
-`
-
-export const BestMainBox = styled.div`
-  display: flex;
-  min-width: 200px;
-  gap: 20px;
+  overflow-y: hidden;
 `

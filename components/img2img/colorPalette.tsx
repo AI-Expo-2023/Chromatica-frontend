@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 /** 색을 보고 직접 눌러 선택할 수 있는 도구창 */
 const ColorPalette = ({ settingOptions, setSettingOptions }: CanvasUseState): JSX.Element => {
   const onClick = (data: string) => {
-    setSettingOptions({ ...settingOptions, color: data, tool: true })
+    setSettingOptions({ ...settingOptions, color: data, tool: true, paint: false })
   }
   return (
     <SettingContainer>
