@@ -43,7 +43,7 @@ const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
       <_.Img src={photo}/>
       <_.BetweenBox>
         <_.GapBox onClick={() => userMove()}>
-          <_.UserImg src={user.photo}/>
+          <_.UserImg src={process.env.REACT_APP_BASEURL + user.photo}/>
           <_.NickName>{user.name}</_.NickName>
         </_.GapBox>
         <_.CursorBox>
