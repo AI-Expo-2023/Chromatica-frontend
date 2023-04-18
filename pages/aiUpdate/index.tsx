@@ -12,6 +12,8 @@ import FilterModal from "@/components/img2img/filterModal";
 
 
 const AiUpdate = () => {
+  const router = useRouter();
+
   const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
@@ -34,7 +36,6 @@ const AiUpdate = () => {
   const [filter, setFilter] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [baseImgUrl, setBaseUrl] = useState("");
-  const router = useRouter();
   const getImage = async () => {
     const imgData = await localStorage.getItem("imgData");
 
@@ -45,11 +46,8 @@ const AiUpdate = () => {
   useEffect(() => {
     getImage();
     if (!router.isReady) return;
-
-    const size = `${router.query.size}`.split(".", 2);
-    const width = Number(size[0]);
-    const height = Number(size[1]);
-    setCanvasSize({ width: width, height: height })
+    const { w, h } = router.query;
+    setCanvasSize({ width: Number(w), height: Number(h) })
 
   }, []);
 
@@ -58,7 +56,7 @@ const AiUpdate = () => {
       <FilterModal openModadl={openModal} setOpenModal={setOpenModal} filter={filter} setFilter={setFilter} />
       <_.Conatiner>
         <PositionDiv>
-          <ImgBackGround src={baseImgUrl} width={canvasSize.width*0.75} height={canvasSize.height*0.75}/>
+          <ImgBackGround src={baseImgUrl} width={canvasSize.width * 0.75} height={canvasSize.height * 0.75} />
         </PositionDiv>
         <CanvasPaint>
           <Canvas update canvasRef={canvasRef} canvasSize={canvasSize} toolWidth={toolWidth} settingOptions={settingOptions} />
