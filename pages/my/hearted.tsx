@@ -17,7 +17,7 @@ const MyHearted = ()=>{
 
     useEffect(()=>{
         axios({
-            url: 'https://4764470f-1c69-4fa0-bc56-d813d9e22c17.mock.pstmn.io/post/photo',
+            url: '/user/[userid]/liked',
             method: 'post',
             headers: {
                 "accessToken" : "babs",
