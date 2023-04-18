@@ -1,32 +1,44 @@
 import { PostLister } from "@/components/my/hearted/PostLister";
 import { Title } from "./style";
 import Pagination from "@/components/common/pagination/pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+
+type postType = {
+    photo: string;
+    head: string;
+    tag: string[];
+    description: string;
+}
 
 const MyHearted = ()=>{
     const [pageNum,setPageNum] = useState<number>(1);
+    const [Data,setData] = useState<postType[]>();
 
-    const ddtt = [
-        {
-            photo:'adfs',
-            user:'구른다슈레기물안경',
-            like:22,
-            head: '티모대위 출동',
-        },
-        {
-            photo:'adfs',
-            user:'구른다슈레기물안경',
-            like:23,
-            head: '티모대위 출동',
-        },
-        {
-            photo:'adfs',
-            user:'구른다슈레기물안경',
-            like:222,
-            head: '티모대위 출동',
-        },
-    ]//일해라 서버
+    useEffect(()=>{
+        axios({
+            url: 'https://4764470f-1c69-4fa0-bc56-d813d9e22c17.mock.pstmn.io/post/photo',
+            method: 'post',
+            headers: {
+                "accessToken" : "babs",
+            },
+            data: {
+                "photo" : Photo,
+                "head" : title,
+                "tag" : TagList,
+                "description" : Desc,
+            }
+        })
+        .then(function (response) { 
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    },
+    [pageNum]);
+
+        
 
     return(
         <CenterContainer>
