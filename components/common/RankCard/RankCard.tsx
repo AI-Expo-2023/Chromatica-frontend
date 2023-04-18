@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useRouter } from 'next/router';
 import { Heart16Filled } from '@fluentui/react-icons';
 import { Theme } from '@/styles/theme/Theme';
@@ -10,7 +10,7 @@ interface RankProps {
   head: string;
   like: number;
   user: {
-    userID?: number;
+    userID?: string;
     Email?: string;
     name: string;
     photo: string;
@@ -20,17 +20,29 @@ interface RankProps {
 
 const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
   const router = useRouter();
+  const click = useRef<boolean>(false);
+
+  const detailMove = () => {
+    if(!click.current) router.push('/detail/' + photoID);
+    click.current = false;
+  }
+
+  const userMove = () => {
+    if(user.userID === undefined) return;
+    click.current = true;
+    router.push('/user/info/:' + user.userID);
+  }
 
   return (
-    <_.Container onClick={() => router.push('/detail/' + photoID)}>
-      {rank && 
+    <_.Container onClick={() => detailMove()}>
+      {rank &&
         <_.Circle>
           <_.Text weight={900} size={16}>{rank}</_.Text>
         </_.Circle>
       }
       <_.Img src={photo}/>
       <_.BetweenBox>
-        <_.GapBox>
+        <_.GapBox onClick={() => userMove()}>
           <_.UserImg src={user.photo}/>
           <_.NickName>{user.name}</_.NickName>
         </_.GapBox>
