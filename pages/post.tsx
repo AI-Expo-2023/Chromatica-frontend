@@ -24,24 +24,25 @@ export default function PostPage(){
         setPhoto(localStorage.getItem('imageData') as string);
     },[]);
 
-    function request(){axios({
-        url: 'https://4764470f-1c69-4fa0-bc56-d813d9e22c17.mock.pstmn.io/post/photo',
-        method: 'post',
-        headers: {
-            "accessToken" : "babs",
-        },
-        data: {
-            "photo" : Photo,
-            "head" : title,
-            "tag" : TagList,
-            "description" : Desc,
-        }
-    })
-    .then(function (response) { 
-        console.log(response);
-    })
-    .catch(function (error) {
-        console.log(error);
+    function request(){
+        axios({
+            url: 'https://4764470f-1c69-4fa0-bc56-d813d9e22c17.mock.pstmn.io/post/photo',
+            method: 'post',
+            headers: {
+                "accessToken" : "babs",
+            },
+            data: {
+                "photo" : Photo,
+                "head" : title,
+                "tag" : TagList,
+                "description" : Desc,
+            }
+        })
+        .then(function (response) { 
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
     });}
 
     return(
