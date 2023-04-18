@@ -24,10 +24,7 @@ const MyHearted = ()=>{
                 "accessToken" : "babs",
             },
             data: {
-                "photo" : Photo,
-                "head" : title,
-                "tag" : TagList,
-                "description" : Desc,
+                "pageNumber" : pageNum
             }
         })
         .then(function (response) { 
