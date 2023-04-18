@@ -9,6 +9,7 @@ import DownloabModal from "./downloabModal";
 
 import { useState } from "react";
 import Router from "next/router";
+import { imgUrltoBase64 } from "@/util/hooks/imgUrltoBase64";
 
 type Props = {
   canvasRef: React.RefObject<HTMLCanvasElement>;
@@ -33,22 +34,33 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
     if (aiKeyword == "") {
       alert("키워드를 입력해주세요")
     } else {
+
       setLoding(true);
       setAiImg([]);
-      const canvas = canvasRef.current;
-      const ctx = canvas?.getContext("2d");
-      const img = new Image();
-      if (canvas) {
-        img.src = canvas.toDataURL("image/jpg");
-        img.onload = () => {
-          ctx?.drawImage(img, 0, 0);
+      if (update) {
+        const canvas = canvasRef.current;
+        if (canvas) {
           handleSubmit(canvas.toDataURL())
+        }
+      }
+      else {
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext("2d");
+        if (canvas) {
+          const img = new Image();
+          img.crossOrigin = "Anonymous";
+          img.src = canvas.toDataURL("image/jpg");
+          img.onload = () => {
+            ctx?.drawImage(img, 0, 0);
+            handleSubmit(canvas.toDataURL())
+          }
         }
       }
     }
   }
 
-  const handleSubmit = (dataURL: string): void => {
+
+  const handleSubmit = (dataURL?: string): void => {
     let filterName = 'original';
     if (filter == 2) {
       filterName = 'black'
@@ -57,28 +69,38 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
     } else if (filter == 4) {
       filterName = 'ruddy'
     };
-
     const formData = new FormData();
     formData.append('steps', String(aiSetting.quality));
     formData.append('keyword', aiKeyword);
-    if (update) {
-      formData.append('base_img', dataURL);
-      formData.append('mask_img', String(imgData));
-      formData.append('style', filterName);
+    formData.append('W', String(canvasSize.width));
+    formData.append('H', String(canvasSize.height));
+    if (!dataURL) return;
+    if (update && imgData) {
+      imgUrltoBase64(imgData).then(base64 => {
+        const base_img = base64.split(",")[1];
+        const mask_img = String(dataURL).split(",")[1]
 
-      axios.post(`${BASEURL}/inpaint/keyword`, formData)
-        .then((res) => {
-          setLoding(false);
-          console.log(res.data)
-        })
-        .catch((err) => {
-          setLoding(false);
-          console.error(err)
-        })
+        formData.append('base_img', base_img);
+        formData.append('mask_img', mask_img);
+        formData.append('style', filterName);
+        axios.post(`${BASEURL}/inpaint/keyword`, formData)
+          .then((res) => {
+            setLoding(false);
+            setAiImg(res.data)
+            console.log(res.data)
+          })
+          .catch((err) => {
+            setLoding(false);
+            console.error(err)
+          })
+      }).catch(err => {
+        console.error(err)
+        setLoding(false)
+      })
+
+
     } else {
       formData.append('base_img', dataURL.split(",")[1]);
-      formData.append('W', String(canvasSize.width));
-      formData.append('H', String(canvasSize.height));
       formData.append('format', "jpg");
       formData.append('samples', String(aiSetting.count));
 
@@ -86,9 +108,11 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
         .then((res) => {
           setAiImg(res.data)
           console.log(res.data)
+          setLoding(false)
         })
         .catch((err) => {
           console.error(err)
+          setLoding(false)
         })
     }
   }
@@ -114,9 +138,12 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
   }
 
   const updateImg = () => {
+    console.log("페이지 이동")
     localStorage.setItem("imgData", aiImg[selectImg - 1]);
+
     Router.push(`aiUpdate/${canvasSize.width}.${canvasSize.height}`)
   }
+
   return (
     <>
       <DownloabModal imgData={aiImg[selectImg - 1]} openDownloadModal={openDownloadModal} setOpenDownloadModal={setOpenDownloadModal} />
@@ -138,9 +165,10 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
                 </div> :
                 <ImgContainer>
                   {aiImg.map((e, i) => {
-                    return (
-                      <AiImage key={e} src={e} onClick={() => { setSelectImg(i + 1) }} select={selectImg == i + 1 ? true : false} />
-                    )
+                    if (i < aiSetting.count)
+                      return (
+                        <AiImage key={e} src={e} onClick={() => { setSelectImg(i + 1) }} select={selectImg == i + 1 ? true : false} />
+                      )
                   })}
                 </ImgContainer>
             }

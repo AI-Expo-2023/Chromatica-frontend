@@ -10,7 +10,6 @@ const Index = () => {
 
   return (
     <Container>
-      <Header />
       <Search word={text} />
     </Container>
   )
