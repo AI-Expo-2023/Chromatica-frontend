@@ -44,7 +44,7 @@ const MyHearted = ()=>{
 const PaddingContainer = styled.div`
     width: 1300px;
     display: flex;
-    gap: 12px;
+    gap: 20px;
     flex-direction: column;
     align-items: flex-start;
     padding-top: 20px;
