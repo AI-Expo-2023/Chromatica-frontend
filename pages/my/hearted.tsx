@@ -3,6 +3,7 @@ import { Title } from "./style";
 import Pagination from "@/components/common/pagination/pagination";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import axios from "axios";
 
 type postType = {
     photo: string;
