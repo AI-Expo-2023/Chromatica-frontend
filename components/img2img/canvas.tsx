@@ -149,8 +149,7 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
   const exitPaint = useCallback(() => {
     setIsPainting(false);
   }, []);
-
-
+  
   useEffect(() => {
     if (canvasRef.current && !update) {
       const canvas: HTMLCanvasElement = canvasRef.current;
@@ -171,13 +170,13 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
     canvas.addEventListener('mousemove', paint);
     canvas.addEventListener('mouseup', exitPaint);
     canvas.addEventListener('click', painting);
-    // canvas.addEventListener('mouseleave', exitPaint);
+    canvas.addEventListener('mouseleave', exitPaint);
     return () => {
       canvas.removeEventListener('mousedown', startPaint);
       canvas.removeEventListener('mousemove', paint);
       canvas.removeEventListener('mouseup', exitPaint);
       canvas.addEventListener('click', painting);
-      // canvas.removeEventListener('mouseleave', exitPaint);
+      canvas.removeEventListener('mouseleave', exitPaint);
     };
   }, [startPaint, paint, exitPaint]);
 

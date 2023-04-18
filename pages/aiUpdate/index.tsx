@@ -10,9 +10,11 @@ import ToolSize from "@/components/img2img/toolSize";
 import { PhotoFilter24Filled } from "@fluentui/react-icons";
 import FilterModal from "@/components/img2img/filterModal";
 
+
 const AiUpdate = () => {
-  /**여기에 사진 주소 넣어야함 */
-  const [imgData, setImgData] = useState("https://avatars.githubusercontent.com/u/102589413?v=4");
+  const router = useRouter();
+
+  const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
     color: "#FADD75",
@@ -33,41 +35,28 @@ const AiUpdate = () => {
   })
   const [filter, setFilter] = useState(1);
   const [openModal, setOpenModal] = useState(false);
-  const router = useRouter();
+  const [baseImgUrl, setBaseUrl] = useState("");
+  const getImage = async () => {
+    const imgData = await localStorage.getItem("imgData");
+
+    setImgData(String(imgData));
+    setBaseUrl(String(imgData))
+  }
+
   useEffect(() => {
-    const imgData = localStorage.getItem("imgData");
-    setImgData(imgData || "");
-  }, []);
-  
-  useEffect(() => {
+    getImage();
     if (!router.isReady) return;
-    const size = `${router.query.size}`.split(".", 2);
-    const width = Number(size[0]);
-    const height = Number(size[1]);
-    setCanvasSize({ width: width, height: height })
-    const imgBackground = document.getElementById("imgBackground") as HTMLImageElement;
-    if (imgBackground?.style) {
-      imgBackground.style.width = `${width * 0.75}px`;
-      imgBackground.style.height = `${height * 0.75}px`;
-      imgBackground.src = imgData;
-    }
-    const img = new Image();
-    img.src = imgData;
-    img.onload = () => {
-      if (canvasRef.current) {
-        const canvas: HTMLCanvasElement = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
-      }
-    }
-  }, [router.isReady]);
+    const { w, h } = router.query;
+    setCanvasSize({ width: Number(w), height: Number(h) })
+
+  }, []);
 
   return (
     <>
       <FilterModal openModadl={openModal} setOpenModal={setOpenModal} filter={filter} setFilter={setFilter} />
       <_.Conatiner>
         <PositionDiv>
-          <ImgBackGround id="imgBackground" />
+          <ImgBackGround src={baseImgUrl} width={canvasSize.width * 0.75} height={canvasSize.height * 0.75} />
         </PositionDiv>
         <CanvasPaint>
           <Canvas update canvasRef={canvasRef} canvasSize={canvasSize} toolWidth={toolWidth} settingOptions={settingOptions} />
