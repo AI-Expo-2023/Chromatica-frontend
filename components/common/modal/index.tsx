@@ -12,9 +12,11 @@ type PropsType = {
   justifyContent?: string;
   gap?: string;
   flexDirection?: string;
+
+  background?: boolean;
 }
 
-const Modal = ({ children, onClickToggleModal, width, height, padding, display, justifyContent, gap, flexDirection, alignItems }: PropsType): JSX.Element => {
+const Modal = ({ background, children, onClickToggleModal, width, height, padding, display, justifyContent, gap, flexDirection, alignItems }: PropsType): JSX.Element => {
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed;
@@ -35,7 +37,7 @@ const Modal = ({ children, onClickToggleModal, width, height, padding, display, 
       <_.ChildrenContainer width={width} height={height} padding={padding} display={display} justifyContent={justifyContent} gap={gap} flexDirection={flexDirection} alignItems={alignItems} >
         {children}
       </_.ChildrenContainer >
-      <_.BackDrop onClick={(e: React.MouseEvent) => {
+      <_.BackDrop onClick={background ? (e) => { } : (e: React.MouseEvent) => {
         e.preventDefault();
         onClickToggleModal();
       }} />
