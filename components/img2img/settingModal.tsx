@@ -40,7 +40,7 @@ const SettingModal = ({ openModal, setOpenModal, aiSetting, setAiSetting }: Prop
         <Modal onClickToggleModal={onClick} display="flex" flexDirection="column" >
           <h1>상세 설정</h1>
           <Range onChange={onChangeQuality} value={aiSetting.quality} min={20} max={40} step={5} label="품질" />
-          <Range onChange={onChangeCount} value={aiSetting.count} min={1} max={4} label="품질" text="이미지 수가 많아지면 처리 속도가 늦어질 수 있습니다" />
+          <Range onChange={onChangeCount} value={aiSetting.count} min={1} max={4} label="개수" text="이미지 수가 많아지면 처리 속도가 늦어질 수 있습니다" />
           <Button MainColor onClick={() => setOpenModal({ ...openModal, setting: false })}>적용</Button>
         </Modal>
       }

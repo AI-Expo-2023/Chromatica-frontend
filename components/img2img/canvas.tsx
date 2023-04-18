@@ -72,7 +72,7 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
 
       ctx.stroke();
     }
-  }
+  };
 
   const startPaint = useCallback((e: MouseEvent) => {
     const coordinates = getCoordinates(e);
@@ -80,14 +80,12 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
       setIsPainting(true);
       setMousePosition(coordinates);
     }
-  }, [])
+  }, []);
+
 
   const paint = useCallback(
     (e: MouseEvent) => {
-      // e.preventDefault();   // drag 방지
-      // e.stopPropagation();  // drag 방지
-
-      if (isPainting && settingOptions.tool) {
+      if (!(isPainting && settingOptions.paint) && isPainting && settingOptions.tool) {
         const newMousePosition = getCoordinates(e);
         if (mousePosition && newMousePosition) {
           drawLine(mousePosition, newMousePosition);
@@ -98,17 +96,60 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
         if (mousePosition && newMousePosition) {
           clearLine(mousePosition, newMousePosition);
           setMousePosition(newMousePosition);
-
         }
       }
     },
     [isPainting, mousePosition]
   );
 
+  const fill = (x: number, y: number, fillColor: string) => {
+    if (canvasRef.current) {
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      const pixelData = ctx?.getImageData(x, y, 1, 1);
+      const color = `rbg(${pixelData?.data[0]},${pixelData?.data[1]},${pixelData?.data[2]})`;
+      floodFill(x, y, color, fillColor);
+    }
+  }
+
+  const floodFill = (x: number, y: number, orginalColor: string, fillColor: string) => {
+    if (!canvasRef.current) return;
+
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const pixelStack: [number, number][] = [[x, y]];
+    const pixelData = ctx.getImageData(x, y, 1, 1);
+    const originalColor = `rbg(${pixelData?.data[0]},${pixelData?.data[1]},${pixelData?.data[2]})`;
+
+    while (pixelStack.length > 0) {
+      const [x, y] = pixelStack.pop()!; //!는 ts에게 무조건 값이 들어가 있으니까 걱정하지 말라는 의미
+      const pixelData = ctx.getImageData(x, y, 1, 1);
+      const color = `rbg(${pixelData?.data[0]},${pixelData?.data[1]},${pixelData?.data[2]})`;
+      if (color !== originalColor) continue;
+
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(x, y, 1, 1);
+
+      pixelStack.push([x - 1, y]);
+      pixelStack.push([x + 1, y]);
+      pixelStack.push([x, y - 1]);
+      pixelStack.push([x, y + 1]);
+    }
+  }
+  const painting = useCallback((e: MouseEvent) => {
+    if (isPainting && settingOptions.paint) {
+      const newMousePosition = getCoordinates(e);
+      if (newMousePosition) {
+        fill(newMousePosition.x, newMousePosition.y, settingOptions.color);
+      }
+    }
+  }, [isPainting, mousePosition]);
+
   const exitPaint = useCallback(() => {
     setIsPainting(false);
   }, []);
-
+  
   useEffect(() => {
     if (canvasRef.current && !update) {
       const canvas: HTMLCanvasElement = canvasRef.current;
@@ -128,23 +169,27 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
     canvas.addEventListener('mousedown', startPaint);
     canvas.addEventListener('mousemove', paint);
     canvas.addEventListener('mouseup', exitPaint);
-    // canvas.addEventListener('mouseleave', exitPaint);
+    canvas.addEventListener('click', painting);
+    canvas.addEventListener('mouseleave', exitPaint);
     return () => {
       canvas.removeEventListener('mousedown', startPaint);
       canvas.removeEventListener('mousemove', paint);
       canvas.removeEventListener('mouseup', exitPaint);
-      // canvas.removeEventListener('mouseleave', exitPaint);
+      canvas.addEventListener('click', painting);
+      canvas.removeEventListener('mouseleave', exitPaint);
     };
   }, [startPaint, paint, exitPaint]);
 
   return (
-    <_.Container>
-      <_.Canvas
-        ref={canvasRef}
-        width={canvasSize.width * 0.75}
-        height={canvasSize.height * 0.75}
-      />
-    </_.Container>
+    <>
+      <_.Container update={update ? true : false}>
+        <_.Canvas
+          ref={canvasRef}
+          width={canvasSize.width * 0.75}
+          height={canvasSize.height * 0.75}
+        />
+      </_.Container>
+    </>
   )
 }
 

@@ -31,4 +31,6 @@ export const SettingContainer = styled.div`
   border: 1px solid ${Theme.Gray[5]};
   border-radius: 44px;
   width: fit-content;
+  justify-content: center;
+  align-items: center;
 `;
