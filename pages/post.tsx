@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
 import { Button } from "@/components/common/button/style";
 import Image from "next/image";
+import axios from "axios";
 
 type postType = {
     photo: string;
@@ -23,6 +24,26 @@ export default function PostPage(){
         setPhoto(localStorage.getItem('imageData') as string);
     },[]);
 
+    function request(){axios({
+        url: 'https://4764470f-1c69-4fa0-bc56-d813d9e22c17.mock.pstmn.io/post/photo',
+        method: 'post',
+        headers: {
+            "accessToken" : "babs",
+        },
+        data: {
+            "photo" : Photo,
+            "head" : title,
+            "tag" : TagList,
+            "description" : Desc,
+        }
+    })
+    .then(function (response) { 
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });}
+
     return(
         <CenterContainer>
             <PaddingContainer>
@@ -30,7 +51,7 @@ export default function PostPage(){
                 <Input value={title} setValue={setTitle} title='제목' width="100%" />
                 <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
                 <TagAdder TagList={TagList} setTagList={setTagList}/>
-                <Button MainColor>게시</Button>
+                <Button MainColor onClick={request}>게시</Button>
             </PaddingContainer>
         </CenterContainer>
     )
