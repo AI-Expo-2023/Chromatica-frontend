@@ -27,7 +27,7 @@ const Header = () => {
       method: 'GET',
       url: `${process.env.REACT_APP_BASEURL}/user`,
       headers: {
-        accessToken: token
+        accessToken: `Bearer ${token}`
       }
     })
       .then((res) => {
