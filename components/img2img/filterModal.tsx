@@ -24,7 +24,7 @@ const FilterModal = ({ filter, setFilter, openModadl, setOpenModal }: Props): JS
               filterType.map((v, i) => {
                 if (filter == i + 1)
                   return <Buttons Black onClick={() => setFilter(i + 1)}>{v}</Buttons>
-                else return <Buttons onClick={() => setFilter(i + 1)}>{v}</Buttons>
+                else return <Buttons Gray5 onClick={() => setFilter(i + 1)}>{v}</Buttons>
               })
             }
           </ButtonContainer>
