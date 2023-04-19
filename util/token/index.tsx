@@ -1,3 +1,3 @@
-export const getAccessToken = () => {
-    return document.cookie;
-  };
+// export const getAccessToken = () => {
+//     return localStorage.getItem('Access_token');
+// };

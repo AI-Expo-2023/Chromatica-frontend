@@ -3,13 +3,11 @@ import styled from "@emotion/styled";
 import MyUpload from "@/components/my/myWork/upload";
 import MyGreat from "@/components/my/myWork/great";
 import MyTemporary from "@/components/my/myWork/temporary";
-import Header from "@/components/header/header";
 
 
 export default function Mypae() {
     return(
         <>
-            <Header/>
             <Warppr>
                 <MyInfo/>
                 <MyUpload/>
