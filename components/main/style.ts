@@ -104,6 +104,6 @@ export const Title = styled.span`
 
 export const BestMainBox = styled.div`
   display: flex;
-  justify-content: space-between;
   min-width: 200px;
+  gap: 20px;
 `
