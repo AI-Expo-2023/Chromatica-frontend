@@ -30,7 +30,7 @@ const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
   const userMove = () => {
     if(user.userID === undefined) return;
     click.current = true;
-    router.push('/user/info/:' + user.userID);
+    router.push('/user/info/' + user.userID);
   }
 
   return (
@@ -40,10 +40,10 @@ const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
           <_.Text weight={900} size={16}>{rank}</_.Text>
         </_.Circle>
       }
-      <_.Img src={photo}/>
+      <_.Img src={process.env.REACT_APP_BASEURL + photo}/>
       <_.BetweenBox>
         <_.GapBox onClick={() => userMove()}>
-          <_.UserImg src={user.photo}/>
+          <_.UserImg src={process.env.REACT_APP_BASEURL + user.photo}/>
           <_.NickName>{user.name}</_.NickName>
         </_.GapBox>
         <_.CursorBox>

@@ -24,6 +24,7 @@ export const Button = styled.button<ButtonType>`
 
   padding: 6px 12px;
   display: flex;
+  justify-content: center;
   gap: 8px;
   justify-content: center;
   align-items: center;

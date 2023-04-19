@@ -1,11 +1,47 @@
 import * as _ from "./style"
 import { Button } from "../../common/button/style";
 import router from 'next/router'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { getAccessToken } from "@/util/token";
 
-const MyInfo = () => {
+type GetData = {
+    photo?: string,
+    name?: string,
+    userId?: number,
+    Email?: string,
+}
+const MyInfo = ():JSX.Element => {
+
+    const [infoData, setInfoData] = useState<GetData>({});
+    // const token = getAccessToken();
+
+    useEffect(()=>{
+        // axios({
+        //     method:'get',
+        //     url: '/user',
+        //     headers: {
+        //         "Authorization": `Bearer ${token}`,
+        //     }
+        // })
+        // .then(function(result){
+        //     console.log('결과', result);
+        //     setInfoData(result.data);
+        // })
+        // .catch(function(error){
+        //     console.log('에러', error);
+        //     alert("로그인이 필요합니다")
+        // });
+        setInfoData({
+            photo: "/assets/image/personIcon.png",
+            name: "진현",
+            Email: "jin123@dsm.hs.kr",
+            userId: 123,
+        });
+    },[]);
 
     const ProfileChange = () => {
-        router.push("/auth/profile");
+        router.push("/my/profileChange");
     }
 
     const PwChange = () =>{
@@ -14,16 +50,17 @@ const MyInfo = () => {
 
     const Logout = () =>{
         // 토큰 지우는 코드 들어갈 예정
+        document.cookie = "";
         router.push("/");
     }
 
     return(
         <_.Flex>
             <_.Warpper>
-                <_.Profile/>
+                <_.Profile src={infoData.photo}/>
                 <div>
-                    <_.Nickname>어디로가야하오</_.Nickname>
-                    <_.Email>baldblind101@gmail.com</_.Email>
+                    <_.Nickname>{infoData.name}</_.Nickname>
+                    <_.Email>{infoData.Email}</_.Email>
                 </div>
             </_.Warpper>
             <_.ButtonWarpper>
