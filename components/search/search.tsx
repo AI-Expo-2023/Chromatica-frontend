@@ -27,10 +27,10 @@ interface ResPhotoProps {
   photo: string;
   head: string;
   like: number;
-  user: {
+  User: {
     userID: string;
-    userName: string;
-    userPhoto: string;
+    name: string;
+    photo: string;
   };
 }
 
@@ -48,22 +48,18 @@ const Search = ({ word }: SearchProps) => {
 
   const GetData = (word: string) => {
     axios({
-      method: 'POST',
-      url: process.env.REACT_APP_BASEURL + `/search/${Page}`,
+      method: 'GET',
+      url: `${process.env.REACT_APP_BASEURL}/search/${Page}`,
       data: {
         searchWord: word,
       }
     })
       .then((res) => {
         setData(res.data.searchedPhotos.map((v: ResPhotoProps): RankProps => {
-          const {user, ...Data} = v;
+          const {User, ...Data} = v;
           return {
             ...Data,
-            user: {
-              userID: user.userID,
-              name: user.userName,
-              photo: user.userPhoto
-            }
+            user: {...User}
           }
         })
         );
