@@ -5,6 +5,11 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import axios from "axios";
 
+type responseType = {
+    manyImage: number;
+    images: postType[];
+}
+
 type postType = {
     photo: string;
     head: string;
@@ -14,21 +19,21 @@ type postType = {
 
 const MyHearted = ()=>{
     const [pageNum,setPageNum] = useState<number>(1);
-    const [Data,setData] = useState<postType[]>();
+    const [Data,setData] = useState<responseType>();
 
     useEffect(()=>{
+        console.log(typeof(pageNum));
         axios({
-            url: '/user/[userid]/liked',
-            method: 'post',
+            url: `http://192.168.102.169:8080/user/liked/${pageNum}`,
+            method: 'get',
             headers: {
-                "accessToken" : "babs",
-            },
-            data: {
-                "pageNumber" : pageNum
+                'Content-Type': 'application/json',
+                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QxMjM0IiwiaWF0IjoxNjgxOTA4OTEyfQ.uNPKWt55eD8KHyfTCwpWVTR0blfF7gMd0WMxnfBZUMU",
             }
         })
         .then(function (response) { 
             console.log(response);
+            setData(response.data as responseType);
         })
         .catch(function (error) {
             console.log(error);
@@ -36,18 +41,21 @@ const MyHearted = ()=>{
     },
     [pageNum]);
 
-        
-
     return(
         <CenterContainer>
             <PaddingContainer>
                 <Title>
                     좋아요 누른 작품
                 </Title>
-                <PostLister data={ddtt} pageNum={pageNum}/>
-                <CenterContainer>
-                    <Pagination value={pageNum} change={setPageNum} end={Math.ceil(ddtt.length/18)}/>
-                </CenterContainer>
+                {Data &&
+                <>
+                    <PostLister data={Data.images} pageNum={pageNum}/>
+                    <CenterContainer>
+                        <Pagination value={pageNum} change={setPageNum} end={Math.ceil(Data.manyImage/18)}/>
+                    </CenterContainer>
+                </>
+                }
+                
             </PaddingContainer>
         </CenterContainer>
     )
