@@ -19,35 +19,32 @@ const PwChangeC = (): JSX.Element => {
     if (!regExpPw.test(newPassword)) {
       alert('비밀번호 규칙 위반');
       return false;
-    } 
-    else if (password == newPassword) {
+    } else if (password == newPassword) {
       alert('기존 비밀번호와 새 비밀번호가 같습니다');
       return false;
-    }
-    else {
-      console.log(token);
+    } else {
       axios
-      .request({
-        url: `${BASEURL}/user/updatePW`,
-        method: 'patch',
-        data: {
-          PW: password,
-          newPW: newPassword,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response: any) => {
-        console.log("성공");
-        router.push('/auth/complete');
-      })
-      .catch((error: any) => {
-        alert('비밀번호 변경 실패');
-      });
-    };
-  }
-    
+        .request({
+          url: `${BASEURL}/user/updatePW`,
+          method: 'patch',
+          data: {
+            PW: password,
+            newPW: newPassword,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response: any) => {
+          console.log('성공');
+          router.push('/auth/complete');
+        })
+        .catch((error: any) => {
+          alert('비밀번호 변경 실패');
+        });
+    }
+  };
+
   return (
     <AuthBox title="비밀번호 변경">
       <Content>
