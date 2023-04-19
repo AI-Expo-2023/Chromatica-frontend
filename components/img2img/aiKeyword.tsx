@@ -18,12 +18,15 @@ type Props = {
   canvasSize: CanvasSize;
   imgData?: string;
   filter?: number;
+  getImage?: () => void;
+  imgId?: number;
 }
 // const BASEURL = process.env.REACT_APP_AIBASEURL;
-const BASEURL = "http://192.168.0.113:3333";
+const BASEURLAI = "http://192.168.0.113:3333";
+const BASEURL = "http://192.168.102.169:8080";
 
 /** 키워드를 입력하고 AI에게 전송하여 사진을 받아오는 곳 */
-const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize }: Props): JSX.Element => {
+const AIResponse = ({ imgId, getImage, filter, imgData, canvasRef, aiSetting, update, canvasSize }: Props): JSX.Element => {
   const [aiKeyword, setAiKeyword] = useState<string>("");
   const [aiImg, setAiImg] = useState<string[]>([]);
   const [selectImg, setSelectImg] = useState<number>(1);
@@ -83,7 +86,7 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
         formData.append('base_img', base_img);
         formData.append('mask_img', mask_img);
         formData.append('style', filterName);
-        axios.post(`${BASEURL}/inpaint/keyword`, formData)
+        axios.post(`${BASEURLAI}/inpaint/keyword`, formData)
           .then((res) => {
             setLoding(false);
             setAiImg(res.data)
@@ -97,14 +100,12 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
         console.error(err)
         setLoding(false)
       })
-
-
     } else {
       formData.append('base_img', dataURL.split(",")[1]);
       formData.append('format', "jpg");
       formData.append('samples', String(aiSetting.count));
 
-      axios.post(`${BASEURL}/img2img/keyword`, formData)
+      axios.post(`${BASEURLAI}/img2img/keyword`, formData)
         .then((res) => {
           setAiImg(res.data)
           console.log(res.data)
@@ -118,30 +119,58 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
   }
 
   const upload = () => {
-
+    localStorage.setItem("imgData", aiImg[selectImg - 1]);
+    Router.push(`post`);
   }
 
   const saveImg = () => {
-    // axios({
-    //   url: '/test',
-    //   method: 'post',
-    //   data: {
-    //     name: 'veneas'
-    //   }
-    // })
-    //   .then(function a(response) {
-    //     console.log(response)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    const token = localStorage.getItem("token");
+
+    if (imgId) {
+      axios({
+        url: `${BASEURL}/${imgId}`,
+        method: 'patch',
+        headers: {
+          "accessToken": `Bearer ${token}`
+        },
+        data: {
+          imageURL: aiImg[selectImg - 1]
+        }
+      })
+        .then((res) => {
+          Router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      axios({
+        url: `${BASEURL}/new`,
+        method: 'post',
+        headers: {
+          "accessToken": `Bearer ${token}`
+        },
+        data: {
+          imageURL: aiImg[selectImg - 1]
+        }
+      })
+        .then((res) => {
+          Router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   const updateImg = () => {
-    console.log("페이지 이동")
     localStorage.setItem("imgData", aiImg[selectImg - 1]);
-
-    Router.push(`aiUpdate/${canvasSize.width}.${canvasSize.height}`)
+    if (Router.pathname == '/aiUpdate' && getImage) {
+      getImage();
+    }
+    else {
+      Router.push(`/aiUpdate`)
+    }
   }
 
   return (
@@ -175,9 +204,9 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
 
             <ButtonContainer>
               <Button MainColor onClick={() => upload()}><Share20Filled primaryFill="white" />업로드</Button>
-              <Button onClick={() => updateImg()}><Bot20Filled />수정</Button>
-              <Button onClick={() => saveImg()}><Save20Filled />임시 저장</Button>
-              <Button onClick={() => setOpenDownloadModal(true)}><ArrowDownload20Filled />파일로 다운로드</Button>
+              <Button Gray5 onClick={() => updateImg()}><Bot20Filled />수정</Button>
+              <Button Gray5 onClick={() => saveImg()}><Save20Filled />임시 저장</Button>
+              <Button Gray5 onClick={() => setOpenDownloadModal(true)}><ArrowDownload20Filled />파일로 다운로드</Button>
             </ButtonContainer>
           </>
 
