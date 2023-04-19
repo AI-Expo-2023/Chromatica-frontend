@@ -15,7 +15,7 @@ type ButtonType = {
   Width?: string;
 };
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonType>`
   font-size: 18px;
   font-weight: 400;
 
@@ -24,110 +24,30 @@ export const Button = styled.button`
 
   padding: 6px 12px;
   display: flex;
+  justify-content: center;
   gap: 8px;
+  justify-content: center;
+  align-items: center;
 
-  ${(props: ButtonType) =>
-    props.Width
-      ? css`
-          width: ${props.Width}px;
-        `
-      : css`
-          width: auto;
-        `}
+  width: ${(props) => (props.Width ? `${props.Width}px` : 'auto')};
+  color: ${(props) => (props.Gray5 ? 'black' : 'white')};
 
-  ${(props: ButtonType) =>
-    props.MainColor
-      ? css`
-          background-color: ${Theme.ThePurple};
-          color: ${Theme.White};
+  &:hover {
+    transition: 100ms;
+    filter: ${(props) => (props.Gray5 ? 'brightness(95%)' : 'brightness(120%)')};
+  }
+  &:active {
+    transition: 100ms;
+    opacity: 0.7;
+  }
 
-          :hover {
-            transition: 100ms;
-            filter: brightness(120%);
-          }
-
-          :active {
-            transition: 100ms;
-            opacity: 0.7;
-          }
-        `
-      : props.Black
-      ? css`
-          color: ${Theme.White};
-          background-color: ${Theme.Black};
-
-          :hover {
-            transition: 100ms;
-            filter: brightness(120%);
-          }
-
-          :active {
-            transition: 100ms;
-            opacity: 0.7;
-          }
-        `
-      : props.White
-      ? css`
-          color: ${Theme.Black};
-          background-color: ${Theme.White};
-
-          :hover {
-            transition: 100ms;
-            filter: brightness(120%);
-          }
-
-          :active {
-            transition: 100ms;
-            opacity: 0.7;
-          }
-        `
-      : props.Red
-      ? css`
-          background-color: ${Theme.Red};
-          color: ${Theme.White};
-
-          :hover {
-            transition: 100ms;
-            filter: brightness(120%);
-          }
-
-          :active {
-            transition: 100ms;
-            opacity: 0.7;
-          }
-        `
-      : props.Gray5
-      ? css`
-          background-color: ${Theme.Gray[5]};
-          color: ${Theme.Black};
-
-          :hover {
-            transition: 100ms;
-            filter: brightness(120%);
-          }
-
-          :active {
-            transition: 100ms;
-            opacity: 0.7;
-          }
-        `
-      : props.Gray25
-      ? css`
-          background-color: ${Theme.Gray[25]};
-          color: ${Theme.White};
-
-          :hover {
-            transition: 100ms;
-            filter: brightness(120%);
-          }
-
-          :active {
-            transition: 100ms;
-            opacity: 0.7;
-          }
-        `
-      : css`
-          color: ${Theme.Black}
-          background-color: ${Theme.White};
-        `}
+  background-color: ${(props) =>
+    props.MainColor ? Theme.ThePurple
+      : props.Black ? Theme.Black
+      : props.White ? Theme.White
+      : props.Red ? Theme.Red
+      : props.Gray5 ? Theme.Gray[5]
+      : props.Gray25 ? Theme.Gray[25]
+      : Theme.White
+    };
 `;
