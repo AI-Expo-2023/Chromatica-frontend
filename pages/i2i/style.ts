@@ -6,6 +6,7 @@ export const DisplayBox = styled.div`
   justify-content: center;
   margin: 50px 0px;
 `;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;

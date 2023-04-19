@@ -19,7 +19,7 @@ const SearchBar = ({ change, value, update }: SearchProps) => {
         onChange={(e) => change(e.target.value)}
         placeholder='이미지 검색'
       />
-      <_.IconBox>
+      <_.IconBox onClick={() => update()}>
         <Search24Filled primaryFill={Theme.Gray[50]}/>
       </_.IconBox>
     </_.SearchBox>
