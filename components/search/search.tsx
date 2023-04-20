@@ -47,9 +47,10 @@ const Search = ({ word }: SearchProps) => {
   }
 
   const GetData = (word: string) => {
+    if(word === undefined) return;
     axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_BASEURL}/search/${Page}`,
+      url: `${process.env.NEXT_PUBLIC_BASEURL}/search/${Page}`,
       data: {
         searchWord: word,
       }
