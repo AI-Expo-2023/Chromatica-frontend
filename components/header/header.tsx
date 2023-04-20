@@ -25,13 +25,13 @@ const Header = () => {
     if(token === null) return;
     axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_BASEURL}/user`,
+      url: `${process.env.NEXT_PUBLIC_BASEURL}/user`,
       headers: {
         accessToken: `Bearer ${token}`,
       },
     })
       .then((res) => {
-        setProfileImg(process.env.REACT_APP_BASEURL + res.data.userPhoto);
+        setProfileImg(process.env.NEXT_PUBLIC_BASEURL + res.data.userPhoto);
         setLogin(true);
       })
       .catch((err) => {
@@ -51,8 +51,8 @@ const Header = () => {
             <_.Img width={124} height={36} src={LogoIcon.src} />
           </Link>
           <_.BetweenBox gap={24}>
-            <_.Text>갤러리</_.Text>
-            <_.BetweenCursor gap={8}>
+            <_.Text onClick={() => router.push('/gallery?sort=new')}>갤러리</_.Text>
+            <_.BetweenCursor gap={8} onClick={() => router.push('/i2i')}>
               <_.Text>스케치</_.Text>
               <_.Img width={21} height={21} src={AiIcon.src}/>
             </_.BetweenCursor>
