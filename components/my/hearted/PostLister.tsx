@@ -33,6 +33,7 @@ export const PostLister = ({data, pageNum}:propsType)=>{
                         head={aa.Photo.head}
                         user={aa.User}
                         like={aa.Photo.like}
+                        key={aa.photoID}
                     />
             ))}
         </SixHorizon>
