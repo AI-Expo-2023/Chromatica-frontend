@@ -27,8 +27,8 @@ const Header = () => {
       method: 'GET',
       url: `${process.env.REACT_APP_BASEURL}/user`,
       headers: {
-        accessToken: token
-      }
+        accessToken: `Bearer ${token}`,
+      },
     })
       .then((res) => {
         setProfileImg(process.env.REACT_APP_BASEURL + res.data.userPhoto);
@@ -36,7 +36,7 @@ const Header = () => {
       })
       .catch((err) => {
         console.error(err);
-      })
+      });
   }
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { Button } from "@/components/common/button/style";
 import RankCard from "@/components/common/RankCard/RankCard";
+// import { getAccessToken } from "@/util/token";
 import axios from "axios";
 import router from 'next/router'
 import { useEffect, useState } from "react";
@@ -24,23 +25,39 @@ type listType = {
 const MyGreat = () => {
 
     const [listData, setListData] = useState<listType[]>();
+    // const token = getAccessToken();
 
     useEffect(()=>{
-        axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_BASEURL}/liked`,
-            headers: {
-                "Authorization": `Bearer ${token}`,
+        // axios({
+        //     method: 'GET',
+        //     url: process.env.REACT_APP_BASEURL + `/liked`,
+        //     headers: {
+        //         "Authorization": `Bearer ${token}`,
+        //     }
+        // })
+        // .then((result)=>{
+        //     const DataCut = result.data.images.slice(0,6);
+        //     setListData(result.data);
+        //     console.log(result)
+        // })
+        // .catch((error)=>{
+        //     console.log('에러: ', error);
+        // });
+        setListData([{
+            photoID: 123,
+            photo:{
+                imgaeID: 4,
+                photoID: 2,
+                photo: "/assets/image/personIcon.png",
+                userID: "asfasf",
+                like: 123,
+                head: "안녕하지요",
+            },
+            user:{
+                name: "홍길동",
+                photo: "/assets/image/personIcon.png"
             }
-        })
-        .then((result)=>{
-            const DataCut = result.data.images.slice(0,6);
-            setListData(result.data);
-            console.log(result)
-        })
-        .catch((error)=>{
-            console.log('에러: ', error);
-        });
+    }]);
     },[]);
 
     const AllView = () =>{
