@@ -3,7 +3,7 @@ import { Button } from "../../common/button/style";
 import router from 'next/router'
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getAccessToken } from "@/util/token";
+// import { getAccessToken } from "@/util/token";
 
 type GetData = {
     photo?: string,
@@ -19,7 +19,7 @@ const MyInfo = ():JSX.Element => {
     useEffect(()=>{
         // axios({
         //     method:'get',
-        //     url: '/user',
+            // url: process.env.REACT_APP_BASEURL + `/user`,
         //     headers: {
         //         "Authorization": `Bearer ${token}`,
         //     }

@@ -5,6 +5,7 @@ export const Conatiner = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin: 50px 0px;
 `;
 
 export const CanvasContainer = styled.div`

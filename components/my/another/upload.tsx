@@ -1,8 +1,10 @@
 import { Button } from "@/components/common/button/style";
-import RankCardImg from "@/components/common/RankCard/RankCardImg";
+import RankCard from "@/components/common/RankCard/RankCard";
+// import { getAccessToken } from "@/util/token";
+import axios from "axios";
 import router from "next/router";
 import { useEffect, useState } from "react";
-import * as _ from "./style"
+import * as _ from "./uploadstyle"
 
 type listType = {
     photoID: number,
@@ -20,27 +22,31 @@ type listType = {
     }
 }
 
-const MyTemporary = () => {
+type user = {
+    ID: string | string[] | undefined,
+}
+
+const AnotherUpload = ({ID}:user) => {
 
     const [listData, setListData] = useState<listType[]>();
     // const token = getAccessToken();
 
     useEffect(()=>{
         // axios({
-        //     method: 'GET',
-        //     url: process.env.REACT_APP_BASEURL + `/liked`,
-        //     headers: {
-        //         "Authorization": `Bearer ${token}`,
-        //     }
-        // })
-        // .then((result)=>{
-        //     const DataCut = result.data.images.slice(0,6);
-        //     setListData(result.data);
-        //     console.log(result)
-        // })
-        // .catch((error)=>{
-        //     console.log('에러: ', error);
-        // });
+        //         method: 'GET',
+        //         url: process.env.REACT_APP_BASEURL + `/${ID}/image/1`,
+        //         headers: {
+        //             "Authorization": `Bearer ${token}`,
+        //         }
+        //     })
+        //     .then((result)=>{
+        //         const DataCut = result.data.images.slice(0,6);
+        //         setListData(result.data);
+        //         console.log(result)
+        //     })
+        //     .catch((error)=>{
+        //         console.log('에러: ', error);
+        //     });
         setListData([{
             photoID: 123,
             photo:{
@@ -59,19 +65,19 @@ const MyTemporary = () => {
     },[]);
 
     const AllView = () =>{
-        router.push("/my/saved");
+        router.push(`/my/${ID}`);
     }
     return(
         <_.Flex>
             <_.Warpper>
-                <_.Work>임시 저장한 작품</_.Work>
+                <_.Work>업로드한 작품</_.Work>
                 <Button Black onClick={AllView}>모두 보기</Button>
             </_.Warpper>
             <_.List>
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCardImg photoID={data.photoID} photo={data.photo.photo}/>
+                            <RankCard photoID={data.photoID} photo={data.photo.photo} head={data.photo.head} like={data.photo.like} user={data.user} key={data.photoID}/>
                         )
                     })
                 }
@@ -80,4 +86,4 @@ const MyTemporary = () => {
     );
 }
 
-export default MyTemporary;
+export default AnotherUpload;
