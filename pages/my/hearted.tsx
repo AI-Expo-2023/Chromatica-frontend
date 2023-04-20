@@ -24,11 +24,11 @@ const MyHearted = ()=>{
     useEffect(()=>{
         console.log(typeof(pageNum));
         axios({
-            url: `http://192.168.102.169:8080/user/liked/${pageNum}`,
+            url: `${process.env.NEXT_PUBLIC_BASEURL}/user/liked/${pageNum}`,
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QxMjM0IiwiaWF0IjoxNjgxOTA4OTEyfQ.uNPKWt55eD8KHyfTCwpWVTR0blfF7gMd0WMxnfBZUMU",
+                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Inp4Y3YiLCJpYXQiOjE2ODE5ODg5NTZ9.sl0MRs2l3yXZHm458RMwwiySVfECe9u6iaex_lPObos",
             }
         })
         .then(function (response) { 
