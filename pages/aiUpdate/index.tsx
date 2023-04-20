@@ -17,7 +17,7 @@ const AiUpdate = () => {
   const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
-    // color: "#FADD75",
+    //color: "#FADD75",
     color: "#ffffff",
     tool: true,
     backgroundColor: "#f2222f"
@@ -43,7 +43,7 @@ const AiUpdate = () => {
     const imgData = await localStorage.getItem("imgData");
     setImgData(String(imgData));
     setBaseUrl(String(imgData));
-
+    console.log(imgData);
     const img = new Image();
     img.src = String(imgData);
     img.onload = () => {
