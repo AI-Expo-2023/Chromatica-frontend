@@ -17,7 +17,8 @@ const AiUpdate = () => {
   const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
-    color: "#FADD75",
+    //color: "#FADD75",
+    color: "#ffffff",
     tool: true,
     backgroundColor: "#f2222f"
   });
@@ -36,19 +37,26 @@ const AiUpdate = () => {
   const [filter, setFilter] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [baseImgUrl, setBaseUrl] = useState("");
+  const [imgId, setImgId] = useState(0);
+
   const getImage = async () => {
     const imgData = await localStorage.getItem("imgData");
-
     setImgData(String(imgData));
-    setBaseUrl(String(imgData))
+    setBaseUrl(String(imgData));
+    console.log(imgData);
+    const img = new Image();
+    img.src = String(imgData);
+    img.onload = () => {
+      setCanvasSize({ width: Number(img.width), height: Number(img.height) })
+    }
+
+    if (!router.isReady) return;
+    const { image } = router.query;
+    setImgId(Number(image))
   }
 
   useEffect(() => {
     getImage();
-    if (!router.isReady) return;
-    const { w, h } = router.query;
-    setCanvasSize({ width: Number(w), height: Number(h) })
-
   }, []);
 
   return (
@@ -69,7 +77,7 @@ const AiUpdate = () => {
           </_.CanvasTools>
           <ToolSize toolWidth={toolWidth} setToolWidth={setToolWidth} settingOptions={settingOptions} />
         </CanvasPaint>
-        <AIResponse filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
+        <AIResponse imgId={imgId} getImage={getImage} filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
       </_.Conatiner>
     </>
   )
@@ -82,9 +90,9 @@ const CanvasPaint = styled(_.CanvasContainer)`
 const PositionDiv = styled.div`
   position: relative;
   z-index: 0;
-  background-color: red;
 `;
 const ImgBackGround = styled.img`
   position: absolute;
-  left:20px
+  left:20px;
+  border-radius: 8px;
 `;

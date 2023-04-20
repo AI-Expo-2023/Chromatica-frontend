@@ -11,11 +11,11 @@ const RankCardImg = ({ photoID, photo }: ImgProps) => {
   const router = useRouter();
   const move = () => {
     localStorage.setItem('imgData', photo);
-    // router.push('')
+    router.push(`/aiUpdate?image=${photoID}`);
   }
 
   return (
-      <_.Img onClick={move} src={process.env.REACT_APP_BASEURL + photo}/>
+      <_.Img onClick={move} src={process.env.NEXT_PUBLIC_BASEURL + photo}/>
   )
 }
 

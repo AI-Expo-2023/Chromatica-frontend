@@ -41,10 +41,10 @@ const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
           <_.Text weight={900} size={16}>{rank}</_.Text>
         </_.Circle>
       }
-      <_.Img src={process.env.REACT_APP_BASEURL + photo}/>
+      <_.Img src={process.env.NEXT_PUBLIC_BASEURL + photo}/>
       <_.BetweenBox>
         <_.GapBox onClick={() => userMove()}>
-          <_.UserImg src={process.env.REACT_APP_BASEURL + user.photo}/>
+          <_.UserImg src={process.env.NEXT_PUBLIC_BASEURL + user.photo}/>
           <_.NickName>{user.name}</_.NickName>
         </_.GapBox>
         <_.CursorBox>
