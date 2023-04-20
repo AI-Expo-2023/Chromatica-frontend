@@ -1,17 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import LogoIcon from "@/public/assets/image/logoIcon.png";
 import AiIcon from "@/public/assets/image/AiIcon_Black.png";
-import { Button } from "../common/button/style";
 import BlankProfile from '@/public/assets/image/personIcon.png'
+import { Button } from "../common/button/style";
+import { useRouter } from "next/router";
 import Search from './SearchBar'
 import * as _ from "./style"
+import axios from "axios";
 
 const Header = () => {
-  const [login, setLogin] = useState(false);
-  const [profileImg, setProfileImg] = useState(BlankProfile.src);
+  const [login, setLogin] = useState<boolean>(false);
+  const [profileImg, setProfileImg] = useState<string>(BlankProfile.src);
   const [keyWord, setKeyWord] = useState('');
+  const router = useRouter();
   
+  const update = () => {
+    if (keyWord.trim() === '') return;
+    router.push('/search/' + keyWord);
+  }
+
+  const GetData = () => {
+    const token = window.localStorage.getItem('token');
+    if(token === null) return;
+    axios({
+      method: 'GET',
+      url: `${process.env.REACT_APP_BASEURL}/user`,
+      headers: {
+        accessToken: `Bearer ${token}`
+      }
+    })
+      .then((res) => {
+        setProfileImg(process.env.REACT_APP_BASEURL + res.data.userPhoto);
+        setLogin(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
+  useEffect(() => {
+    GetData();
+  }, [])
+
   return (
     <_.HeaderOutBox>
       <_.HeaderBox>
@@ -27,12 +58,12 @@ const Header = () => {
             </_.BetweenCursor>
           </_.BetweenBox>
         </_.BetweenBox>
-        <Search change={setKeyWord} value={keyWord}/>
+        <Search change={setKeyWord} value={keyWord} update={update}/>
         {
           login ?
-          <_.PersonIconBox onClick={() => setLogin(!login)} src={profileImg}/>
+          <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg}/>
           :
-          <Button MainColor={true} onClick={() => setLogin(!login)}>로그인</Button>
+          <Button MainColor={true} onClick={() => router.push('/auth/login')}>로그인</Button>
         }
       </_.HeaderBox>
     </_.HeaderOutBox>
