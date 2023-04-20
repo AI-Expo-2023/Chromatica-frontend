@@ -23,7 +23,6 @@ interface postDataType {
     }
 
 export const PostLister = ({data, pageNum}:propsType)=>{
-    console.log((pageNum-1)*18,(pageNum-1)*18+17);
     return(
         <SixHorizon>
             {data

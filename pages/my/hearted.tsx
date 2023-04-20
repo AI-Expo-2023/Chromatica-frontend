@@ -22,7 +22,6 @@ const MyHearted = ()=>{
     const [Data,setData] = useState<responseType>();
 
     useEffect(()=>{
-        console.log(typeof(pageNum));
         axios({
             url: `${process.env.NEXT_PUBLIC_BASEURL}/user/liked/${pageNum}`,
             method: 'get',
@@ -31,12 +30,11 @@ const MyHearted = ()=>{
                 "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Inp4Y3YiLCJpYXQiOjE2ODE5ODg5NTZ9.sl0MRs2l3yXZHm458RMwwiySVfECe9u6iaex_lPObos",
             }
         })
-        .then(function (response) { 
-            console.log(response);
+        .then(function (response) {
             setData(response.data as responseType);
         })
         .catch(function (error) {
-            console.log(error);
+            alert(`오류가 발생했습니다(${error.status})`);
         })
     },
     [pageNum]);
