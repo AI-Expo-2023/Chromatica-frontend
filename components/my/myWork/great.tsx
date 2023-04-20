@@ -1,6 +1,6 @@
 import { Button } from "@/components/common/button/style";
 import RankCard from "@/components/common/RankCard/RankCard";
-// import { getAccessToken } from "@/util/token";
+import { getAccessToken } from "@/util/token";
 import axios from "axios";
 import router from 'next/router'
 import { useEffect, useState } from "react";
@@ -8,57 +8,45 @@ import * as _ from "./style"
 
 type listType = {
     photoID: number,
-    photo:{
+    Photo:{
         imgaeID: number,
-        photoID: number,
-        userID: string,
         photo: string,
         like: number,
         head: string,
-    },
-    user:{
+        userID: string,
+        photoID: number,
+    }
+    User:{
         name: string,
         photo: string,
+        userID: string,
     }
 }
 
 const MyGreat = () => {
 
     const [listData, setListData] = useState<listType[]>();
-    // const token = getAccessToken();
+    const token = getAccessToken();
 
     useEffect(()=>{
-        // axios({
-        //     method: 'GET',
-        //     url: process.env.REACT_APP_BASEURL + `/liked`,
-        //     headers: {
-        //         "Authorization": `Bearer ${token}`,
-        //     }
-        // })
-        // .then((result)=>{
-        //     const DataCut = result.data.images.slice(0,6);
-        //     setListData(result.data);
-        //     console.log(result)
-        // })
-        // .catch((error)=>{
-        //     console.log('에러: ', error);
-        // });
-        setListData([{
-            photoID: 123,
-            photo:{
-                imgaeID: 4,
-                photoID: 2,
-                photo: "/assets/image/personIcon.png",
-                userID: "asfasf",
-                like: 123,
-                head: "안녕하지요",
-            },
-            user:{
-                name: "홍길동",
-                photo: "/assets/image/personIcon.png"
+        axios({
+            method: 'GET',
+            url: process.env.NEXT_PUBLIC_BASEURL + `/user/liked/1`,
+            headers: {
+                "Authorization": `Bearer ${token}`,
             }
-    }]);
+        })
+        .then((result)=>{
+            const DataCut = result.data.images.slice(0,6);
+            setListData(DataCut);
+            console.log(result)
+        })
+        .catch((error)=>{
+            console.log('에러: ', error);
+        });
     },[]);
+
+    console.log(listData);
 
     const AllView = () =>{
         router.push("/my/hearted");
@@ -74,7 +62,7 @@ const MyGreat = () => {
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCard photoID={data.photoID} photo={data.photo.photo} head={data.photo.head} like={data.photo.like} user={data.user} key={data.photoID}/>
+                            <RankCard photoID={data.Photo.photoID} photo={data.Photo.photo} head={data.Photo.head} like={data.Photo.like} user={data.User} key={data.Photo.photoID}/>
                         )
                     })
                 }

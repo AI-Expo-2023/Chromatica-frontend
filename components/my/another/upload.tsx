@@ -1,6 +1,6 @@
 import { Button } from "@/components/common/button/style";
 import RankCard from "@/components/common/RankCard/RankCard";
-// import { getAccessToken } from "@/util/token";
+import { getAccessToken } from "@/util/token";
 import axios from "axios";
 import router from "next/router";
 import { useEffect, useState } from "react";
@@ -11,7 +11,6 @@ type listType = {
     photo:{
         imgaeID: number,
         photoID: number,
-        userID: string,
         photo: string,
         like: number,
         head: string,
@@ -19,6 +18,7 @@ type listType = {
     user:{
         name: string,
         photo: string,
+        userID: string,
     }
 }
 
@@ -29,39 +29,24 @@ type user = {
 const AnotherUpload = ({ID}:user) => {
 
     const [listData, setListData] = useState<listType[]>();
-    // const token = getAccessToken();
+    const token = getAccessToken();
 
     useEffect(()=>{
-        // axios({
-        //         method: 'GET',
-        //         url: process.env.REACT_APP_BASEURL + `/${ID}/image/1`,
-        //         headers: {
-        //             "Authorization": `Bearer ${token}`,
-        //         }
-        //     })
-        //     .then((result)=>{
-        //         const DataCut = result.data.images.slice(0,6);
-        //         setListData(result.data);
-        //         console.log(result)
-        //     })
-        //     .catch((error)=>{
-        //         console.log('에러: ', error);
-        //     });
-        setListData([{
-            photoID: 123,
-            photo:{
-                imgaeID: 4,
-                photoID: 2,
-                photo: "/assets/image/personIcon.png",
-                userID: "asfasf",
-                like: 123,
-                head: "안녕하지요",
-            },
-            user:{
-                name: "홍길동",
-                photo: "/assets/image/personIcon.png"
-            }
-    }]);
+        axios({
+                method: 'GET',
+                url: process.env.NEXT_PUBLEC_BASEURL + `/user/${ID}/image/1`,
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+            .then((result)=>{
+                const DataCut = result.data.slice(0,6);
+                setListData(DataCut);
+                console.log(result)
+            })
+            .catch((error)=>{
+                console.log('에러: ', error);
+            });
     },[]);
 
     const AllView = () =>{

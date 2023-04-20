@@ -6,13 +6,14 @@ import MyTemporary from "@/components/my/myWork/temporary";
 
 
 export default function Mypae() {
+
     return(
         <>
             <Warppr>
-                <MyInfo/>
+                {/* <MyInfo/> */}
                 <MyUpload/>
-                <MyGreat/>
-                <MyTemporary/>
+                {/* <MyGreat/>
+                <MyTemporary/> */}
             </Warppr>
         </>
     );

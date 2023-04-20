@@ -1,7 +1,6 @@
 import * as _ from "./infostyle"
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button } from "../../common/button/style";
 
 type user = {
     ID: string | string[] | undefined,
@@ -19,21 +18,15 @@ const AnotherMy = ({ID}:user) =>{
     const [AnotherMyData, setAnotherMyData] = useState<data>();
 
     useEffect(()=>{
-        // axios({
-        //     method: 'GET',
-        //     url: process.env.REACT_APP_BASEURL + `/user/info/${ID}`,
-        // })
-        // .then((result)=>{
-        //     setAnotherMyData(result.data);
-        // })
-        // .catch((error)=>{
-        //     console.error('에러', error);
-        // });
-        setAnotherMyData({
-            name: "홍길동",
-            userId: 1122,
-            Email: "qwer1234@gmail.com",
-            photo: "/assets/image/personIcon.png",
+        axios({
+            method: 'GET',
+            url: process.env.NEXT_PUBLIC_BASEURL + `/user/info/${ID}`,
+        })
+        .then((result)=>{
+            setAnotherMyData(result.data);
+        })
+        .catch((error)=>{
+            console.error('에러', error);
         });
     },[])
 
