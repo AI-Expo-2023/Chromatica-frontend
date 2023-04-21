@@ -31,7 +31,7 @@ const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
     if(user.userID === undefined) return;
     click.current = true;
     console.log(user.userID);
-    router.push('');
+    router.push("/my/" + user.userID);
   }
 
   return (

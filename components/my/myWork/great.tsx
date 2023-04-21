@@ -7,13 +7,11 @@ import { useEffect, useState } from "react";
 import * as _ from "./style"
 
 type listType = {
-    photoID: number,
     Photo:{
         imgaeID: number,
         photo: string,
         like: number,
         head: string,
-        userID: string,
         photoID: number,
     }
     User:{

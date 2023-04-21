@@ -6,46 +6,46 @@ import router from "next/router";
 import { useEffect, useState } from "react";
 import * as _ from "./uploadstyle"
 
+type user = {
+    ID: string | string[] | undefined,
+}
+
 type listType = {
+    imgaeID: number,
     photoID: number,
-    photo:{
-        imgaeID: number,
-        photoID: number,
-        photo: string,
-        like: number,
-        head: string,
-    },
-    user:{
+    photo: string,
+    like: number,
+    head: string,
+    User:{
         name: string,
         photo: string,
         userID: string,
     }
 }
 
-type user = {
-    ID: string | string[] | undefined,
-}
-
 const AnotherUpload = ({ID}:user) => {
 
     const [listData, setListData] = useState<listType[]>();
     const token = getAccessToken();
-
+    const baseUrl = process.env.NEXT_PUBLIC_BASEURL
+    
     useEffect(()=>{
+        console.log(ID);
+        if(ID === undefined) return;
         axios({
                 method: 'GET',
-                url: process.env.NEXT_PUBLEC_BASEURL + `/user/${ID}/image/1`,
+                url: baseUrl + `/user/${ID}/image/1`,
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 }
             })
             .then((result)=>{
-                const DataCut = result.data.slice(0,6);
+                const DataCut = result.data.images.slice(0,6);
                 setListData(DataCut);
                 console.log(result)
             })
             .catch((error)=>{
-                console.log('에러: ', error);
+                console.error('에러: ', error);
             });
     },[]);
 
@@ -62,7 +62,7 @@ const AnotherUpload = ({ID}:user) => {
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCard photoID={data.photoID} photo={data.photo.photo} head={data.photo.head} like={data.photo.like} user={data.user} key={data.photoID}/>
+                            <RankCard photoID={data.photoID} photo={data.photo} head={data.head} like={data.like} user={data.User} key={data.photoID}/>
                         )
                     })
                 }

@@ -6,13 +6,13 @@ import React from "react";
 
 const Index = () => {
   const router = useRouter();
-  const { userID } = router.query;
+  const {userID}  = router.query;
 
   console.log(userID);
 
   return (
     <Container>
-      {/* <AnotherMy ID={userID} /> */}
+      <AnotherMy ID={userID} />
       <AnotherUpload ID={userID}/>
     </Container>
   )
