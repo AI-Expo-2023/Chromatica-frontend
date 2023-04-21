@@ -1,16 +1,11 @@
 import RankCard from "@/components/common/RankCard/RankCard"
 import styled from "@emotion/styled";
 
-interface propsType{
-    data: any[];
-    pageNum: number;
-}
-
-export const PostLister = ({data, pageNum}:propsType)=>{
+export const PostLister = ({data}:any)=>{
     return(
         <SixHorizon>
             {data
-                .map((aa, index)=>(
+                .map((aa)=>(
                     <RankCard
                         photoID={aa.Photo.photoID}
                         photo={aa.Photo.photo}
