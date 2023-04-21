@@ -2,25 +2,9 @@ import RankCard from "@/components/common/RankCard/RankCard"
 import styled from "@emotion/styled";
 
 interface propsType{
-    data: postDataType[];
+    data: any[];
     pageNum: number;
 }
-
-interface postDataType {
-    photoID: number;
-    Photo: {
-        imageID: number;
-        photoID: number;
-        userID: string;
-        head: string;
-        photo: string;
-        like: number;
-    };
-    User: {
-        name: string;
-        photo: string;
-    };
-    }
 
 export const PostLister = ({data, pageNum}:propsType)=>{
     return(
