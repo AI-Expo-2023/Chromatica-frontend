@@ -21,6 +21,7 @@ type postType = {
         name: string;
         photo: string;
     };
+}
 
 const MyPosts = ()=>{
     const [pageNum,setPageNum] = useState<number>(1);
