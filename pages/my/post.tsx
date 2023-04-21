@@ -32,7 +32,7 @@ const MyPosts = ()=>{
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFzZGYiLCJpYXQiOjE2ODE5ODQyODl9.bU5Dn5OUwUoCcU06o-EkqlT98Ob-ssnPZc4WCjg8-UY",
+                "Authorization" : `Bearer ${localStorage.getItem('token')}`,
             }
         })
         .then(function (response) {
