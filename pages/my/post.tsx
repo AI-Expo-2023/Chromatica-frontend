@@ -24,7 +24,10 @@ type postType = {
 
 const MyPosts = ()=>{
     const [pageNum,setPageNum] = useState<number>(1);
-    const [Data,setData] = useState<responseType>();
+    const [Data,setData] = useState<responseType>({
+        manyImage: 0,
+        images:[],
+    });
 
     useEffect(()=>{
         axios({
@@ -51,15 +54,10 @@ const MyPosts = ()=>{
                 <Title>
                     내가 업로드한 작품
                 </Title>
-                {Data &&
-                <>
-                    <PostLister data={Data.images} pageNum={pageNum}/>
-                    <CenterContainer>
-                        <Pagination value={pageNum} change={setPageNum} end={Math.ceil(Data.manyImage/18)}/>
-                    </CenterContainer>
-                </>
-                }
-                
+                <PostLister data={Data.images} pageNum={pageNum}/>
+                <CenterContainer>
+                    <Pagination value={pageNum} change={setPageNum} end={Math.ceil(Data.manyImage/18)}/>
+                </CenterContainer>
             </PaddingContainer>
         </CenterContainer>
     )
