@@ -1,4 +1,4 @@
-import RecevieEmailC from '@/components/auth/recevieEmailC';
+import RecevieEmailC from '@/components/auth/receiveEmailC';
 import styled from '@emotion/styled';
 
 const ReceiveEmail = (): JSX.Element => {
