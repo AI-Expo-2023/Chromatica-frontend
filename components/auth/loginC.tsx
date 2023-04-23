@@ -6,8 +6,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import router from 'next/router';
 
-// const BASEURL = process.env.REACT_APP_BASEURL;
-const BASEURL = 'http://192.168.102.169:8080';
+const BASEURL = process.env.NEXT_PUBLIC_APP_BASEURL;
 
 const LoginC = (): JSX.Element => {
   const [id, setId] = useState<string>('');
