@@ -1,4 +1,4 @@
-import { PostLister } from "@/components/my/post/PostLister";
+import { PostLister } from "@/components/my/hearted/PostLister";
 import { Title } from "./style";
 import Pagination from "@/components/common/pagination/pagination";
 import { useEffect, useState } from "react";
