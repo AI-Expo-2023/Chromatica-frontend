@@ -16,17 +16,25 @@ export const Main = styled.div`
   gap: 12px;
 `
 
-export const Img = styled.img<{ width?: number, height?: number}>`
-  width: ${(props) => props.width ?? 24}px;
-  height: ${(props) => props.height ?? 24}px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  object-fit: scale-down;
-  border-radius: 8px;
+export const ImgContainer = styled.div`
+  width: 100%;
+  min-width: 300px;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
 `
 
-export const ImgCircle = styled(Img)`
+export const Img = styled.img`
+  position: absolute;
+  height: 100%;
+`
+
+
+export const ImgCircle = styled.img`
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  object-position: center center;
   border-radius: 100%;
 `
 
@@ -67,4 +75,27 @@ export const ErrorText = styled.span`
   font-weight: 400;
   font-size: 14px;
   color: ${Theme.Red};
+`
+
+export const ReportContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const ReportGapBox = styled.div`
+  display: flex;
+  gap: 8px;
+`
+
+export const ReportTextGapBox = styled(ReportGapBox)`
+  gap: 12px;
+  flex-direction: column;
 `
