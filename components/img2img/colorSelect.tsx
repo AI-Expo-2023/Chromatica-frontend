@@ -14,7 +14,13 @@ const ColorSelect = ({ settingOptions, setSettingOptions, background }: Props): 
     <Container>
       <Color24Filled primaryFill="black" />
       <NowColor color={background ? settingOptions.backgroundColor : settingOptions.color} />
-      <input type="color" value={background ? settingOptions.backgroundColor : settingOptions.color} onChange={background ? (e) => setSettingOptions({ ...settingOptions, backgroundColor: e.target.value }) : (e) => setSettingOptions({ ...settingOptions, color: e.target.value, tool: true })} />
+      <input type="color"
+        value={background ? settingOptions.backgroundColor : settingOptions.color}
+        onClick={() => setSettingOptions({ ...settingOptions, paint: false, tool:true })}
+        onChange={background ?
+          (e) => { setSettingOptions({ ...settingOptions, backgroundColor: e.target.value }); }
+          : (e) => { setSettingOptions({ ...settingOptions, color: e.target.value});}
+        } />
     </Container>
   )
 }

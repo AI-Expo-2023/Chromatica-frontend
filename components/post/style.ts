@@ -22,6 +22,10 @@ export const tagOptionDiv = styled.div`
     padding: 8px;
     gap: 4px;
     border-bottom: 1px solid ${Theme.Gray[75]};
+    &:hover{
+        background-color: ${Theme.Gray[5]};
+        transition: 100ms ease-in-out;
+    }
 `
 
 export const tagOptionList = styled.div`
