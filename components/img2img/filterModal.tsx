@@ -17,20 +17,19 @@ const FilterModal = ({ filter, setFilter, openModadl, setOpenModal }: Props): JS
     <>
       {
         openModadl &&
-        <Modal onClickToggleModal={onClick} display="flex" flexDirection="column" >
+        <Modal onClickToggleModal={onClick} display="flex" flexDirection="column" background>
           <h1>필터</h1>
           <ButtonContainer >
             {
               filterType.map((v, i) => {
                 if (filter == i + 1)
                   return <Buttons Black onClick={() => setFilter(i + 1)}>{v}</Buttons>
-                else return <Buttons onClick={() => setFilter(i + 1)}>{v}</Buttons>
+                else return <Buttons Gray5 onClick={() => setFilter(i + 1)}>{v}</Buttons>
               })
             }
           </ButtonContainer>
           <ButtonContainer>
-            <Buttons onClick={()=> setOpenModal(false)}>닫기</Buttons>
-            <Buttons MainColor>적용</Buttons>
+            <Buttons MainColor onClick={() => onClick()}>적용</Buttons>
           </ButtonContainer>
         </Modal>
       }

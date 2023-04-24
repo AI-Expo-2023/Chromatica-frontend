@@ -4,11 +4,15 @@ import { getAccessToken } from "@/util/token";
 import axios from "axios";
 import router from "next/router";
 import { useEffect, useState } from "react";
-import * as _ from "./style"
+import * as _ from "./uploadstyle"
+
+type user = {
+    ID: string | string[] | undefined,
+}
 
 type listType = {
-    photoID: number,
     imgaeID: number,
+    photoID: number,
     photo: string,
     like: number,
     head: string,
@@ -19,15 +23,18 @@ type listType = {
     }
 }
 
-const MyUpload = () => {
+const AnotherUpload = ({ID}:user) => {
 
     const [listData, setListData] = useState<listType[]>();
     const token = getAccessToken();
-
+    const baseUrl = process.env.NEXT_PUBLIC_BASEURL
+    
     useEffect(()=>{
+        console.log(ID);
+        if(ID === undefined) return;
         axios({
                 method: 'GET',
-                url: process.env.NEXT_PUBLIC_BASEURL + `/user/image/1`,
+                url: baseUrl + `/user/${ID}/image/1`,
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 }
@@ -38,26 +45,24 @@ const MyUpload = () => {
                 console.log(result)
             })
             .catch((error)=>{
-                console.log('에러: ', error);
+                console.error('에러: ', error);
             });
     },[]);
 
-    console.log(listData);
-
     const AllView = () =>{
-        router.push("/my/post");
+        router.push(`/my/${ID}`);
     }
     return(
         <_.Flex>
             <_.Warpper>
-                <_.Work>내가 업로드한 작품</_.Work>
+                <_.Work>업로드한 작품</_.Work>
                 <Button Black onClick={AllView}>모두 보기</Button>
             </_.Warpper>
             <_.List>
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCard photoID={data.photoID} photo={data.User.photo} head={data.head} like={data.like} user={data.User} key={data.photoID}/>
+                            <RankCard photoID={data.photoID} photo={data.photo} head={data.head} like={data.like} user={data.User} key={data.photoID}/>
                         )
                     })
                 }
@@ -66,4 +71,4 @@ const MyUpload = () => {
     );
 }
 
-export default MyUpload;
+export default AnotherUpload;

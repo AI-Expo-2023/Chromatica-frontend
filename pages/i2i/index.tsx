@@ -27,7 +27,7 @@ const I2i = (): JSX.Element => {
   });
   const [aiSetting, setAiSetting] = useState<AiSetting>({
     quality: 20,
-    count: 4
+    count: 2
   })
 
 

@@ -6,18 +6,20 @@ import * as _ from './style'
 interface SearchProps {
   change: React.Dispatch<React.SetStateAction<string>>;
   value: string;
+  update: () => void;
 }
 
-const SearchBar = ({ change, value }: SearchProps) => {
+const SearchBar = ({ change, value, update }: SearchProps) => {
   return (
     <_.SearchBox>
       <_.SearchInput
         type='text'
         value={value}
+        onKeyDown={(e) => {if(e.key === 'Enter') update()}}
         onChange={(e) => change(e.target.value)}
         placeholder='이미지 검색'
       />
-      <_.IconBox>
+      <_.IconBox onClick={() => update()}>
         <Search24Filled primaryFill={Theme.Gray[50]}/>
       </_.IconBox>
     </_.SearchBox>
