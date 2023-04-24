@@ -14,10 +14,14 @@ const Header = () => {
   const [profileImg, setProfileImg] = useState<string>(BlankProfile.src);
   const [keyWord, setKeyWord] = useState('');
   const router = useRouter();
-  
+
   const update = () => {
     if (keyWord.trim() === '') return;
     router.push('/search/' + keyWord);
+  }
+
+  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = BlankProfile.src;
   }
 
   const GetData = () => {
@@ -27,7 +31,7 @@ const Header = () => {
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASEURL}/user`,
       headers: {
-        accessToken: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -61,7 +65,7 @@ const Header = () => {
         <Search change={setKeyWord} value={keyWord} update={update}/>
         {
           login ?
-          <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg}/>
+          <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg} alt="" onError={onErrorImg}/>
           :
           <Button MainColor={true} onClick={() => router.push('/auth/login')}>로그인</Button>
         }
