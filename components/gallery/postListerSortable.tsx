@@ -8,10 +8,16 @@ interface propsType{
 }
 
 interface postDataType {
+    photoID: number;
     photo: string;
-    user: string;
     head: string;
     like: number;
+    createdAt: string;
+    User: {
+        name: string;
+        photo: string;
+        userID: string;
+    }
 }
 
 export const PostListerWithSort = ({data, sort}:propsType)=>{
@@ -19,7 +25,7 @@ export const PostListerWithSort = ({data, sort}:propsType)=>{
         <SixHorizon>
             {data
                 .map((aa, index)=>(
-                    <RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} rank={sort=='popular' ? index+1 : undefined}/>
+                    <RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} rank={sort=== 'popular' ? index+1 : undefined}/>
             ))}
         </SixHorizon>
     )
