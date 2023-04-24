@@ -16,12 +16,19 @@ export const Main = styled.div`
   gap: 12px;
 `
 
-export const Img = styled.img`
-  max-width: 100%;
-  width: auto;
+export const ImgContainer = styled.div`
+  width: 100%;
+  min-width: 300px;
   height: 500px;
-  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
 `
+
+export const Img = styled.img`
+  position: absolute;
+  height: 100%;
+`
+
 
 export const ImgCircle = styled.img`
   width: 28px;

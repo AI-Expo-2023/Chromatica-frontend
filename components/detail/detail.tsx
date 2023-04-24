@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as _ from './style'
+import * as _ from './style';
+import BlankProfile from '@/public/assets/image/personIcon.png';
 import { ErrorCircle20Regular, Heart20Filled } from '@fluentui/react-icons';
 import { Theme } from '@/styles/theme/Theme';
 import { useRouter } from 'next/router';
@@ -14,19 +15,25 @@ interface DetailProps {
 interface resProps {
   photo: string;
   head: string;
-  user: string;
+  user: {
+    userID: string;
+    name: string;
+    photo: string;
+  };
   description: string;
   like: number;
   tag: string[];
   reported: number;
+  hadliked: boolean;
 }
 
 const Detail = ({ word }: DetailProps) => {
   const [keyWord, setKeyWord] = useState<string | string[] | undefined>('');
   const [like, setLike] = useState<boolean>(false);
   const [Data, setData] = useState<resProps | undefined>();
-  const [report, setReport] = useState<boolean>(false)
-  const Time = useRef<NodeJS.Timer | undefined>()
+  const [report, setReport] = useState<boolean>(false);
+  const Time = useRef<NodeJS.Timer | undefined>();
+  const router = useRouter();
 
   const GetData = (word: string) => {
     const token = window.localStorage.getItem('token');
@@ -39,7 +46,8 @@ const Detail = ({ word }: DetailProps) => {
         .then((res) => {
           setData({
             ...res.data.image,
-            tag: res.data.image.tag.replace(' ', '').split(',')
+            tag: res.data.image.tag.replace(' ', '').split(','),
+            hadliked: res.data.hadliked
           });
         })
         .catch((err) => {
@@ -50,13 +58,14 @@ const Detail = ({ word }: DetailProps) => {
         method: 'GET',
         url: `${process.env.NEXT_PUBLIC_BASEURL}/photo/${word}`,
         headers: {
-          accessToken: `Bearer ${token}`
+          "Authorization": `Bearer ${token}`
         }
       })
         .then((res) => {
           setData({
             ...res.data.image,
-            tag: res.data.image.tag.replace(' ', '').split(',')
+            tag: res.data.image.tag.replace(' ', '').split(','),
+            hadliked: res.data.hadliked
           });
           setLike(res.data.hadliked);
         })
@@ -73,11 +82,12 @@ const Detail = ({ word }: DetailProps) => {
       method: 'POST',
       url: `${process.env.NEXT_PUBLIC_BASEURL}/photo/${(keyWord as string)}/like`,
       headers: {
-        accessToken: `Bearer ${token}`
+        "Authorization": `Bearer ${token}`
       }
     })
       .catch((err) => {
         console.error(err);
+        setLike(Data ? Data.hadliked : false);
       })
   }
 
@@ -90,7 +100,7 @@ const Detail = ({ word }: DetailProps) => {
       Time.current = undefined;
     }
     Time.current = setInterval(() => {
-      if (like) PostLike();
+      PostLike();
       clearInterval(Time.current);
       Time.current = undefined;
     }, 1000)
@@ -110,7 +120,7 @@ const Detail = ({ word }: DetailProps) => {
       method: 'POST',
       url: `${process.env.NEXT_PUBLIC_BASEURL}/photo/${(keyWord as string)}/report`,
       headers: {
-        accessToken: `Bearer ${token}`
+        "Authorization": `Bearer ${token}`
       }
     })
     .then(() => {
@@ -126,6 +136,10 @@ const Detail = ({ word }: DetailProps) => {
     GetData(word as string)
   }, [word])
 
+  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = BlankProfile.src;
+  }
+
   return (
     <_.Container>
       {
@@ -136,16 +150,27 @@ const Detail = ({ word }: DetailProps) => {
         />
       }
       <_.Main>
-        <_.Img src={Data?.photo} />
+        <_.ImgContainer>
+        <_.Img src={Data?.photo} alt='사진을 불러오는데 실패했습니다.'/>
+        </_.ImgContainer>
         <_.Text weight={800} size={24}>{Data?.head}</_.Text>
         <_.GapBox>
           {
-            Data?.tag.map((data, index) => <Tag key={index} basic={true}>{data}</Tag>)
+            Data?.tag.map((data, index) => 
+            <div onClick={() => router.push(`/search/${data}`)}>
+            <Tag
+              key={index}
+              basic={true}
+              >
+                {data}
+              </Tag>
+              </div>
+            )
           }
         </_.GapBox>
-        <_.GapBox>
-          <_.ImgCircle width={28} height={28} />
-          <_.Text>이름이름</_.Text>
+        <_.GapBox onClick={() => router.push(`/my/${Data?.user.userID}`)}>
+          <_.ImgCircle width={28} height={28} src={Data?.user.photo} alt='' onError={onErrorImg} />
+          <_.Text>{Data?.user.name}</_.Text>
         </_.GapBox>
         <_.Text>{Data?.description}</_.Text>
         <_.GapBox>
