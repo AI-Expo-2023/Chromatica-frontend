@@ -5,7 +5,7 @@ export const PostLister4mypost = ({data}:any)=>{
     return(
         <SixHorizon>
             {data
-                .map((aa)=>(
+                .map((aa:any)=>(
                     <RankCard
                         photoID={aa.Photo.photoID}
                         photo={aa.Photo.photo}
