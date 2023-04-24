@@ -6,6 +6,7 @@ import MyTemporary from "@/components/my/myWork/temporary";
 
 
 export default function Mypae() {
+
     return(
         <>
             <Warppr>

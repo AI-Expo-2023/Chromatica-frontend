@@ -8,57 +8,41 @@ import * as _ from "./style"
 
 type listType = {
     photoID: number,
-    photo:{
-        imgaeID: number,
-        photoID: number,
-        userID: string,
-        photo: string,
-        like: number,
-        head: string,
-    },
-    user:{
+    imgaeID: number,
+    photo: string,
+    like: number,
+    head: string,
+    User:{
         name: string,
         photo: string,
+        userID: string,
     }
 }
 
 const MyUpload = () => {
 
     const [listData, setListData] = useState<listType[]>();
-    // const token = getAccessToken();
+    const token = getAccessToken();
 
     useEffect(()=>{
-        // axios({
-        //         method: 'GET',
-        //         url: process.env.REACT_APP_BASEURL + `/image`,
-        //         headers: {
-        //             "Authorization": `Bearer ${token}`,
-        //         }
-        //     })
-        //     .then((result)=>{
-        //         const DataCut = result.data.images.slice(0,6);
-        //         setListData(result.data);
-        //         console.log(result)
-        //     })
-        //     .catch((error)=>{
-        //         console.log('에러: ', error);
-        //     });
-        setListData([{
-            photoID: 123,
-            photo:{
-                imgaeID: 4,
-                photoID: 2,
-                photo: "/assets/image/personIcon.png",
-                userID: "asfasf",
-                like: 123,
-                head: "안녕하지요",
-            },
-            user:{
-                name: "홍길동",
-                photo: "/assets/image/personIcon.png"
-            }
-    }]);
+        axios({
+                method: 'GET',
+                url: process.env.NEXT_PUBLIC_BASEURL + `/user/image/1`,
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+            .then((result)=>{
+                const DataCut = result.data.images.slice(0,6);
+                setListData(DataCut);
+                console.log(result)
+            })
+            .catch((error)=>{
+                console.log('에러: ', error);
+            });
     },[]);
+
+    console.log(listData);
 
     const AllView = () =>{
         router.push("/my/post");
@@ -73,7 +57,7 @@ const MyUpload = () => {
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCard photoID={data.photoID} photo={data.photo.photo} head={data.photo.head} like={data.photo.like} user={data.user} key={data.photoID}/>
+                            <RankCard photoID={data.photoID} photo={data.User.photo} head={data.head} like={data.like} user={data.User} key={data.photoID}/>
                         )
                     })
                 }

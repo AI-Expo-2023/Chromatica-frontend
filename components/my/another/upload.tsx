@@ -1,67 +1,52 @@
 import { Button } from "@/components/common/button/style";
 import RankCard from "@/components/common/RankCard/RankCard";
-// import { getAccessToken } from "@/util/token";
+import { getAccessToken } from "@/util/token";
 import axios from "axios";
 import router from "next/router";
 import { useEffect, useState } from "react";
 import * as _ from "./uploadstyle"
 
-type listType = {
-    photoID: number,
-    photo:{
-        imgaeID: number,
-        photoID: number,
-        userID: string,
-        photo: string,
-        like: number,
-        head: string,
-    },
-    user:{
-        name: string,
-        photo: string,
-    }
-}
-
 type user = {
     ID: string | string[] | undefined,
+}
+
+type listType = {
+    imgaeID: number,
+    photoID: number,
+    photo: string,
+    like: number,
+    head: string,
+    User:{
+        name: string,
+        photo: string,
+        userID: string,
+    }
 }
 
 const AnotherUpload = ({ID}:user) => {
 
     const [listData, setListData] = useState<listType[]>();
-    // const token = getAccessToken();
-
+    const token = getAccessToken();
+    const baseUrl = process.env.NEXT_PUBLIC_BASEURL
+    
     useEffect(()=>{
-        // axios({
-        //         method: 'GET',
-        //         url: process.env.REACT_APP_BASEURL + `/${ID}/image/1`,
-        //         headers: {
-        //             "Authorization": `Bearer ${token}`,
-        //         }
-        //     })
-        //     .then((result)=>{
-        //         const DataCut = result.data.images.slice(0,6);
-        //         setListData(result.data);
-        //         console.log(result)
-        //     })
-        //     .catch((error)=>{
-        //         console.log('에러: ', error);
-        //     });
-        setListData([{
-            photoID: 123,
-            photo:{
-                imgaeID: 4,
-                photoID: 2,
-                photo: "/assets/image/personIcon.png",
-                userID: "asfasf",
-                like: 123,
-                head: "안녕하지요",
-            },
-            user:{
-                name: "홍길동",
-                photo: "/assets/image/personIcon.png"
-            }
-    }]);
+        console.log(ID);
+        if(ID === undefined) return;
+        axios({
+                method: 'GET',
+                url: baseUrl + `/user/${ID}/image/1`,
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+            .then((result)=>{
+                const DataCut = result.data.images.slice(0,6);
+                setListData(DataCut);
+                console.log(result)
+            })
+            .catch((error)=>{
+                console.error('에러: ', error);
+            });
     },[]);
 
     const AllView = () =>{
@@ -77,7 +62,7 @@ const AnotherUpload = ({ID}:user) => {
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCard photoID={data.photoID} photo={data.photo.photo} head={data.photo.head} like={data.photo.like} user={data.user} key={data.photoID}/>
+                            <RankCard photoID={data.photoID} photo={data.photo} head={data.head} like={data.like} user={data.User} key={data.photoID}/>
                         )
                     })
                 }

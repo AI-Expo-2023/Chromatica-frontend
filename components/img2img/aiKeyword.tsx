@@ -89,12 +89,12 @@ const AIResponse = ({ imgId, getImage, filter, imgData, canvasRef, aiSetting, up
         axios.post(`${BASEURLAI}/inpaint/keyword`, formData)
           .then((res) => {
             setLoding(false);
-            setAiImg(res.data)
-            console.log(res.data)
+            setAiImg(res.data);
+            console.log(res.data);
           })
           .catch((err) => {
             setLoding(false);
-            console.error(err)
+            console.error(err);
           })
       }).catch(err => {
         console.error(err)
@@ -164,11 +164,19 @@ const AIResponse = ({ imgId, getImage, filter, imgData, canvasRef, aiSetting, up
   }
 
   const updateImg = () => {
-    localStorage.setItem("imgData", aiImg[selectImg - 1]);
+    Router.reload();
     if (Router.pathname == '/aiUpdate' && getImage) {
+      localStorage.setItem("imgData", String(aiImg));
       getImage();
+      setAiImg([]);
+      if (canvasRef.current) {
+        const canvas: HTMLCanvasElement = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        ctx?.clearRect(0, 0, canvas.width, canvas.height)
+      }
     }
     else {
+      localStorage.setItem("imgData", aiImg[selectImg - 1]);
       Router.push(`/aiUpdate`)
     }
   }
@@ -190,7 +198,7 @@ const AIResponse = ({ imgId, getImage, filter, imgData, canvasRef, aiSetting, up
             {
               update ?
                 <div>
-                  <AiImageOne src={aiImg[0]} />
+                  <AiImageOne src={String(aiImg)} />
                 </div> :
                 <ImgContainer>
                   {aiImg.map((e, i) => {

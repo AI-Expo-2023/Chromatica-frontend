@@ -47,7 +47,7 @@ const Main = () => {
   const GetData = () => {
     axios({
       method: 'GET',
-      url: process.env.REACT_APP_BASEURL
+      url: process.env.NEXT_PUBLIC_BASEURL
     })
       .then((res) => {
         setData(res.data.sortPhoto.map((v: resProps, index: number): RankProps => {
