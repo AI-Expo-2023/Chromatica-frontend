@@ -20,7 +20,7 @@ export default function Gallery() {
         <CenterContainer>
             <PaddingContainer>
                 <SortSelecter sort={Sort} setSort={setSort} />
-                <PostListerWithSort sort={Sort==='new' || Sort === 'popular' ? Sort : 'new'} data={}}/>
+                <PostListerWithSort sort={Sort==='new' || Sort === 'popular' ? Sort : 'new'} data={} />
                 {Sort==='new' ? <Pagination value={Page} change={setPage} /> : null}
             </PaddingContainer>
         </CenterContainer>
