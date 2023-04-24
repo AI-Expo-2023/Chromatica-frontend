@@ -6,7 +6,7 @@ import { useState } from 'react';
 import router from 'next/router';
 import axios from 'axios';
 
-const BASEURL = 'http://192.168.102.169:8080';
+const BASEURL = process.env.NEXT_PUBLIC_APP_BASEURL;
 
 const PwChangeC = (): JSX.Element => {
   const [password, setPassword] = useState<string>('');
@@ -28,8 +28,8 @@ const PwChangeC = (): JSX.Element => {
           url: `${BASEURL}/user/updatePW`,
           method: 'patch',
           data: {
-            PW: password,
-            newPW: newPassword,
+            "PW": password,
+            "newPW": newPassword,
           },
           headers: {
             Authorization: `Bearer ${token}`,
