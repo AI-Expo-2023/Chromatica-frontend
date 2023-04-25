@@ -65,7 +65,7 @@ const Header = () => {
               <_.Img width={21} height={21} src={AiIcon.src} />
             </_.BetweenCursor>
           </_.BetweenBox>
-        </_.BetweenBox
+        </_.BetweenBox>
         <Search change={setKeyWord} value={keyWord} update={update}/>
         {
           login ?
