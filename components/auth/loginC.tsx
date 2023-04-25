@@ -6,20 +6,20 @@ import axios from 'axios';
 import { useState } from 'react';
 import router from 'next/router';
 
-const BASEURL = process.env.NEXT_PUBLIC_APP_BASEURL;
+const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 
 const LoginC = (): JSX.Element => {
   const [id, setId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  
+
   const loginPost = () => {
     axios
       .request({
         url: `${BASEURL}/user/log`,
         method: 'post',
         data: {
-          "ID":id,
-          "PW":password
+          "ID": id,
+          "PW": password
         },
       })
       .then((response: any) => {

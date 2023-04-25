@@ -6,7 +6,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import router from 'next/router';
 
-const BASEURL = process.env.NEXT_PUBLIC_APP_BASEURL;
+const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 
 const SignupC = (): JSX.Element => {
   const [email, setEmail] = useState<string>('');
