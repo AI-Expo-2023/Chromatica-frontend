@@ -17,7 +17,3 @@ const SixHorizon = styled.div`
     flex-wrap: wrap;
     gap: 20px;
 `
-
-// {Data?.image.map((mp)=>{
-//     return 
-// })}
