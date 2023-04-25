@@ -66,7 +66,7 @@ const Header = () => {
             </_.BetweenCursor>
           </_.BetweenBox>
         </_.BetweenBox>
-        <Search change={setKeyWord} value={keyWord} update={update} />
+        <Search change={setKeyWord} value={keyWord} update={update}/>
         {
           login ?
             <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg} alt="" onError={onErrorImg} />
