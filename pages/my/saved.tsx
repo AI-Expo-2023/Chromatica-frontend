@@ -1,3 +1,4 @@
+import Pagination from "@/components/common/pagination/pagination";
 import { PostListerSaved } from "@/components/my/saved/postlistersaved";
 import styled from "@emotion/styled";
 import axios from "axios";
@@ -41,6 +42,9 @@ const MySaved = () => {
         <CenterContainer>
             <PaddingContainer>
                 <PostListerSaved data={Data?.image} />
+                <CenterContainer>
+                    <Pagination change={setPageNum} value={pageNum} end={Math.ceil(Data.manyImage)} />
+                </CenterContainer>
             </PaddingContainer>
         </CenterContainer>
     )
