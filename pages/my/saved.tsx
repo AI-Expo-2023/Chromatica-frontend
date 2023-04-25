@@ -1,3 +1,4 @@
+import { PostListerSaved } from "@/components/my/saved/postlistersaved";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { useEffect, useState } from "react"
@@ -37,7 +38,7 @@ const MySaved = () => {
         return(
             <CenterContainer>
                 <PaddingContainer>
-                    
+                    <PostListerSaved data={Data?.image} />
                 </PaddingContainer>
             </CenterContainer>
     )
