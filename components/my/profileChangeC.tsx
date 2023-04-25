@@ -9,18 +9,24 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { NickName } from '../common/RankCard/style';
 
-const ProfileChangeC = (): JSX.Element => {
+
+type user = {
+  Name: string | string[] | undefined,
+}
+
+const ProfileChangeC = ({Name}:user): JSX.Element => {
 
   const token = getAccessToken();
-  const router = useRouter();
-  const {userName}  = router.query;
   const [nickName, setNickName] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null); // 서버 전송용
   const [imgView, setImgView] = useState<string>(''); // 프리뷰용
 
   useEffect(()=>{
-    setNickName(`${userName}`);
+    console.log(Name);
+    setNickName(`${Name}`);
   })
+
+  console.log(nickName)
 
   const fileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files as FileList;
