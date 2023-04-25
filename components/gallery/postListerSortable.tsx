@@ -23,9 +23,16 @@ interface postDataType {
 export const PostListerWithSort = ({data, sort}:propsType)=>{
     return(
         <SixHorizon>
-            {data
-                .map((aa, index)=>(
-                    <RankCard head={aa.head} like={aa.like} name={aa.user} photo={aa.photo} key={aa.photo+aa.like} photoID={aa.photo} rank={sort=== 'popular' ? index+1 : undefined}/>
+            {data.map((data, index)=>(
+                    <RankCard
+                        head={data.head}
+                        like={data.like}
+                        photo={data.photo}
+                        photoID={data.photoID}
+                        user={data.User}
+                        rank={sort === 'popular' ? index+1 : undefined}
+                        key={data.photoID + data.User.userID}
+                    />
             ))}
         </SixHorizon>
     )
