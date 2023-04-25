@@ -5,7 +5,7 @@ export const PostListerSaved = ({data}:any)=>{
     return(
         <SixHorizon>
             {data.map((aa)=>(
-                <RankCardImg photoID={aa.imageID} photo={aa.photo} />
+                <RankCardImg photoID={aa.imageID} photo={aa.photo} key={aa.imageID}/>
             ))}
         </SixHorizon>
     )
