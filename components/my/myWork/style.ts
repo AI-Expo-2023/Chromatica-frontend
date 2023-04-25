@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 export const Flex = styled.div`
   width: 80%;
-  height: 340px;
+  height: 370px;
   background-color: ${Theme.Gray[5]};
   margin-top: 16px;
   border-radius: 8px;
@@ -15,6 +15,7 @@ export const Warpper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 export const Work = styled.div`
