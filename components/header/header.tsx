@@ -49,7 +49,7 @@ const Header = () => {
 
   useEffect(() => {
     GetData();
-  }, [])
+  },[])
 
   return (
     <_.HeaderOutBox>
@@ -69,9 +69,9 @@ const Header = () => {
         <Search change={setKeyWord} value={keyWord} update={update}/>
         {
           login ?
-          <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg} alt="" onError={onErrorImg}/>
-          :
-          <Button MainColor={true} onClick={() => router.push('/auth/login')}>로그인</Button>
+            <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg} alt="" onError={onErrorImg} />
+            :
+            <Button MainColor={true} onClick={() => router.push('/auth/login')}>로그인</Button>
         }
       </_.HeaderBox>
     </_.HeaderOutBox>

@@ -15,18 +15,6 @@ interface RankProps {
   photo: string;
   head: string;
   like: number;
-  user: {
-    userID: string;
-    name: string;
-    photo: string;
-  };
-}
-
-interface ResPhotoProps {
-  photoID: number;
-  photo: string;
-  head: string;
-  like: number;
   User: {
     userID: string;
     name: string;
@@ -42,28 +30,23 @@ const Search = ({ word }: SearchProps) => {
   const router = useRouter()
 
   const update = () => {
-    if((keyWord as string).trim() === '') return;
+    if ((keyWord as string).trim() === '') return;
     router.push('/search/' + keyWord);
   }
 
   const GetData = (word: string) => {
-    if(word === undefined) return;
+    if (word === undefined) return;
+    console.log(word)
     axios({
-      method: 'GET',
+      method: 'POST',
       url: `${process.env.NEXT_PUBLIC_BASEURL}/search/${Page}`,
       data: {
         searchWord: word,
       }
     })
       .then((res) => {
-        setData(res.data.searchedPhotos.map((v: ResPhotoProps): RankProps => {
-          const {User, ...Data} = v;
-          return {
-            ...Data,
-            user: {...User}
-          }
-        })
-        );
+        console.log(res.data)
+        setData(res.data.searchedPhoto)
         setMax(Math.floor(res.data.manyImage / 18) + 1);
       })
       .catch((err) => {
@@ -86,13 +69,13 @@ const Search = ({ word }: SearchProps) => {
           <_.SearchMainBox>
             {
               Data?.map((data) =>
-                <RankCard {...data} key={data.photoID}/>
+                <RankCard {...data} key={data.photoID} />
               )
             }
           </_.SearchMainBox>
         </_.Cover>
         <_.Center>
-          <Pagination change={setPage} value={Page} end={max}/>
+          <Pagination change={setPage} value={Page} end={max} />
         </_.Center>
       </_.MainBox>
     </_.Container>

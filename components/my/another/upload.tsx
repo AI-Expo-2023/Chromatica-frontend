@@ -62,7 +62,7 @@ const AnotherUpload = ({ID}:user) => {
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCard photoID={data.photoID} photo={data.photo} head={data.head} like={data.like} user={data.User} key={data.photoID}/>
+                            <RankCard {...data}/>
                         )
                     })
                 }

@@ -5,7 +5,7 @@ import { Theme } from '@/styles/theme/Theme';
 import { getAccessToken } from '@/util/token';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { NickName } from '../common/RankCard/style';
 
@@ -22,11 +22,8 @@ const ProfileChangeC = ({Name}:user): JSX.Element => {
   const [imgView, setImgView] = useState<string>(''); // 프리뷰용
 
   useEffect(()=>{
-    console.log(Name);
-    setNickName(`${Name}`);
-  })
-
-  console.log(nickName)
+    setNickName(String(Name));
+  },[])
 
   const fileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files as FileList;
@@ -46,6 +43,7 @@ const ProfileChangeC = ({Name}:user): JSX.Element => {
   };
 
   const change = () => {
+    
     axios({
       method: "PATCH",
       url: process.env.NEXT_PUBLIC_BASEURL + "/user/updateInfo",
@@ -53,13 +51,13 @@ const ProfileChangeC = ({Name}:user): JSX.Element => {
         "Authorization": `Bearer ${token}`
       },
       data: {
-        "name": NickName,
+        "name": nickName,
         "photo": imgFile,
       }
     })
     .then((result)=>{
       console.log(result)
-      // router.push('/my'); 연동확인되면 주석 풀기
+      Router.push("/my")
     })
     .catch((error)=>{
       console.error(error);
