@@ -15,7 +15,10 @@ interface postType{
 }
 
 const MySaved = () => {
-    const [Data, setData] = useState<responseType>();
+    const [Data, setData] = useState<responseType>({
+        manyImage: 0,
+        image: [],
+    });
     const [pageNum, setPageNum] = useState<number>(1);
 
     useEffect(()=>{
