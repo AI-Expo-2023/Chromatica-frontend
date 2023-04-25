@@ -34,12 +34,12 @@ const MySaved = () => {
             })
         },[])
 
-        return(
-            <CenterContainer>
-                <PaddingContainer>
-                    <PostListerSaved data={Data?.image} />
-                </PaddingContainer>
-            </CenterContainer>
+    return(
+        <CenterContainer>
+            <PaddingContainer>
+                <PostListerSaved data={Data?.image} />
+            </PaddingContainer>
+        </CenterContainer>
     )
 }
 
