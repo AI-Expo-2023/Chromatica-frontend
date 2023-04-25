@@ -26,7 +26,11 @@ const Header = () => {
 
   const GetData = () => {
     const token = window.localStorage.getItem('token');
-    if(token === null) return;
+    if (token === null) {
+      setLogin(false);
+      return;
+    }
+    setLogin(true);
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASEURL}/user`,
@@ -58,10 +62,10 @@ const Header = () => {
             <_.Text onClick={() => router.push('/gallery?sort=new')}>갤러리</_.Text>
             <_.BetweenCursor gap={8} onClick={() => router.push('/i2i')}>
               <_.Text>스케치</_.Text>
-              <_.Img width={21} height={21} src={AiIcon.src}/>
+              <_.Img width={21} height={21} src={AiIcon.src} />
             </_.BetweenCursor>
           </_.BetweenBox>
-        </_.BetweenBox>
+        </_.BetweenBox
         <Search change={setKeyWord} value={keyWord} update={update}/>
         {
           login ?
