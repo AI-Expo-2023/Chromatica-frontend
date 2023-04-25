@@ -7,19 +7,19 @@ interface propsType{
 }
 
 export const SortSelecter = ({sort, setSort}:propsType)=>{
-    if(sort==='new'){
+    if(sort){
         return(
             <HzDiv>
-                <Button Gray25>최신순</Button>
-                <Button Gray5 onClick={()=>setSort(true)}>인기순</Button>
+                <Button Gray5 onClick={()=>setSort(false)}>최신순</Button>
+                <Button Gray25>인기순</Button>
             </HzDiv>
         )
     }
     else{
         return(
             <HzDiv>
-                <Button Gray5 onClick={()=>setSort(false)}>최신순</Button>
-                <Button Gray25>인기순</Button>
+                <Button Gray25>최신순</Button>
+                <Button Gray5 onClick={()=>setSort(true)}>인기순</Button>
             </HzDiv>
         )
     }
