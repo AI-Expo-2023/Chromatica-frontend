@@ -71,7 +71,7 @@ export default function Gallery() {
             <PaddingContainer>
                 <SortSelecter sort={isPopular} setSort={setIsPopular} />
                 <PostListerWithSort sort={isPopular} data={Data.sortPhoto} />
-                {isPopular ? <Pagination value={Page} change={setPage} /> : null}
+                {isPopular ? <CenterContainer><Pagination value={Page} change={setPage} /></CenterContainer> : null}
             </PaddingContainer>
         </CenterContainer>
     );
@@ -87,6 +87,7 @@ const PaddingContainer = styled.div`
 `
 
 const CenterContainer = styled.div`
+    width: 100%;
     display: flex;
     justify-content: center;
 `
