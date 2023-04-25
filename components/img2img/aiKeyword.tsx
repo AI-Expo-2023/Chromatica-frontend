@@ -20,9 +20,8 @@ type Props = {
   filter?: number;
   getImage?: () => void;
 }
-// const BASEURL = process.env.REACT_APP_AIBASEURL;
-const BASEURLAI = "http://192.168.0.113:3333";
-const BASEURL = "http://192.168.0.27:8080";
+const BASEURLAI = process.env.NEXT_PUBLIC_AIBASEURL;
+const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 
 /** 키워드를 입력하고 AI에게 전송하여 사진을 받아오는 곳 */
 const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, canvasSize }: Props): JSX.Element => {
