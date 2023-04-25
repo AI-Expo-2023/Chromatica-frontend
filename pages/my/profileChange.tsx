@@ -1,4 +1,3 @@
-import ProfileC from '@/components/auth/profileC';
 import ProfileChangeC from '@/components/my/profileChangeC';
 import styled from '@emotion/styled';
 

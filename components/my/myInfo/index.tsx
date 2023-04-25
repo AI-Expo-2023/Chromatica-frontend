@@ -1,9 +1,9 @@
 import * as _ from "./style"
 import { Button } from "../../common/button/style";
-import router from 'next/router'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getAccessToken } from "@/util/token";
+import { useRouter } from "next/router";
 
 type GetData = {
     userPhoto?: string,
@@ -13,6 +13,7 @@ type GetData = {
 }
 const MyInfo = ():JSX.Element => {
 
+    const router = useRouter();
     const [infoData, setInfoData] = useState<GetData>({});
     const [worldtoken, setWorldToken] = useState<string>();
     useEffect(()=>{
@@ -39,7 +40,10 @@ const MyInfo = ():JSX.Element => {
     console.log(infoData);
 
     const ProfileChange = () => {
-        router.push("/my/profileChange");
+        router.push({
+            pathname: '/my/profileChange',
+            query: infoData.userName,
+        });
     }
 
     const PwChange = () =>{
