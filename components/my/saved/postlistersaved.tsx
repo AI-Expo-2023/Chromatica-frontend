@@ -4,8 +4,7 @@ import styled from "@emotion/styled"
 export const PostListerSaved = ({data}:any)=>{
     return(
         <SixHorizon>
-            {data
-                .map((aa)=>(
+            {data.map((aa)=>(
                 <RankCardImg photoID={aa.imageID} photo={aa.photo} />
             ))}
         </SixHorizon>

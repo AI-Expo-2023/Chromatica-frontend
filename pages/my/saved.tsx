@@ -25,15 +25,14 @@ const MySaved = () => {
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization" : `Bearer ${localStorage.getItem('token')}`,
-            }
-        })
-        .then(function (response) {
-            setData(response.data as responseType);
-        })
-        .catch(function (error) {
-            alert(`오류가 발생했습니다(${error.status})`);
-        })
-    },[])
+            }})
+            .then(function (response) {
+                setData(response.data as responseType);
+            })
+            .catch(function (error) {
+                alert(`오류가 발생했습니다(${error.status})`);
+            })
+        },[])
 
         return(
             <CenterContainer>
