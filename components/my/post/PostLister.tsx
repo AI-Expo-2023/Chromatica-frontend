@@ -1,11 +1,11 @@
 import RankCard from "@/components/common/RankCard/RankCard"
 import styled from "@emotion/styled";
 
-export const PostLister = ({data}:any)=>{
+export const PostLister4mypost = ({data}:any)=>{
     return(
         <SixHorizon>
             {data
-                .map((aa)=>(
+                .map((aa:any)=>(
                     <RankCard
                         photoID={aa.Photo.photoID}
                         photo={aa.Photo.photo}

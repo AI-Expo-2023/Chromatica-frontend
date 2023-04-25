@@ -27,7 +27,7 @@ const MyHearted = ()=>{
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Inp4Y3YiLCJpYXQiOjE2ODE5ODg5NTZ9.sl0MRs2l3yXZHm458RMwwiySVfECe9u6iaex_lPObos",
+                "Authorization" : `Bearer ${localStorage.getItem('token')}`,
             }
         })
         .then(function (response) {
