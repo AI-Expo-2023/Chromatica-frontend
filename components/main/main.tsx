@@ -11,29 +11,25 @@ import * as _ from './style'
 import axios from "axios";
 
 interface resProps {
-  v: {
-    photo: {
-      photoID: number;
-      photoPath: string;
-      photoHead: string;
-      photoLiked: number;
-    };
-    user: {
-      userName: string;
-      userProfile: string;
-    };
-  }
-  index: number;
+  photoID: number;
+  photo: string;
+  head: string;
+  like: number;
+  User: {
+    name: string;
+    photo: string;
+    userID: string;
+  };
 }
 
-type UserType = "name" | "photo";
+type UserType = "name" | "photo" | "userID";
 interface RankProps {
   photoID: number;
   photo: string;
   head: string;
   like: number;
   user: { [key in UserType]: string };
-  rank?: number;
+  rank: number;
 }
 
 const Main = () => {
@@ -44,28 +40,23 @@ const Main = () => {
   const router = useRouter();
 
   const update = () => {
-    if(keyWord.trim() === '') return;
+    if (keyWord.trim() === '') return;
     router.push('/search/' + keyWord);
   }
 
   const GetData = () => {
     axios({
       method: 'GET',
-      url: process.env.REACT_APP_BASEURL
+      url: process.env.NEXT_PUBLIC_BASEURL
     })
       .then((res) => {
-        setData(Object.values(res).map(({v, index}: resProps): RankProps => {
+        setData(res.data.sortPhoto.map((v: resProps, index: number): RankProps => {
+          const { User, ...Data } = v;
           return {
-            photoID: v.photo.photoID,
-            photo: v.photo.photoPath,
-            head: v.photo.photoHead,
-            like: v.photo.photoLiked,
-            user: {
-              name: v.user.userName,
-              photo: v.user.userProfile
-            },
+            ...Data,
+            user: { ...User },
             rank: index + 1
-        }
+          }
         }))
       })
       .catch((err) => {
@@ -103,7 +94,7 @@ const Main = () => {
       <_.MainBox>
         <_.Img src={LogoImg.src} width={282} height={69} />
         <_.SearchOutBox>
-          <SearchBar change={setKeyWord} value={keyWord} update={update}/>
+          <SearchBar change={setKeyWord} value={keyWord} update={update} />
           <_.SketchBtn MainColor={true} onClick={() => router.push('/i2i/')}>
             <Bot24Filled primaryFill={Theme.White} />
             <_.SketchBox>

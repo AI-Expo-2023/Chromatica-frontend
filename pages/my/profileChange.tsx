@@ -1,13 +1,16 @@
-import ProfileC from '@/components/auth/profileC';
 import ProfileChangeC from '@/components/my/profileChangeC';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
 const ProfileChange = (): JSX.Element => {
   
+  const router = useRouter();
+
+  const {userName} = router.query;
 
   return (
     <Contanier>
-      <ProfileChangeC/>
+      <ProfileChangeC Name={userName}/>
     </Contanier>
   );
 };
