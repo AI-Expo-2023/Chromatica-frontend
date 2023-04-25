@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Button } from "../common/button/style";
 
 interface propsType{
-    sort: string;
+    sort: boolean;
     setSort: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
