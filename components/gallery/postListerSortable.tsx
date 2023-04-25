@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 interface propsType{
     data: postDataType[];
     pageNum?: number;
-    sort: string;
+    sort: boolean;
 }
 
 interface postDataType {
@@ -30,7 +30,7 @@ export const PostListerWithSort = ({data, sort}:propsType)=>{
                         photo={data.photo}
                         photoID={data.photoID}
                         user={data.User}
-                        rank={sort === 'popular' ? index+1 : undefined}
+                        rank={sort ? index+1 : undefined}
                         key={data.photoID + data.User.userID}
                     />
             ))}
