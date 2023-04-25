@@ -30,12 +30,10 @@ const I2i = (): JSX.Element => {
     count: 2
   })
 
-
   return (
     <>
       <SizeModal canvasSize={canvasSize} setCanvasSize={setCanvasSize} settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
       <_.DisplayBox>
-
         <_.Container>
           <div>
             <_.CanvasContainer>

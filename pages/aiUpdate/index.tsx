@@ -1,5 +1,4 @@
 import Canvas from "@/components/img2img/canvas";
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import * as _ from "./style";
 import CanvasSetting from "@/components/img2img/canvasSetting";
@@ -12,8 +11,6 @@ import FilterModal from "@/components/img2img/filterModal";
 
 
 const AiUpdate = () => {
-  const router = useRouter();
-
   const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
@@ -37,22 +34,16 @@ const AiUpdate = () => {
   const [filter, setFilter] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [baseImgUrl, setBaseUrl] = useState("");
-  const [imgId, setImgId] = useState(0);
 
   const getImage = async () => {
     const imgData = await localStorage.getItem("imgData");
     setImgData(String(imgData));
     setBaseUrl(String(imgData));
-    console.log(imgData);
     const img = new Image();
     img.src = String(imgData);
     img.onload = () => {
       setCanvasSize({ width: Number(img.width), height: Number(img.height) })
     }
-
-    if (!router.isReady) return;
-    const { image } = router.query;
-    setImgId(Number(image))
   }
 
   useEffect(() => {
@@ -73,11 +64,11 @@ const AiUpdate = () => {
               <Tool settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
               <_.SettingContainer onClick={() => setOpenModal(true)}><PhotoFilter24Filled primaryFill="black" />필터</_.SettingContainer>
             </div>
-            <CanvasSetting settingOptions={settingOptions} canvasRef={canvasRef} aiSetting={aiSetting} setAiSetting={setAiSetting} />
+            <CanvasSetting update settingOptions={settingOptions} canvasRef={canvasRef} aiSetting={aiSetting} setAiSetting={setAiSetting} />
           </_.CanvasTools>
           <ToolSize toolWidth={toolWidth} setToolWidth={setToolWidth} settingOptions={settingOptions} />
         </CanvasPaint>
-        <AIResponse imgId={imgId} getImage={getImage} filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
+        <AIResponse getImage={getImage} filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
       </_.Conatiner>
     </>
   )
