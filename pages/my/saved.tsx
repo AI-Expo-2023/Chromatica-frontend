@@ -3,6 +3,7 @@ import { PostListerSaved } from "@/components/my/saved/postlistersaved";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { Title } from "./style";
 
 interface responseType {
     manyImage: number;
@@ -41,6 +42,7 @@ const MySaved = () => {
     return(
         <CenterContainer>
             <PaddingContainer>
+                <Title>임시 저장한 작품</Title>
                 <PostListerSaved data={Data?.image} />
                 <CenterContainer>
                     <Pagination change={setPageNum} value={pageNum} end={Math.ceil(Data.manyImage)} />
