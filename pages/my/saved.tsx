@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import axios from "axios";
 import { useEffect, useState } from "react"
 
@@ -32,6 +33,29 @@ const MySaved = () => {
             alert(`오류가 발생했습니다(${error.status})`);
         })
     },[])
+
+        return(
+            <CenterContainer>
+                <PaddingContainer>
+                    
+                </PaddingContainer>
+            </CenterContainer>
+    )
 }
+
+const PaddingContainer = styled.div`
+    width: 1300px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 20px;
+`
+
+const CenterContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`
 
 export default MySaved;
