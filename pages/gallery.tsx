@@ -28,7 +28,10 @@ export default function Gallery() {
     const {query, isReady} = useRouter();
     const [isPopular, setIsPopular] = useState<boolean>(false);
     const [Page, setPage] = useState<number>(1);
-    const [Data, setData] = useState<ResponseType>();
+    const [Data, setData] = useState<ResponseType>({
+        message: "",
+        sortPhoto:[]
+    });
 
     useEffect(()=>{
         if(isReady===false) return;
