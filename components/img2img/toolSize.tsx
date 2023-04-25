@@ -20,8 +20,8 @@ const ToolSize = ({ toolWidth, setToolWidth, settingOptions }: Props): JSX.Eleme
       {
         settingOptions.paint ? <></> :
           settingOptions.tool ?
-            <Range value={toolWidth.brush} min={1} max={100} label="브러시" onChange={onChangeBrush} />
-            : <Range value={toolWidth.eraser} min={1} max={100} label="지우개" onChange={onChangeEraser} />
+            <Range value={toolWidth.brush} min={1} max={100} label="브러시 크기" onChange={onChangeBrush} />
+            : <Range value={toolWidth.eraser} min={1} max={100} label="지우개 크기" onChange={onChangeEraser} />
       }
     </Container>
   )
