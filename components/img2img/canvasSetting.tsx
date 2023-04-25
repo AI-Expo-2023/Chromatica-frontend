@@ -29,7 +29,7 @@ const CanvasSetting = ({ update, canvasRef, aiSetting, setAiSetting, settingOpti
   }
   return (
     <>
-      {openModal.setting && <SettingModal openModal={openModal} setOpenModal={setOpenModal} aiSetting={aiSetting} setAiSetting={setAiSetting} />}
+      {openModal.setting && <SettingModal update={update ? true : false} openModal={openModal} setOpenModal={setOpenModal} aiSetting={aiSetting} setAiSetting={setAiSetting} />}
       {openModal.delete && <DeleteModal settingOptions={settingOptions} canvasRef={canvasRef} openModal={openModal} setOpenModal={setOpenModal} update={update ? true : false} />}
       <Container>
         {!update && <SettingContainer onClick={() => onClickDelete()}> <Delete24Filled /> </SettingContainer>}
