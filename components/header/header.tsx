@@ -14,10 +14,14 @@ const Header = () => {
   const [profileImg, setProfileImg] = useState<string>(BlankProfile.src);
   const [keyWord, setKeyWord] = useState('');
   const router = useRouter();
-  
+
   const update = () => {
     if (keyWord.trim() === '') return;
     router.push('/search/' + keyWord);
+  }
+
+  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = BlankProfile.src;
   }
 
   const GetData = () => {
@@ -25,18 +29,18 @@ const Header = () => {
     if(token === null) return;
     axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_BASEURL}/user`,
+      url: `${process.env.NEXT_PUBLIC_BASEURL}/user`,
       headers: {
-        accessToken: `Bearer ${token}`
-      }
+        "Authorization": `Bearer ${token}`,
+      },
     })
       .then((res) => {
-        setProfileImg(process.env.REACT_APP_BASEURL + res.data.userPhoto);
+        setProfileImg(process.env.NEXT_PUBLIC_BASEURL + res.data.userPhoto);
         setLogin(true);
       })
       .catch((err) => {
         console.error(err);
-      })
+      });
   }
 
   useEffect(() => {
@@ -51,8 +55,8 @@ const Header = () => {
             <_.Img width={124} height={36} src={LogoIcon.src} />
           </Link>
           <_.BetweenBox gap={24}>
-            <_.Text>갤러리</_.Text>
-            <_.BetweenCursor gap={8}>
+            <_.Text onClick={() => router.push('/gallery?sort=new')}>갤러리</_.Text>
+            <_.BetweenCursor gap={8} onClick={() => router.push('/i2i')}>
               <_.Text>스케치</_.Text>
               <_.Img width={21} height={21} src={AiIcon.src}/>
             </_.BetweenCursor>
@@ -61,7 +65,7 @@ const Header = () => {
         <Search change={setKeyWord} value={keyWord} update={update}/>
         {
           login ?
-          <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg}/>
+          <_.PersonIconBox onClick={() => router.push('/my')} src={profileImg} alt="" onError={onErrorImg}/>
           :
           <Button MainColor={true} onClick={() => router.push('/auth/login')}>로그인</Button>
         }

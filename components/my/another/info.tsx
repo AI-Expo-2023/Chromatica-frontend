@@ -16,11 +16,12 @@ type data = {
 const AnotherMy = ({ID}:user) =>{
 
     const [AnotherMyData, setAnotherMyData] = useState<data>();
+    const baseUrl = process.env.NEXT_PUBLIC_BASEURL;
 
     useEffect(()=>{
         axios({
             method: 'GET',
-            url: process.env.NEXT_PUBLIC_BASEURL + `/user/info/${ID}`,
+            url: baseUrl + `/user/info/${ID}`,
         })
         .then((result)=>{
             setAnotherMyData(result.data);

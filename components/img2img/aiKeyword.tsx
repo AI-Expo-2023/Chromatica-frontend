@@ -18,12 +18,13 @@ type Props = {
   canvasSize: CanvasSize;
   imgData?: string;
   filter?: number;
+  getImage?: () => void;
 }
-// const BASEURL = process.env.REACT_APP_AIBASEURL;
-const BASEURL = "http://192.168.0.113:3333";
+const BASEURLAI = process.env.NEXT_PUBLIC_AIBASEURL;
+const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 
 /** 키워드를 입력하고 AI에게 전송하여 사진을 받아오는 곳 */
-const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize }: Props): JSX.Element => {
+const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, canvasSize }: Props): JSX.Element => {
   const [aiKeyword, setAiKeyword] = useState<string>("");
   const [aiImg, setAiImg] = useState<string[]>([]);
   const [selectImg, setSelectImg] = useState<number>(1);
@@ -83,28 +84,26 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
         formData.append('base_img', base_img);
         formData.append('mask_img', mask_img);
         formData.append('style', filterName);
-        axios.post(`${BASEURL}/inpaint/keyword`, formData)
+        axios.post(`${BASEURLAI}/inpaint/keyword`, formData)
           .then((res) => {
             setLoding(false);
-            setAiImg(res.data)
-            console.log(res.data)
+            setAiImg(res.data);
+            console.log(res.data);
           })
           .catch((err) => {
             setLoding(false);
-            console.error(err)
+            console.error(err);
           })
       }).catch(err => {
         console.error(err)
         setLoding(false)
       })
-
-
     } else {
       formData.append('base_img', dataURL.split(",")[1]);
       formData.append('format', "jpg");
       formData.append('samples', String(aiSetting.count));
 
-      axios.post(`${BASEURL}/img2img/keyword`, formData)
+      axios.post(`${BASEURLAI}/img2img/keyword`, formData)
         .then((res) => {
           setAiImg(res.data)
           console.log(res.data)
@@ -118,35 +117,74 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
   }
 
   const upload = () => {
-
+    localStorage.setItem("imgData", aiImg[selectImg - 1]);
+    Router.push(`post`);
   }
 
   const saveImg = () => {
-    // axios({
-    //   url: '/test',
-    //   method: 'post',
-    //   data: {
-    //     name: 'veneas'
-    //   }
-    // })
-    //   .then(function a(response) {
-    //     console.log(response)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    const token = localStorage.getItem("token");
+    if (!Router.ready) return;
+    const { image } = Router.query;
+
+    console.log(image);
+    if (image) {
+      axios({
+        url: `${BASEURL}/design/${image}`,
+        method: 'patch',
+        headers: {
+          "authorization": `Bearer ${token}`
+        },
+        data: {
+          imageURL: String(aiImg)
+        }
+      })
+        .then((res) => {
+          Router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      axios({
+        url: `${BASEURL}/design/new`,
+        method: 'post',
+        headers: {
+          "authorization": `Bearer ${token}`
+        },
+        data: {
+          imageURL: aiImg[selectImg - 1]
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          Router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   const updateImg = () => {
-    console.log("페이지 이동")
-    localStorage.setItem("imgData", aiImg[selectImg - 1]);
-
-    Router.push(`aiUpdate/${canvasSize.width}.${canvasSize.height}`)
+    if (Router.pathname == '/aiUpdate' && getImage) {
+      localStorage.setItem("imgData", String(aiImg));
+      getImage();
+      setAiImg([]);
+      if (canvasRef.current) {
+        const canvas: HTMLCanvasElement = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        ctx?.clearRect(0, 0, canvas.width, canvas.height)
+      }
+    }
+    else {
+      localStorage.setItem("imgData", aiImg[selectImg - 1]);
+      Router.push(`/aiUpdate`)
+    }
   }
 
   return (
     <>
-      <DownloabModal imgData={aiImg[selectImg - 1]} openDownloadModal={openDownloadModal} setOpenDownloadModal={setOpenDownloadModal} />
+      <DownloabModal imgData={getImage ? String(aiImg) : aiImg[selectImg - 1]} openDownloadModal={openDownloadModal} setOpenDownloadModal={setOpenDownloadModal} />
       <Container>
         <Input title="키워드" value={aiKeyword} setValue={setAiKeyword} text="쉼표(반점)으로 구분해 입력하세요" width="512px" />
         <Button MainColor onClick={() => makeImg()}>생성</Button>
@@ -161,7 +199,7 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
             {
               update ?
                 <div>
-                  <AiImageOne src={aiImg[0]} />
+                  <AiImageOne src={String(aiImg)} />
                 </div> :
                 <ImgContainer>
                   {aiImg.map((e, i) => {
@@ -175,9 +213,9 @@ const AIResponse = ({ filter, imgData, canvasRef, aiSetting, update, canvasSize 
 
             <ButtonContainer>
               <Button MainColor onClick={() => upload()}><Share20Filled primaryFill="white" />업로드</Button>
-              <Button onClick={() => updateImg()}><Bot20Filled />수정</Button>
-              <Button onClick={() => saveImg()}><Save20Filled />임시 저장</Button>
-              <Button onClick={() => setOpenDownloadModal(true)}><ArrowDownload20Filled />파일로 다운로드</Button>
+              <Button Gray5 onClick={() => updateImg()}><Bot20Filled />수정</Button>
+              <Button Gray5 onClick={() => saveImg()}><Save20Filled />임시 저장</Button>
+              <Button Gray5 onClick={() => setOpenDownloadModal(true)}><ArrowDownload20Filled />파일로 다운로드</Button>
             </ButtonContainer>
           </>
 
@@ -196,28 +234,18 @@ const Container = styled.div`
 `
 
 const ImgContainer = styled.div`
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
   width: 512px;
   height: fit-content;
-  >:nth-child(1){
-    margin: 0px 10px 10px 0px;
-  }
-  >:nth-child(2){
-    margin: 0px 0px 10px 10px;
-  }
-  >:nth-child(3){
-    margin: 10px 10px 0px 0px;
-  }
-  >:nth-child(4){
-    margin: 10px 0px 0px 10px;
-  }
-  `
+  gap: 20px;
+`
+
 const AiImage = styled.img<{ select: boolean }>`
-  border: ${props => props.select && `4px solid ${Theme.ThePurple}`};
+  border: ${props => props.select ? `5px solid ${Theme.ThePurple}` : `${Theme.Gray[5]} 4px solid`};
   border-radius:8px;
   box-shadow: ${props => props.select && `0px 0px 8px 0px rgba(0,0,0,0.5)`} ;
-  max-width: 246px;
-  max-height: 246px;
+  width: 246px;
 `
 
 const AiImageOne = styled.img`

@@ -1,5 +1,4 @@
 import Canvas from "@/components/img2img/canvas";
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import * as _ from "./style";
 import CanvasSetting from "@/components/img2img/canvasSetting";
@@ -12,12 +11,11 @@ import FilterModal from "@/components/img2img/filterModal";
 
 
 const AiUpdate = () => {
-  const router = useRouter();
-
   const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
-    color: "#FADD75",
+    //color: "#FADD75",
+    color: "#ffffff",
     tool: true,
     backgroundColor: "#f2222f"
   });
@@ -36,19 +34,20 @@ const AiUpdate = () => {
   const [filter, setFilter] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [baseImgUrl, setBaseUrl] = useState("");
+
   const getImage = async () => {
     const imgData = await localStorage.getItem("imgData");
-
     setImgData(String(imgData));
-    setBaseUrl(String(imgData))
+    setBaseUrl(String(imgData));
+    const img = new Image();
+    img.src = String(imgData);
+    img.onload = () => {
+      setCanvasSize({ width: Number(img.width), height: Number(img.height) })
+    }
   }
 
   useEffect(() => {
     getImage();
-    if (!router.isReady) return;
-    const { w, h } = router.query;
-    setCanvasSize({ width: Number(w), height: Number(h) })
-
   }, []);
 
   return (
@@ -65,11 +64,11 @@ const AiUpdate = () => {
               <Tool settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
               <_.SettingContainer onClick={() => setOpenModal(true)}><PhotoFilter24Filled primaryFill="black" />필터</_.SettingContainer>
             </div>
-            <CanvasSetting settingOptions={settingOptions} canvasRef={canvasRef} aiSetting={aiSetting} setAiSetting={setAiSetting} />
+            <CanvasSetting update settingOptions={settingOptions} canvasRef={canvasRef} aiSetting={aiSetting} setAiSetting={setAiSetting} />
           </_.CanvasTools>
           <ToolSize toolWidth={toolWidth} setToolWidth={setToolWidth} settingOptions={settingOptions} />
         </CanvasPaint>
-        <AIResponse filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
+        <AIResponse getImage={getImage} filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
       </_.Conatiner>
     </>
   )
@@ -82,9 +81,9 @@ const CanvasPaint = styled(_.CanvasContainer)`
 const PositionDiv = styled.div`
   position: relative;
   z-index: 0;
-  background-color: red;
 `;
 const ImgBackGround = styled.img`
   position: absolute;
-  left:20px
+  left:20px;
+  border-radius: 8px;
 `;
