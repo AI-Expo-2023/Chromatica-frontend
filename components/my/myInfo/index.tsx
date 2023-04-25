@@ -42,7 +42,7 @@ const MyInfo = ():JSX.Element => {
     const ProfileChange = () => {
         router.push({
             pathname: '/my/profileChange',
-            query: infoData.userName,
+            query: {userName:infoData.userName},
         });
     }
 

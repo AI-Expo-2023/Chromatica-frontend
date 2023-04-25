@@ -10,7 +10,7 @@ interface RankProps {
   photo: string;
   head: string;
   like: number;
-  user: {
+  User: {
     userID?: string;
     Email?: string;
     name: string;
@@ -19,7 +19,7 @@ interface RankProps {
   rank?: number;
 }
 
-const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
+const RankCard = ({photoID, photo, head, User, like, rank}: RankProps) => {
   const router = useRouter();
   const click = useRef<boolean>(false);
 
@@ -33,10 +33,10 @@ const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
   }
 
   const userMove = () => {
-    if(user.userID === undefined) return;
+    if(User.userID === undefined) return;
     click.current = true;
-    console.log(user.userID);
-    router.push("/my/" + user.userID);
+    console.log(User.userID);
+    router.push("/my/" + User.userID);
   }
 
   return (
@@ -49,8 +49,8 @@ const RankCard = ({photoID, photo, head, user, like, rank}: RankProps) => {
       <_.Img src={photo} alt='사진을 불러오는데 실패했습니다.'/>
       <_.BetweenBox>
         <_.GapBox onClick={() => userMove()}>
-          <_.UserImg src={process.env.NEXT_PUBLIC_BASEURL + user.photo} alt="" onError={onErrorImg}/>
-          <_.NickName>{user.name}</_.NickName>
+          <_.UserImg src={ User.photo} alt="" onError={onErrorImg}/>
+          <_.NickName>{User.name}</_.NickName>
         </_.GapBox>
         <_.CursorBox>
           <_.Text color={Theme.Gray[50]}>{like}</_.Text>

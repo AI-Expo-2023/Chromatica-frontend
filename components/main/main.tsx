@@ -28,7 +28,7 @@ interface RankProps {
   photo: string;
   head: string;
   like: number;
-  user: { [key in UserType]: string };
+  User: { [key in UserType]: string };
   rank: number;
 }
 
@@ -50,14 +50,7 @@ const Main = () => {
       url: process.env.NEXT_PUBLIC_BASEURL
     })
       .then((res) => {
-        setData(res.data.sortPhoto.map((v: resProps, index: number): RankProps => {
-          const { User, ...Data } = v;
-          return {
-            ...Data,
-            user: { ...User },
-            rank: index + 1
-          }
-        }))
+        setData(res.data.sortPhoto)
       })
       .catch((err) => {
         console.error(err);
