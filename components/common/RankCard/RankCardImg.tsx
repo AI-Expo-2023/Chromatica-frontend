@@ -15,7 +15,7 @@ const RankCardImg = ({ photoID, photo }: ImgProps) => {
   }
 
   return (
-      <_.Img onClick={move} src={process.env.NEXT_PUBLIC_BASEURL + photo}/>
+      <_.Img onClick={move} src={photo}/>
   )
 }
 
