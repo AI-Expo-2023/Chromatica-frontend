@@ -61,7 +61,7 @@ export default function Gallery() {
                 alert(`오류가 발생했습니다(${error.status})`);
             })
         }
-    },[Page])
+    },[Page, isPopular])
 
     return(
         <CenterContainer>
