@@ -7,7 +7,6 @@ import styled from '@emotion/styled';
 import axios from 'axios';
 import Router, { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { NickName } from '../common/RankCard/style';
 
 
 type user = {
@@ -16,12 +15,14 @@ type user = {
 
 const ProfileChangeC = ({Name}:user): JSX.Element => {
 
+  const formData = new FormData();
   const token = getAccessToken();
   const [nickName, setNickName] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null); // 서버 전송용
   const [imgView, setImgView] = useState<string>(''); // 프리뷰용
 
   useEffect(()=>{
+    console.log(Name);
     setNickName(String(Name));
   },[])
 
@@ -43,17 +44,17 @@ const ProfileChangeC = ({Name}:user): JSX.Element => {
   };
 
   const change = () => {
-    
+    formData.append("name", nickName);
+    if(imgFile !== null){
+      formData.append("photo", imgFile);
+    }
     axios({
       method: "PATCH",
       url: process.env.NEXT_PUBLIC_BASEURL + "/user/updateInfo",
       headers: {
         "Authorization": `Bearer ${token}`
       },
-      data: {
-        "name": nickName,
-        "photo": imgFile,
-      }
+      data: formData,
     })
     .then((result)=>{
       console.log(result)
