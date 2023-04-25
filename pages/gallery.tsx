@@ -16,7 +16,7 @@ interface PostType {
     photo: string;
     head: string;
     like: number;
-    createdAt: string;
+    createdAt?: string;
     User: {
         name: string;
         photo: string;
