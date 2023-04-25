@@ -21,12 +21,14 @@ export const Img = styled.img`
 export const BetweenBox = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: ${Theme.White};
 `
 
 export const UserImg = styled(Img)`
   width: 20px;
   height: 20px;
   border-radius: 100%;
+  background-color: #D9D9D9;
 `
 
 export const GapBox = styled.div`
@@ -43,15 +45,15 @@ export const Text = styled.span<{ weight?: number, size?: number, color?: string
   font-weight: ${({weight}) => weight ?? 400}px;
   font-size: ${({size}) => size ?? 14}px;
   color: ${({color}) => color ?? Theme.Black};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export const NickName = styled(Text)`
   font-weight: 400;
   font-size: 14px;
   width: 121px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `
 
 export const Circle = styled.div`
