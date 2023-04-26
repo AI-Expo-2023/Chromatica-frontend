@@ -1,34 +1,37 @@
 import Input from "@/components/common/input";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TextArea } from "@/components/post/textArea";
 import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
 import { Button } from "@/components/common/button/style";
-import Image from "next/image";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
-
-const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 
 export default function PostPage(){
     const [title, setTitle] = useState<string>('');
     const [Desc, setDesc] = useState<string>('');
-    const [Photo, setPhoto] = useState<string>('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/6152bc164687275.63fb405a39dda.jpg');
+    const [Photo, setPhoto] = useState<string>('');
     const [TagList, setTagList] = useState<string[]>([]);
     const router = useRouter();
 
     useEffect(()=>{
+        if(localStorage.getItem('imgData') === null){
+            alert('권한이 없습니다');
+            router.push('/');
+        }
         setPhoto(localStorage.getItem('imgData') as string);
     },[]);
 
     const request = () => {
-        const token = localStorage.getItem('token');
-        if(token === null || !(Photo && title && TagList && Desc)) return;
+        if(!(title && Desc)){
+            alert('내용과 제목은 필수 사항입니다');
+            return;
+        }
         axios({
-            url: `${BASEURL}/photo`,
+            url: `${process.env.NEXT_PUBLIC_BASEURL}/photo`,
             method: 'post',
             headers: {
-                "Authorization" : `Bearer ${token}`,
+                "Authorization" : `Bearer ${localStorage.getItem('token')}`,
             },
             data: {
                 photo : Photo,
@@ -38,8 +41,8 @@ export default function PostPage(){
             }
         })
         .then(() => {
+            alert('성공적으로 게시되었습니다.');
             router.push('/');
-            alert('성공적으로 게시되었습니다!');
         })
         .catch((error) => {
             console.log(error);
@@ -76,5 +79,6 @@ const CenterContainer = styled.div`
 const PostPreview = styled.img`
     position: initial !important;
     border-radius: 8px;
-    height: 500px;
+    height: 500px !important;
+    width: auto !important;
 `
