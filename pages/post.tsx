@@ -23,7 +23,10 @@ export default function PostPage(){
     },[]);
 
     const request = () => {
-        if(localStorage.getItem('token') === null || !(Photo && title && TagList && Desc)) return;
+        if(!(title && Desc)){
+            alert('내용과 제목은 필수 사항입니다');
+            return;
+        }
         axios({
             url: `${process.env.NEXT_PUBLIC_BASEURL}/photo`,
             method: 'post',
