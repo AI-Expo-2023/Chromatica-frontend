@@ -47,7 +47,7 @@ const Search = ({ word }: SearchProps) => {
       .then((res) => {
         console.log(res.data)
         setData(res.data.searchedPhoto)
-        setMax(Math.floor(res.data.manyImage / 18) + 1);
+        setMax(Math.ceil(res.data.manyImage / 18));
       })
       .catch((err) => {
         console.error(err);

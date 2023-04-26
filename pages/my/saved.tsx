@@ -45,7 +45,11 @@ const MySaved = () => {
                 <Title>임시 저장한 작품</Title>
                 <PostListerSaved data={Data?.image} />
                 <CenterContainer>
-                    <Pagination change={setPageNum} value={pageNum} end={Math.ceil(Data.manyImage)} />
+                <Pagination
+                    value={pageNum}
+                    change={setPageNum}
+                    end={Math.ceil(Data.manyImage/18) === 0 ? 1 : Math.ceil(Data.manyImage/18)}
+                />                
                 </CenterContainer>
             </PaddingContainer>
         </CenterContainer>

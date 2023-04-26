@@ -1,10 +1,20 @@
 import RankCardImg from "@/components/common/RankCard/RankCardImg"
 import styled from "@emotion/styled"
 
-export const PostListerSaved = ({data}:any)=>{
+interface PostProps {
+    data: postType[]
+}
+
+interface postType{
+    imageID: number;
+    userID: string;
+    photo: string;
+}
+
+export const PostListerSaved = ({data}: PostProps)=>{
     return(
         <SixHorizon>
-            {data.map((aa)=>(
+            {data.map((aa: postType)=>(
                 <RankCardImg photoID={aa.imageID} photo={aa.photo} key={aa.imageID}/>
             ))}
         </SixHorizon>

@@ -1,4 +1,4 @@
-import { PostLister } from "@/components/my/hearted/PostLister";
+import { PostLister } from "@/components/my/PostLister";
 import { Title } from "./style";
 import Pagination from "@/components/common/pagination/pagination";
 import { useEffect, useState } from "react";
@@ -12,7 +12,6 @@ type responseType = {
 
 type postType = {
     photoID: number;
-    imageID: number;
     head: string;
     photo: string;
     like: number;
@@ -39,11 +38,10 @@ const MyPosts = ()=>{
                 "Authorization" : `Bearer ${localStorage.getItem('token')}`,
             }
         })
-        .then(function (response) {
-            console.log(response);
+        .then((response) => {
             setData(response.data as responseType);
         })
-        .catch(function (error) {
+        .catch((error) => {
             alert(`오류가 발생했습니다(${error.status})`);
         })
     },
@@ -55,9 +53,13 @@ const MyPosts = ()=>{
                 <Title>
                     내가 업로드한 작품
                 </Title>
-                <PostLister data={Data.images} pageNum={pageNum}/>
+                <PostLister data={Data.images}/>
                 <CenterContainer>
-                    <Pagination value={pageNum} change={setPageNum} end={Math.ceil(Data.manyImage/18)}/>
+                <Pagination
+                    value={pageNum}
+                    change={setPageNum}
+                    end={Math.ceil(Data.manyImage/18) === 0 ? 1 : Math.ceil(Data.manyImage/18)}
+                />
                 </CenterContainer>
             </PaddingContainer>
         </CenterContainer>

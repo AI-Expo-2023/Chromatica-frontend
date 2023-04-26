@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import LogoIcon from "@/public/assets/image/logoIcon.png";
 import AiIcon from "@/public/assets/image/AiIcon_Black.png";
-import BlankProfile from '@/public/assets/image/personIcon.png'
+import BlankProfile from '@/public/assets/image/personIcon.png';
 import { Button } from "../common/button/style";
 import { useRouter } from "next/router";
 import Search from './SearchBar'
@@ -12,7 +12,7 @@ import axios from "axios";
 const Header = () => {
   const [login, setLogin] = useState<boolean>(false);
   const [profileImg, setProfileImg] = useState<string>(BlankProfile.src);
-  const [keyWord, setKeyWord] = useState('');
+  const [keyWord, setKeyWord] = useState<string>('');
   const router = useRouter();
 
   const update = () => {
@@ -30,26 +30,27 @@ const Header = () => {
       setLogin(false);
       return;
     }
-    setLogin(true);
-    axios({
-      method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASEURL}/user`,
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        setProfileImg(process.env.NEXT_PUBLIC_BASEURL + res.data.userPhoto);
-        setLogin(true);
+    if (!login) {
+      axios({
+        method: 'GET',
+        url: `${process.env.NEXT_PUBLIC_BASEURL}/user`,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
       })
-      .catch((err) => {
-        console.error(err);
-      });
+        .then((res) => {
+          setProfileImg(process.env.NEXT_PUBLIC_BASEURL + res.data.userPhoto);
+          setLogin(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   }
 
   useEffect(() => {
     GetData();
-  },[])
+  }, [router])
 
   return (
     <_.HeaderOutBox>

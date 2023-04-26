@@ -10,18 +10,6 @@ import SearchBar from "./SearchBar";
 import * as _ from './style'
 import axios from "axios";
 
-interface resProps {
-  photoID: number;
-  photo: string;
-  head: string;
-  like: number;
-  User: {
-    name: string;
-    photo: string;
-    userID: string;
-  };
-}
-
 type UserType = "name" | "photo" | "userID";
 interface RankProps {
   photoID: number;
@@ -50,7 +38,7 @@ const Main = () => {
       url: process.env.NEXT_PUBLIC_BASEURL
     })
       .then((res) => {
-        setData(res.data.sortPhoto)
+        setData(res.data.sortPhoto);
       })
       .catch((err) => {
         console.error(err);

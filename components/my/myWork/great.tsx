@@ -60,7 +60,7 @@ const MyGreat = () => {
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCard photoID={data.Photo.photoID} photo={data.Photo.photo} head={data.Photo.head} like={data.Photo.like} user={data.User} key={data.Photo.photoID}/>
+                            <RankCard photoID={data.Photo.photoID} photo={data.Photo.photo} head={data.Photo.head} like={data.Photo.like} User={data.User} key={data.Photo.photoID}/>
                         )
                     })
                 }
