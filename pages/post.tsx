@@ -19,13 +19,12 @@ export default function PostPage(){
     },[]);
 
     const request = () => {
-        const token = localStorage.getItem('token');
-        if(token === null || !(Photo && title && TagList && Desc)) return;
+        if(localStorage.getItem('token') === null || !(Photo && title && TagList && Desc)) return;
         axios({
             url: `${process.env.NEXT_PUBLIC_BASEURL}/photo`,
             method: 'post',
             headers: {
-                "Authorization" : `Bearer ${token}`,
+                "Authorization" : `Bearer ${localStorage.getItem('token')}`,
             },
             data: {
                 photo : Photo,
