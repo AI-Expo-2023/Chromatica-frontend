@@ -41,8 +41,8 @@ export default function PostPage(){
             }
         })
         .then(() => {
-            router.push('/');
             alert('성공적으로 게시되었습니다.');
+            router.push('/');
         })
         .catch((error) => {
             console.log(error);
