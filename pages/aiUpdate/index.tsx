@@ -1,5 +1,4 @@
 import Canvas from "@/components/img2img/canvas";
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import * as _ from "./style";
 import CanvasSetting from "@/components/img2img/canvasSetting";
@@ -10,12 +9,13 @@ import ToolSize from "@/components/img2img/toolSize";
 import { PhotoFilter24Filled } from "@fluentui/react-icons";
 import FilterModal from "@/components/img2img/filterModal";
 
+
 const AiUpdate = () => {
-  /**여기에 사진 주소 넣어야함 */
-  const [imgData, setImgData] = useState("https://avatars.githubusercontent.com/u/102589413?v=4");
+  const [imgData, setImgData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [settingOptions, setSettingOptions] = useState<CanvasOptions>({
-    color: "#FADD75",
+    //color: "#FADD75",
+    color: "#ffffff",
     tool: true,
     backgroundColor: "#f2222f"
   });
@@ -33,41 +33,29 @@ const AiUpdate = () => {
   })
   const [filter, setFilter] = useState(1);
   const [openModal, setOpenModal] = useState(false);
-  const router = useRouter();
-  useEffect(() => {
-    const imgData = localStorage.getItem("imgData");
-    setImgData(imgData || "");
-  }, []);
-  
-  useEffect(() => {
-    if (!router.isReady) return;
-    const size = `${router.query.size}`.split(".", 2);
-    const width = Number(size[0]);
-    const height = Number(size[1]);
-    setCanvasSize({ width: width, height: height })
-    const imgBackground = document.getElementById("imgBackground") as HTMLImageElement;
-    if (imgBackground?.style) {
-      imgBackground.style.width = `${width * 0.75}px`;
-      imgBackground.style.height = `${height * 0.75}px`;
-      imgBackground.src = imgData;
-    }
+  const [baseImgUrl, setBaseUrl] = useState("");
+
+  const getImage = async () => {
+    const imgData = await localStorage.getItem("imgData");
+    setImgData(String(imgData));
+    setBaseUrl(String(imgData));
     const img = new Image();
-    img.src = imgData;
+    img.src = String(imgData);
     img.onload = () => {
-      if (canvasRef.current) {
-        const canvas: HTMLCanvasElement = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
-      }
+      setCanvasSize({ width: Number(img.width), height: Number(img.height) })
     }
-  }, [router.isReady]);
+  }
+
+  useEffect(() => {
+    getImage();
+  }, []);
 
   return (
     <>
       <FilterModal openModadl={openModal} setOpenModal={setOpenModal} filter={filter} setFilter={setFilter} />
       <_.Conatiner>
         <PositionDiv>
-          <ImgBackGround id="imgBackground" />
+          <ImgBackGround src={baseImgUrl} width={canvasSize.width * 0.75} height={canvasSize.height * 0.75} />
         </PositionDiv>
         <CanvasPaint>
           <Canvas update canvasRef={canvasRef} canvasSize={canvasSize} toolWidth={toolWidth} settingOptions={settingOptions} />
@@ -76,11 +64,11 @@ const AiUpdate = () => {
               <Tool settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
               <_.SettingContainer onClick={() => setOpenModal(true)}><PhotoFilter24Filled primaryFill="black" />필터</_.SettingContainer>
             </div>
-            <CanvasSetting settingOptions={settingOptions} canvasRef={canvasRef} aiSetting={aiSetting} setAiSetting={setAiSetting} />
+            <CanvasSetting update settingOptions={settingOptions} canvasRef={canvasRef} aiSetting={aiSetting} setAiSetting={setAiSetting} />
           </_.CanvasTools>
           <ToolSize toolWidth={toolWidth} setToolWidth={setToolWidth} settingOptions={settingOptions} />
         </CanvasPaint>
-        <AIResponse filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
+        <AIResponse getImage={getImage} filter={filter} imgData={imgData} canvasRef={canvasRef} aiSetting={aiSetting} update={true} canvasSize={canvasSize} />
       </_.Conatiner>
     </>
   )
@@ -93,9 +81,9 @@ const CanvasPaint = styled(_.CanvasContainer)`
 const PositionDiv = styled.div`
   position: relative;
   z-index: 0;
-  background-color: red;
 `;
 const ImgBackGround = styled.img`
   position: absolute;
-  left:20px
+  left:20px;
+  border-radius: 8px;
 `;

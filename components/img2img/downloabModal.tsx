@@ -20,7 +20,7 @@ const DownloabModal = ({ openDownloadModal, setOpenDownloadModal, imgData }: Pro
       const a = document.createElement("a");
         a.href = base64;
         if (selectKind == 0) {
-          a.download = "Chromatica-image.jpeg";
+          a.download = "Chromatica-image.jpg";
         } else {
           a.download = "Chromatica-image.png";
         }
@@ -40,9 +40,9 @@ const DownloabModal = ({ openDownloadModal, setOpenDownloadModal, imgData }: Pro
             {
               selectKind ? <>
                 <Button Width="189" Gray25>PNG</Button>
-                <Button Width="189" onClick={() => setSelectKind(0)}>JPEG</Button>
+                <Button Width="189" Gray5 onClick={() => setSelectKind(0)}>JPG</Button>
               </> : <>
-                <Button Width="189" onClick={() => setSelectKind(1)}>PNG</Button>
+                <Button Width="189" Gray5 onClick={() => setSelectKind(1)}>PNG</Button>
                 <Button Width="189" Gray25>JPEG</Button>
               </>
             }

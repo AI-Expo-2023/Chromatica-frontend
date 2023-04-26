@@ -81,6 +81,7 @@ export const PersonIconBox = styled.img`
   height: 32px;
   border-radius: 100%;
   object-fit: cover;
+  object-position: center center;
   background-color: #D9D9D9;
 `
 

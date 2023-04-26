@@ -27,15 +27,13 @@ const I2i = (): JSX.Element => {
   });
   const [aiSetting, setAiSetting] = useState<AiSetting>({
     quality: 20,
-    count: 4
+    count: 2
   })
-
 
   return (
     <>
       <SizeModal canvasSize={canvasSize} setCanvasSize={setCanvasSize} settingOptions={settingOptions} setSettingOptions={setSettingOptions} />
       <_.DisplayBox>
-
         <_.Container>
           <div>
             <_.CanvasContainer>

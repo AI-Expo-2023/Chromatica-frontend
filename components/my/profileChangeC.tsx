@@ -2,13 +2,29 @@ import AuthBox from '@/components/common/authBox';
 import { Button } from '@/components/common/button/style';
 import Input from '@/components/common/input';
 import { Theme } from '@/styles/theme/Theme';
+import { getAccessToken } from '@/util/token';
 import styled from '@emotion/styled';
-import { ChangeEvent, useState } from 'react';
+import axios from 'axios';
+import Router, { useRouter } from 'next/router';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-const ProfileChangeC = (): JSX.Element => {
+
+type user = {
+  Name: string | string[] | undefined,
+}
+
+const ProfileChangeC = ({Name}:user): JSX.Element => {
+
+  const formData = new FormData();
+  const token = getAccessToken();
   const [nickName, setNickName] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null); // 서버 전송용
   const [imgView, setImgView] = useState<string>(''); // 프리뷰용
+
+  useEffect(()=>{
+    console.log(Name);
+    setNickName(String(Name));
+  },[])
 
   const fileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files as FileList;
@@ -27,6 +43,28 @@ const ProfileChangeC = (): JSX.Element => {
     await reader.readAsDataURL(theFile);
   };
 
+  const change = () => {
+    formData.append("name", nickName);
+    if(imgFile !== null){
+      formData.append("photo", imgFile);
+    }
+    axios({
+      method: "PATCH",
+      url: process.env.NEXT_PUBLIC_BASEURL + "/user/updateInfo",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+      data: formData,
+    })
+    .then((result)=>{
+      console.log(result)
+      Router.push("/my")
+    })
+    .catch((error)=>{
+      console.error(error);
+    })
+  }
+
   return (
     <AuthBox title="프로필 수정" sub="게시물과 댓글에 표시되는 정보입니다">
       <Content>
@@ -40,7 +78,7 @@ const ProfileChangeC = (): JSX.Element => {
           </div>
         </ProfileBox>
         <Input value={nickName} setValue={setNickName} title="닉네임" />
-        <Button MainColor>수정</Button>
+        <Button MainColor onClick={change}>수정</Button>
       </Content>
     </AuthBox>
   );
@@ -62,6 +100,7 @@ const ProfileBox = styled.div`
     border: 1px solid ${Theme.Gray[75]};
     -webkit-user-drag: none;
     margin: 0 12px 0 0;
+    object-fit: contain;
   }
   > div {
     position: relative;
@@ -71,6 +110,7 @@ const ProfileBox = styled.div`
       height: 33px;
       border-radius: 8px;
       position: absolute;
+      top: 0;
       left:0;
       cursor: pointer;
       ::-webkit-file-upload-button {
