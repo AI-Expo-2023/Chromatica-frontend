@@ -1,26 +1,7 @@
 import RankCard from "@/components/common/RankCard/RankCard"
 import styled from "@emotion/styled";
 
-interface propsType{
-    data: postDataType[];
-    pageNum?: number;
-    sort: boolean;
-}
-
-interface postDataType {
-    photoID: number;
-    photo: string;
-    head: string;
-    like: number;
-    createdAt: string;
-    User: {
-        name: string;
-        photo: string;
-        userID: string;
-    }
-}
-
-export const PostListerWithSort = ({data, sort}:propsType)=>{
+export const PostListerWithSort = ({data, sort}:any)=>{
     return(
         <SixHorizon>
             {data.map((data, index)=>(
