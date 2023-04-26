@@ -7,8 +7,6 @@ import { Button } from "@/components/common/button/style";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
 
-const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
-
 export default function PostPage(){
     const [title, setTitle] = useState<string>('');
     const [Desc, setDesc] = useState<string>('');
@@ -24,7 +22,7 @@ export default function PostPage(){
         const token = localStorage.getItem('token');
         if(token === null || !(Photo && title && TagList && Desc)) return;
         axios({
-            url: `${BASEURL}/photo`,
+            url: `${process.env.NEXT_PUBLIC_BASEURL}/photo`,
             method: 'post',
             headers: {
                 "Authorization" : `Bearer ${token}`,
@@ -48,27 +46,6 @@ export default function PostPage(){
     useEffect(()=>{
         setPhoto(localStorage.getItem('imageData') as string);
     },[]);
-
-    function request(){
-        axios({
-            url: 'https://4764470f-1c69-4fa0-bc56-d813d9e22c17.mock.pstmn.io/post/photo',
-            method: 'post',
-            headers: {
-                "accessToken" : "babs",
-            },
-            data: {
-                "photo" : Photo,
-                "head" : title,
-                "tag" : TagList,
-                "description" : Desc,
-            }
-        })
-        .then(function (response) { 
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-    });}
 
     return(
         <CenterContainer>
