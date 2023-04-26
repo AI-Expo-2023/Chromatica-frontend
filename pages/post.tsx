@@ -4,7 +4,6 @@ import { TextArea } from "@/components/post/textArea";
 import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
 import { Button } from "@/components/common/button/style";
-import Image from "next/image";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
 
