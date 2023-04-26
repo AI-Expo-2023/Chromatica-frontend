@@ -1,7 +1,7 @@
 import RankCard from "@/components/common/RankCard/RankCard"
 import styled from "@emotion/styled";
 
-export const PostListerWithSort = ({data, sort}:any)=>{
+export const PostListerWithSort = ({data, isPopular}:any)=>{
     return(
         <SixHorizon>
             {data.map((data, index)=>(
@@ -11,7 +11,7 @@ export const PostListerWithSort = ({data, sort}:any)=>{
                         photo={data.photo}
                         photoID={data.photoID}
                         user={data.User}
-                        rank={sort ? index+1 : undefined}
+                        rank={isPopular ? index+1 : undefined} //정렬이 popular일 때 순위 표시
                         key={data.photoID + data.User.userID}
                     />
             ))}
