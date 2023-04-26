@@ -15,6 +15,10 @@ export default function PostPage(){
     const router = useRouter();
 
     useEffect(()=>{
+        if(localStorage.getItem('imgData') === null){
+            alert('권한이 없습니다');
+            router.push('/');
+        }
         setPhoto(localStorage.getItem('imgData') as string);
     },[]);
 
