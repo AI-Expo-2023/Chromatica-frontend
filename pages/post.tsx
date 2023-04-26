@@ -42,16 +42,12 @@ export default function PostPage(){
         })
         .then(() => {
             router.push('/');
-            alert('성공적으로 게시되었습니다!');
+            alert('성공적으로 게시되었습니다.');
         })
         .catch((error) => {
             console.log(error);
     });
 }
-
-    useEffect(()=>{
-        setPhoto(localStorage.getItem('imageData') as string);
-    },[]);
 
     return(
         <CenterContainer>
