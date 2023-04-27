@@ -23,13 +23,11 @@ interface resProps {
   description: string;
   like: number;
   tag: string[];
-  reported: number;
-  hadliked: boolean;
 }
 
 const Detail = ({ word }: DetailProps) => {
   const [keyWord, setKeyWord] = useState<string | string[] | undefined>('');
-  const [like, setLike] = useState<boolean>(false);
+  const [Like, setLike] = useState<boolean>(false);
   const [Data, setData] = useState<resProps | undefined>();
   const [report, setReport] = useState<boolean>(false);
   const Time = useRef<NodeJS.Timer | undefined>();
@@ -44,11 +42,7 @@ const Detail = ({ word }: DetailProps) => {
         url: `${process.env.NEXT_PUBLIC_BASEURL}/photo/${word}`,
       })
         .then((res) => {
-          setData({
-            ...res.data.image,
-            tag: res.data.image.tag,
-            hadliked: res.data.hadliked
-          });
+          setData(res.data.image);
         })
         .catch((err) => {
           console.error(err);
@@ -62,12 +56,8 @@ const Detail = ({ word }: DetailProps) => {
         }
       })
         .then((res) => {
-          setData({
-            ...res.data.image,
-            tag: res.data.image.tag,
-            hadliked: res.data.hadliked
-          });
-          setLike(res.data.hadliked);
+          setLike(res.data.hadLiked);
+          setData(res.data.image);
         })
         .catch((err) => {
           console.error(err);
@@ -85,16 +75,23 @@ const Detail = ({ word }: DetailProps) => {
         "Authorization": `Bearer ${token}`
       }
     })
+      .then(() => {
+        setLike(!Like);
+        if (Data) {
+          setData({
+            ...Data,
+            like: !Like ? Data.like + 1 : Data.like - 1
+          });
+        }
+      })
       .catch((err) => {
         console.error(err);
-        setLike(Data ? Data.hadliked : false);
       })
   }
 
-  const isLike = (like: boolean) => {
+  const isLike = () => {
     const token = window.localStorage.getItem('token');
     if (token === null) return;
-    setLike(like);
     if (Time.current) {
       clearInterval(Time.current);
       Time.current = undefined;
@@ -103,7 +100,7 @@ const Detail = ({ word }: DetailProps) => {
       PostLike();
       clearInterval(Time.current);
       Time.current = undefined;
-    }, 1000)
+    }, 500)
   }
 
   const readyReport = () => {
@@ -174,9 +171,9 @@ const Detail = ({ word }: DetailProps) => {
         </_.GapBox>
         <_.Text>{Data?.description}</_.Text>
         <_.GapBox>
-          <_.LikeBtn onClick={() => isLike(!like)}>
-            <Heart20Filled primaryFill={like ? Theme.Red : Theme.Black} />
-            <_.LikeText bool={like}>{Data ? Data.like + 1 : 0}</_.LikeText>
+          <_.LikeBtn onClick={() => isLike()}>
+            <Heart20Filled primaryFill={Like ? Theme.Red : Theme.Black} />
+            <_.LikeText bool={Like}>{Data?.like}</_.LikeText>
           </_.LikeBtn>
         </_.GapBox>
         <_.GapBox>
