@@ -11,6 +11,7 @@ export const BackGround = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1;
+
 `;
 
 export const ChildrenContainer = styled.div<{
@@ -26,14 +27,15 @@ export const ChildrenContainer = styled.div<{
   background?: boolean;
 }>`
   background-color: white;
-  width: ${(props) => props.width ?? '466px'};
+  width: ${(props) => props.width ?? '450px'};
   height: ${(props) => props.height ?? ''};
   border-radius: 8px;
   z-index: 10000;
-  gap: ${(props) => props.gap ?? '52px'};
-  padding: ${(props) => props.padding ?? '40px 39px'};
+  gap: ${(props) => props.gap ?? '32px'};
+  padding: ${(props) => props.padding ?? '32px'};
   display: ${(props) => props.display ?? ''};
   justify-content: ${(props) => props.justifyContent ?? ''};
   align-items: ${(props) => props.alignItems ?? ''};
   flex-direction: ${(props) => props.flexDirection ?? ''};
 `;
+

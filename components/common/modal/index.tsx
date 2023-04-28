@@ -12,15 +12,19 @@ type PropsType = {
   justifyContent?: string;
   gap?: string;
   flexDirection?: string;
+
+  background?: boolean;
 }
 
 const Modal = ({ background, children, onClickToggleModal, width, height, padding, display, justifyContent, gap, flexDirection, alignItems }: PropsType) => {
+
   return (
     <_.BackGround onClick={() => background ? () => { } : onClickToggleModal()} >
       <_.ChildrenContainer onClick={(e) => e.stopPropagation()} background={background} width={width} height={height} padding={padding} display={display} justifyContent={justifyContent} gap={gap} flexDirection={flexDirection} alignItems={alignItems}>
         {children}
       </_.ChildrenContainer>
     </_.BackGround>
+
   )
 }
 
