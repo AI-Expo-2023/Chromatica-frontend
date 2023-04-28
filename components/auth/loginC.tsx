@@ -25,6 +25,7 @@ const LoginC = (): JSX.Element => {
       .then((response: any) => {
         const token = response.data.accessToken;
         localStorage.setItem("token", token);
+        localStorage.setItem("userId", id);
         router.push('/');
       })
       .catch((error: any) => {

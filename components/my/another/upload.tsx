@@ -16,43 +16,43 @@ type listType = {
     photo: string,
     like: number,
     head: string,
-    User:{
+    User: {
         name: string,
         photo: string,
         userID: string,
     }
 }
 
-const AnotherUpload = ({ID}:user) => {
+const AnotherUpload = ({ ID }: user) => {
 
     const [listData, setListData] = useState<listType[]>();
     const token = getAccessToken();
     const baseUrl = process.env.NEXT_PUBLIC_BASEURL
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         console.log(ID);
-        if(ID === undefined) return;
+        if (ID === undefined) return;
         axios({
-                method: 'GET',
-                url: baseUrl + `/user/${ID}/image/1`,
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                }
-            })
-            .then((result)=>{
-                const DataCut = result.data.images.slice(0,6);
+            method: 'GET',
+            url: baseUrl + `/user/${ID}/image/1`,
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+            .then((result) => {
+                const DataCut = result.data.images.slice(0, 6);
                 setListData(DataCut);
                 console.log(result)
             })
-            .catch((error)=>{
+            .catch((error) => {
                 console.error('에러: ', error);
             });
-    },[]);
+    }, []);
 
-    const AllView = () =>{
+    const AllView = () => {
         router.push(`/my/${ID}`);
     }
-    return(
+    return (
         <_.Flex>
             <_.Warpper>
                 <_.Work>업로드한 작품</_.Work>
@@ -60,9 +60,9 @@ const AnotherUpload = ({ID}:user) => {
             </_.Warpper>
             <_.List>
                 {
-                    listData?.map((data)=>{
-                        return(
-                            <RankCard {...data}/>
+                    listData?.map((data) => {
+                        return (
+                            <RankCard {...data} />
                         )
                     })
                 }

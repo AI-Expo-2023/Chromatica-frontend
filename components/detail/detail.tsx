@@ -85,10 +85,10 @@ const Detail = ({ word }: DetailProps) => {
         }
       })
       .catch((err) => {
-        if(err.response.status == 409){
+        if (err.response.status == 409) {
           alert("본인 작품은 좋아요를 누를 수 없습니다.")
         }
-        else{
+        else {
           console.error(err)
         }
       })
@@ -129,7 +129,10 @@ const Detail = ({ word }: DetailProps) => {
         alert('성공적으로 신고했습니다!');
       })
       .catch((err) => {
-        if(err.response.status == 409) alert("한번만 신고가 가능합니다")
+        if (err.response.status == 409) {
+          if (err.response.message == "자신의 게시글은 신고할 수 없습니다.") alert("자신의 게시글은 신고할 수 없습니다.")
+          else alert("한번만 신고가 가능합니다")
+        }
       })
   }
 
@@ -140,6 +143,14 @@ const Detail = ({ word }: DetailProps) => {
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = BlankProfile.src;
+  }
+
+
+  const changePage = () => {
+    const id = localStorage.getItem("userId");
+
+    if (id == Data?.user.userID) router.push(`/my`)
+    else router.push(`/my/${Data?.user.userID}`)
   }
 
   return (
@@ -170,7 +181,7 @@ const Detail = ({ word }: DetailProps) => {
             )
           }
         </_.GapBox>
-        <_.GapBox onClick={() => router.push(`/my/${Data?.user.userID}`)}>
+        <_.GapBox onClick={() => changePage()}>
           <_.ImgCircle width={28} height={28} src={Data?.user.photo} alt='' onError={onErrorImg} />
           <_.Text>{Data?.user.name}</_.Text>
         </_.GapBox>
