@@ -14,32 +14,13 @@ type PropsType = {
   flexDirection?: string;
 }
 
-const Modal = ({ children, onClickToggleModal, width, height, padding, display, justifyContent, gap, flexDirection, alignItems }: PropsType): JSX.Element => {
-  useEffect(() => {
-    document.body.style.cssText = `
-      position: fixed;
-      top: -${window.scrollY} px;
-      overflow - y: scroll;
-      width: 100 %;;
-    `;
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
-    };
-  }, []);
-
-
+const Modal = ({ background, children, onClickToggleModal, width, height, padding, display, justifyContent, gap, flexDirection, alignItems }: PropsType) => {
   return (
-    <_.Container >
-      <_.ChildrenContainer width={width} height={height} padding={padding} display={display} justifyContent={justifyContent} gap={gap} flexDirection={flexDirection} alignItems={alignItems} >
+    <_.BackGround onClick={() => background ? () => { } : onClickToggleModal()} >
+      <_.ChildrenContainer onClick={(e) => e.stopPropagation()} background={background} width={width} height={height} padding={padding} display={display} justifyContent={justifyContent} gap={gap} flexDirection={flexDirection} alignItems={alignItems}>
         {children}
-      </_.ChildrenContainer >
-      <_.BackDrop onClick={(e: React.MouseEvent) => {
-        e.preventDefault();
-        onClickToggleModal();
-      }} />
-    </_.Container >
+      </_.ChildrenContainer>
+    </_.BackGround>
   )
 }
 
