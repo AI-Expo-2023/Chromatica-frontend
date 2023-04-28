@@ -28,7 +28,7 @@ const LoginC = (): JSX.Element => {
         router.push('/');
       })
       .catch((error: any) => {
-        alert('로그인 실패');
+          alert('로그인 실패');
       });
   };
 

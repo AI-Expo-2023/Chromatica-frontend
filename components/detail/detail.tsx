@@ -85,7 +85,12 @@ const Detail = ({ word }: DetailProps) => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        if(err.response.status == 409){
+          alert("본인 작품은 좋아요를 누를 수 없습니다.")
+        }
+        else{
+          console.error(err)
+        }
       })
   }
 

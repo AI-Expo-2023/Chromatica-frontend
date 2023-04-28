@@ -38,6 +38,7 @@ const PwChangeC = (): JSX.Element => {
         })
         .then(() => {
           console.log('성공');
+          localStorage.removeItem('token');
           router.push('/auth/complete');
         })
         .catch(() => {
@@ -48,7 +49,7 @@ const PwChangeC = (): JSX.Element => {
 
   useEffect(() => {
     const token = window.localStorage.getItem('token');
-    if(token === null) router.push('/')
+    if (token === null) router.push('/')
   }, [])
 
   return (

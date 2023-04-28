@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import * as _ from "./style"
 
 type listType = {
-    imageID: number,
+    photoID: number,
     photo: string,
     userID: string,
     createdAt: string,
@@ -52,7 +52,7 @@ const MyTemporary = () => {
                 {
                     listData?.map((data)=>{
                         return(
-                            <RankCardImg photoID={data.imageID} photo={data.photo}/>
+                            <RankCardImg photoID={data.photoID} photo={data.photo}/>
                         )
                     })
                 }

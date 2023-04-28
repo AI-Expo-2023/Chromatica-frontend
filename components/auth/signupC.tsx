@@ -83,7 +83,12 @@ const SignupC = (): JSX.Element => {
           router.push('/auth/start');
         })
         .catch((error: any) => {
-          alert('실패');
+          if (error.response.status == 409) {
+            alert("이미 회원가입한 이메일 또는 중복된 아이디입니다.")
+          } else {
+            alert('실패');
+          }
+          router.push('/auth/login')
         });
     } else {
       alert('인증번호가 틀립니다');

@@ -117,7 +117,8 @@ const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, c
   }
 
   const upload = () => {
-    localStorage.setItem("imgData", aiImg[selectImg - 1]);
+    if (update) localStorage.setItem("imgData", String(aiImg));
+    else localStorage.setItem("imgData", aiImg[selectImg - 1]);
     Router.push(`post`);
   }
 
@@ -127,7 +128,7 @@ const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, c
     const { image } = Router.query;
 
     console.log(image);
-    if (image) {
+    if (image && image != "undefined") {
       axios({
         url: `${BASEURL}/design/${image}`,
         method: 'patch',
@@ -152,7 +153,7 @@ const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, c
           "authorization": `Bearer ${token}`
         },
         data: {
-          imageURL: aiImg[selectImg - 1]
+          imageURL: update ? String(aiImg) : aiImg[selectImg - 1]
         }
       })
         .then((res) => {

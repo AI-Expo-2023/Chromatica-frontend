@@ -22,7 +22,7 @@ export const TagAdder = ({TagList, setTagList}:tagAdderProps) => {
 
     return(
         <Horizonal>
-            <Button onClick={()=>setTSstatus(!isTSenabled)} className='tag-selector'><Add20Filled primaryFill={Theme.Black}  />태그 추가</Button>
+            <Button Gray5 onClick={()=>setTSstatus(!isTSenabled)} className='tag-selector'><Add20Filled primaryFill={Theme.Black}  />태그 추가</Button>
             {isTSenabled ? <TagSelector setTSstatus={setTSstatus} array={TagList} setArray={setTagList} /> : null}
             {TagList.map((data)=>{
                 return <RemovableTag key={data} data={data} array={TagList} setArray={setTagList} />;
