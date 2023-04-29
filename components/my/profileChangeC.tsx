@@ -5,9 +5,8 @@ import { Theme } from '@/styles/theme/Theme';
 import { getAccessToken } from '@/util/token';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { NickName } from '../common/RankCard/style';
 
 
 type user = {
@@ -16,6 +15,7 @@ type user = {
 
 const ProfileChangeC = ({Name}:user): JSX.Element => {
 
+  const formData = new FormData();
   const token = getAccessToken();
   const [nickName, setNickName] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null); // 서버 전송용
@@ -23,10 +23,8 @@ const ProfileChangeC = ({Name}:user): JSX.Element => {
 
   useEffect(()=>{
     console.log(Name);
-    setNickName(`${Name}`);
-  })
-
-  console.log(nickName)
+    setNickName(String(Name));
+  },[])
 
   const fileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files as FileList;
@@ -46,20 +44,21 @@ const ProfileChangeC = ({Name}:user): JSX.Element => {
   };
 
   const change = () => {
+    formData.append("name", nickName);
+    if(imgFile !== null){
+      formData.append("photo", imgFile);
+    }
     axios({
       method: "PATCH",
       url: process.env.NEXT_PUBLIC_BASEURL + "/user/updateInfo",
       headers: {
         "Authorization": `Bearer ${token}`
       },
-      data: {
-        "name": NickName,
-        "photo": imgFile,
-      }
+      data: formData,
     })
     .then((result)=>{
       console.log(result)
-      // router.push('/my'); 연동확인되면 주석 풀기
+      Router.push("/my")
     })
     .catch((error)=>{
       console.error(error);

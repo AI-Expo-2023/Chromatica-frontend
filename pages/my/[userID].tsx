@@ -17,7 +17,7 @@ const Index = () => {
     (() => {
       window.addEventListener("beforeunload", preventClose);
     })();
-   
+
     return () => {
       window.removeEventListener("beforeunload", preventClose);
     };

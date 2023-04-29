@@ -37,7 +37,7 @@ const Detail = ({ word }: DetailProps) => {
 
   const GetData = (word: string) => {
     const token = window.localStorage.getItem('token');
-    if(word === undefined) return;
+    if (word === undefined) return;
     if (token === null) {
       axios({
         method: 'GET',
@@ -46,7 +46,7 @@ const Detail = ({ word }: DetailProps) => {
         .then((res) => {
           setData({
             ...res.data.image,
-            tag: res.data.image.tag.replace(' ', '').split(','),
+            tag: res.data.image.tag,
             hadliked: res.data.hadliked
           });
         })
@@ -64,7 +64,7 @@ const Detail = ({ word }: DetailProps) => {
         .then((res) => {
           setData({
             ...res.data.image,
-            tag: res.data.image.tag.replace(' ', '').split(','),
+            tag: res.data.image.tag,
             hadliked: res.data.hadliked
           });
           setLike(res.data.hadliked);
@@ -123,11 +123,11 @@ const Detail = ({ word }: DetailProps) => {
         "Authorization": `Bearer ${token}`
       }
     })
-    .then(() => {
-      alert('성공적으로 신고했습니다!');
-    })
+      .then(() => {
+        alert('성공적으로 신고했습니다!');
+      })
       .catch((err) => {
-        console.error(err);
+        if(err.response.status == 409) alert("한번만 신고가 가능합니다")
       })
   }
 
@@ -151,19 +151,19 @@ const Detail = ({ word }: DetailProps) => {
       }
       <_.Main>
         <_.ImgContainer>
-        <_.Img src={Data?.photo} alt='사진을 불러오는데 실패했습니다.'/>
+          <_.Img src={Data?.photo} alt='사진을 불러오는데 실패했습니다.' />
         </_.ImgContainer>
         <_.Text weight={800} size={24}>{Data?.head}</_.Text>
         <_.GapBox>
           {
-            Data?.tag.map((data, index) => 
-            <div onClick={() => router.push(`/search/${data}`)}>
-            <Tag
-              key={index}
-              basic={true}
-              >
-                {data}
-              </Tag>
+            Data?.tag.map((data, index) =>
+              <div onClick={() => router.push(`/search/${data}`)}>
+                <Tag
+                  key={index}
+                  basic={true}
+                >
+                  {data}
+                </Tag>
               </div>
             )
           }

@@ -6,7 +6,7 @@ import axios from 'axios';
 import router from 'next/router';
 import { useState } from 'react';
 
-const BASEURL = process.env.NEXT_PUBLIC_APP_BASEURL;
+const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 
 const receiveEmailC = (): JSX.Element => {
   const [email, setEmail] = useState<string>('');

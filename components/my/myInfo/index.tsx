@@ -42,7 +42,7 @@ const MyInfo = ():JSX.Element => {
     const ProfileChange = () => {
         router.push({
             pathname: '/my/profileChange',
-            query: infoData.userName,
+            query: {userName:infoData.userName},
         });
     }
 
@@ -88,7 +88,7 @@ const MyInfo = ():JSX.Element => {
     return(
         <_.Flex>
             <_.Warpper>
-                <_.Profile src={infoData.userPhoto}/>
+                <_.Profile src={`${process.env.NEXT_PUBLIC_BASEURL}` + "/user/upload/" + `${infoData.userPhoto}`}/>
                 <div>
                     <_.Nickname>{infoData.userName}</_.Nickname>
                     <_.Email>{infoData.userEmail}</_.Email>
