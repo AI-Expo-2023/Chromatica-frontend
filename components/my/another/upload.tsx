@@ -50,7 +50,7 @@ const AnotherUpload = ({ ID }: user) => {
     }, []);
 
     const AllView = () => {
-        router.push(`/my/${ID}`);
+        router.push(`/my/${ID}/post`);
     }
     return (
         <_.Flex>

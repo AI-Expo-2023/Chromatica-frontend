@@ -16,13 +16,7 @@ type listType = {
 
 const MyTemporary = () => {
 
-    const [listData, setListData] = useState<listType[]>([{
-        photoID: 123,
-        photo: "https://avatars.githubusercontent.com/u/102589413?s=400&u=e0b6882cfc27244779f8b22f4ba60e0e48941426&v=4",
-        userID: "asd",
-        createdAt: "asd",
-        updatedAt: "asd"
-    }]);
+    const [listData, setListData] = useState<listType[]>([]);
     const token = getAccessToken();
 
     useEffect(() => {
