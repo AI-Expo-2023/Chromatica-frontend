@@ -2,15 +2,16 @@ import AuthBox from '@/components/common/authBox';
 import { Button } from '@/components/common/button/style';
 import Input from '@/components/common/input';
 import styled from '@emotion/styled';
-import { useState } from 'react';
-import router from 'next/router';
+import { useEffect, useState } from 'react';
+import router, { useRouter } from 'next/router';
 import axios from 'axios';
 
-const BASEURL = process.env.NEXT_PUBLIC_APP_BASEURL;
+const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 
 const PwChangeC = (): JSX.Element => {
   const [password, setPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
+  const router = useRouter();
 
   const NPWPost = () => {
     const token = window.localStorage.getItem('token');
@@ -35,15 +36,21 @@ const PwChangeC = (): JSX.Element => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((response: any) => {
+        .then(() => {
           console.log('성공');
+          localStorage.removeItem('token');
           router.push('/auth/complete');
         })
-        .catch((error: any) => {
+        .catch(() => {
           alert('비밀번호 변경 실패');
         });
     }
   };
+
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+    if (token === null) router.push('/')
+  }, [])
 
   return (
     <AuthBox title="비밀번호 변경">

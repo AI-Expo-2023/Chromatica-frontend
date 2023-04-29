@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getAccessToken } from "@/util/token";
 import { useRouter } from "next/router";
+import BlankProfile from '@/public/assets/image/personIcon.png'
 
 type GetData = {
     userPhoto?: string,
@@ -12,14 +13,14 @@ type GetData = {
     userEmail?: string,
 }
 const MyInfo = ():JSX.Element => {
-
     const router = useRouter();
     const [infoData, setInfoData] = useState<GetData>({});
     const [worldtoken, setWorldToken] = useState<string>();
+
     useEffect(()=>{
         const token = getAccessToken();
-        setWorldToken(`${token}`);
         if(token === null) return;
+        setWorldToken(token);
         axios({
             method:'GET',
             url: process.env.NEXT_PUBLIC_BASEURL + `/user`,
@@ -51,7 +52,6 @@ const MyInfo = ():JSX.Element => {
     }
 
     const Logout = () =>{
-        // 토큰 지우는 코드 들어갈 예정
         axios({
             method: 'DELETE',
             url: process.env.NEXT_PUBLIC_BASEURL + '/user/log',
@@ -59,8 +59,8 @@ const MyInfo = ():JSX.Element => {
                 "Authorization": `Bearer ${worldtoken}`
             }
         })
-        .then((result)=>{
-            localStorage.setItem("token", "");
+        .then(()=>{
+            localStorage.removeItem("token");
             router.push("/");
         })
         .catch((error)=>{
@@ -85,10 +85,14 @@ const MyInfo = ():JSX.Element => {
         });
     }
 
+    const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+        e.currentTarget.src = BlankProfile.src;
+    }
+
     return(
         <_.Flex>
             <_.Warpper>
-                <_.Profile src={`${process.env.NEXT_PUBLIC_BASEURL}` + "/user/upload/" + `${infoData.userPhoto}`}/>
+                <_.Profile src={`${process.env.NEXT_PUBLIC_BASEURL}` + "/user/upload/" + `${infoData.userPhoto}`} alt='' onError={onErrorImg}/>
                 <div>
                     <_.Nickname>{infoData.userName}</_.Nickname>
                     <_.Email>{infoData.userEmail}</_.Email>

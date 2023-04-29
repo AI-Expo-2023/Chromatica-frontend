@@ -21,7 +21,6 @@ export const Img = styled.img`
 export const BetweenBox = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: ${Theme.White};
 `
 
 export const UserImg = styled(Img)`

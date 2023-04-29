@@ -1,64 +1,60 @@
 import Input from "@/components/common/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextArea } from "@/components/post/textArea";
 import styled from "@emotion/styled";
 import { TagAdder } from "@/components/post/tagAdder";
 import { Button } from "@/components/common/button/style";
-import Image from "next/image";
 import axios from "axios";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
-type postType = {
-    photo: string;
-    head: string;
-    tag: string[];
-    description: string;
-}
-const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
-
-export default function PostPage(){
-    
-
+export default function PostPage() {
     const [title, setTitle] = useState<string>('');
     const [Desc, setDesc] = useState<string>('');
-    const [Photo, setPhoto] = useState<string>('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/6152bc164687275.63fb405a39dda.jpg');
+    const [Photo, setPhoto] = useState<string>('');
     const [TagList, setTagList] = useState<string[]>([]);
+    const router = useRouter();
 
-    useEffect(()=>{
-        setPhoto(localStorage.getItem('imgData') as string);
-    },[]);
+    useEffect(() => {
+        const photodata = localStorage.getItem('imgData');
 
-    function request(){
-        const token = localStorage.getItem('token');
+        setPhoto(String(photodata))
+    }, []);
 
+    const request = () => {
+        if (!(title && Desc)) {
+            alert('내용과 제목은 필수 사항입니다');
+            return;
+        }
         axios({
-            url: `${BASEURL}/photo`,
+            url: `${process.env.NEXT_PUBLIC_BASEURL}/photo`,
             method: 'post',
             headers: {
-                "Authorization" : `Bearer ${token}`,
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
             },
             data: {
-                "photo" : Photo,
-                "head" : title,
-                "tag" : TagList,
-                "description" : Desc,
+                photo: Photo,
+                head: title,
+                tag: TagList,
+                description: Desc,
             }
         })
-        .then(function (response) { 
-            console.log(response)
-        })
-        .catch(function (error) {
-            console.log(error);
-    });}
+            .then(() => {
+                alert('성공적으로 게시되었습니다.');
+                router.push('/');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
-    return(
+    return (
         <CenterContainer>
             <PaddingContainer>
                 <PostPreview src={Photo} placeholder="empty" alt="업로드하려는 이미지 미리 보기" />
                 <Input value={title} setValue={setTitle} title='제목' width="100%" />
-                <TextArea value={Desc} setValue={setDesc} title='설명' width="100%"/>
-                <TagAdder TagList={TagList} setTagList={setTagList}/>
-                <Button MainColor>게시</Button>
+                <TextArea value={Desc} setValue={setDesc} title='설명' width="100%" />
+                <TagAdder TagList={TagList} setTagList={setTagList} />
+                <Button MainColor onClick={() => request()}>게시</Button>
             </PaddingContainer>
         </CenterContainer>
     )
@@ -81,5 +77,6 @@ const CenterContainer = styled.div`
 const PostPreview = styled.img`
     position: initial !important;
     border-radius: 8px;
-    height: 500px;
+    height: 500px !important;
+    width: auto !important;
 `

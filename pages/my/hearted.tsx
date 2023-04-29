@@ -1,4 +1,4 @@
-import { PostLister } from "@/components/my/hearted/PostLister";
+import { PostLister } from "@/components/my/PostLister";
 import { Title } from "./style";
 import Pagination from "@/components/common/pagination/pagination";
 import { useEffect, useState } from "react";
@@ -7,14 +7,32 @@ import axios from "axios";
 
 type responseType = {
     manyImage: number;
-    images: postType[];
+    images: RankProps[];
 }
 
-type postType = {
+type UserProps = {
+    userID: string;
+    name: string;
+    photo: string;
+}
+
+type resType = {
+    photoID: number;
+    Photo: {
+        photoID: number;
+        photo: string;
+        head: string;
+        like: number;
+    };
+    User: UserProps;
+}
+
+interface RankProps {
+    photoID: number;
     photo: string;
     head: string;
-    tag: string[];
-    description: string;
+    like: number;
+    User: UserProps;
 }
 
 const MyHearted = ()=>{
@@ -27,13 +45,19 @@ const MyHearted = ()=>{
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Inp4Y3YiLCJpYXQiOjE2ODE5ODg5NTZ9.sl0MRs2l3yXZHm458RMwwiySVfECe9u6iaex_lPObos",
+                "Authorization" : `Bearer ${localStorage.getItem('token')}`,
             }
         })
-        .then(function (response) {
-            setData(response.data as responseType);
+        .then((response) => {
+            setData({
+                manyImage: response.data.manyImage,
+                images: response.data.images.map((value: resType): RankProps => {
+                    const {Photo, User} = value;
+                    return { ...Photo, User }
+                })
+            })
         })
-        .catch(function (error) {
+        .catch((error) => {
             alert(`오류가 발생했습니다(${error.status})`);
         })
     },
@@ -47,9 +71,13 @@ const MyHearted = ()=>{
                 </Title>
                 {Data &&
                 <>
-                    <PostLister data={Data.images} pageNum={pageNum}/>
+                    <PostLister data={Data.images}/>
                     <CenterContainer>
-                        <Pagination value={pageNum} change={setPageNum} end={Math.ceil(Data.manyImage/18)}/>
+                        <Pagination
+                            value={pageNum}
+                            change={setPageNum}
+                            end={Math.ceil(Data.manyImage/18) === 0 ? 1 : Math.ceil(Data.manyImage/18)}
+                        />
                     </CenterContainer>
                 </>
                 }

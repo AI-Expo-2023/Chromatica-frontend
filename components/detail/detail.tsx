@@ -23,13 +23,11 @@ interface resProps {
   description: string;
   like: number;
   tag: string[];
-  reported: number;
-  hadliked: boolean;
 }
 
 const Detail = ({ word }: DetailProps) => {
   const [keyWord, setKeyWord] = useState<string | string[] | undefined>('');
-  const [like, setLike] = useState<boolean>(false);
+  const [Like, setLike] = useState<boolean>(false);
   const [Data, setData] = useState<resProps | undefined>();
   const [report, setReport] = useState<boolean>(false);
   const Time = useRef<NodeJS.Timer | undefined>();
@@ -44,11 +42,7 @@ const Detail = ({ word }: DetailProps) => {
         url: `${process.env.NEXT_PUBLIC_BASEURL}/photo/${word}`,
       })
         .then((res) => {
-          setData({
-            ...res.data.image,
-            tag: res.data.image.tag,
-            hadliked: res.data.hadliked
-          });
+          setData(res.data.image);
         })
         .catch((err) => {
           console.error(err);
@@ -62,12 +56,8 @@ const Detail = ({ word }: DetailProps) => {
         }
       })
         .then((res) => {
-          setData({
-            ...res.data.image,
-            tag: res.data.image.tag,
-            hadliked: res.data.hadliked
-          });
-          setLike(res.data.hadliked);
+          setLike(res.data.hadLiked);
+          setData(res.data.image);
         })
         .catch((err) => {
           console.error(err);
@@ -85,16 +75,28 @@ const Detail = ({ word }: DetailProps) => {
         "Authorization": `Bearer ${token}`
       }
     })
+      .then(() => {
+        setLike(!Like);
+        if (Data) {
+          setData({
+            ...Data,
+            like: !Like ? Data.like + 1 : Data.like - 1
+          });
+        }
+      })
       .catch((err) => {
-        console.error(err);
-        setLike(Data ? Data.hadliked : false);
+        if (err.response.status == 409) {
+          alert("본인 작품은 좋아요를 누를 수 없습니다.")
+        }
+        else {
+          console.error(err)
+        }
       })
   }
 
-  const isLike = (like: boolean) => {
+  const isLike = () => {
     const token = window.localStorage.getItem('token');
     if (token === null) return;
-    setLike(like);
     if (Time.current) {
       clearInterval(Time.current);
       Time.current = undefined;
@@ -103,7 +105,7 @@ const Detail = ({ word }: DetailProps) => {
       PostLike();
       clearInterval(Time.current);
       Time.current = undefined;
-    }, 1000)
+    }, 500)
   }
 
   const readyReport = () => {
@@ -127,7 +129,10 @@ const Detail = ({ word }: DetailProps) => {
         alert('성공적으로 신고했습니다!');
       })
       .catch((err) => {
-        if(err.response.status == 409) alert("한번만 신고가 가능합니다")
+        if (err.response.status == 409) {
+          if (err.response.message == "자신의 게시글은 신고할 수 없습니다.") alert("자신의 게시글은 신고할 수 없습니다.")
+          else alert("한번만 신고가 가능합니다")
+        }
       })
   }
 
@@ -138,6 +143,14 @@ const Detail = ({ word }: DetailProps) => {
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = BlankProfile.src;
+  }
+
+
+  const changePage = () => {
+    const id = localStorage.getItem("userId");
+
+    if (id == Data?.user.userID) router.push(`/my`)
+    else router.push(`/my/${Data?.user.userID}`)
   }
 
   return (
@@ -168,15 +181,15 @@ const Detail = ({ word }: DetailProps) => {
             )
           }
         </_.GapBox>
-        <_.GapBox onClick={() => router.push(`/my/${Data?.user.userID}`)}>
+        <_.GapBox onClick={() => changePage()}>
           <_.ImgCircle width={28} height={28} src={Data?.user.photo} alt='' onError={onErrorImg} />
           <_.Text>{Data?.user.name}</_.Text>
         </_.GapBox>
         <_.Text>{Data?.description}</_.Text>
         <_.GapBox>
-          <_.LikeBtn onClick={() => isLike(!like)}>
-            <Heart20Filled primaryFill={like ? Theme.Red : Theme.Black} />
-            <_.LikeText bool={like}>{Data ? Data.like + 1 : 0}</_.LikeText>
+          <_.LikeBtn onClick={() => isLike()}>
+            <Heart20Filled primaryFill={Like ? Theme.Red : Theme.Black} />
+            <_.LikeText bool={Like}>{Data?.like}</_.LikeText>
           </_.LikeBtn>
         </_.GapBox>
         <_.GapBox>

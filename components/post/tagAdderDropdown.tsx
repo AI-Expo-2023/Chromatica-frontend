@@ -19,7 +19,7 @@ interface option{
 
 function TagSelector({setTSstatus, array, setArray}:main){
     const [searchKeyword, setKeyword] = useState<string>('');
-    const tempData = ["띵명작","자연","사이버펑크","현대적","도시","현대차","타이어펑크","개띵작","머리가띵","현대의적","띵"];
+    const tagEnum = ["인간", "가구", "개", "경찰", "고양이", "곰", "교사", "기린", "꽃", "나무", "남성", "노인", "다람쥐", "도시", "독수리", "드워프", "따뜻한", "물고기", "바다", "밝은", "배", "뱀", "별", "사이버펑크", "사자", "산", "새", "석양", "시골", "식물", "아이", "안개", "어두운", "엘프", "여성", "여우", "연못", "우주", "우주선", "음식", "이구아나", "자동차", "차가운", "초원", "하늘", "학교", "학생", "해변", "햄스터", "호랑이", "호수", "오크"];
 
     return(
         <_.addTagMain className='tag-selector'>
@@ -28,7 +28,7 @@ function TagSelector({setTSstatus, array, setArray}:main){
             </IconButton>
             <Input title='태그 검색' width='100%' value={searchKeyword} setValue={setKeyword}/>
             <_.tagOptionList>
-                {tempData.filter(data=> {return data.includes(searchKeyword)}).map((text)=>(<TagListOption tagName={text} array={array} setArray={setArray} key={text} />))}
+                {tagEnum.filter(data=> {return data.includes(searchKeyword)}).map((text)=>(<TagListOption tagName={text} array={array} setArray={setArray} key={text} />))}
             </_.tagOptionList>
         </_.addTagMain>
     )

@@ -23,4 +23,7 @@ export const Work = styled.div`
   font-weight: 800;
 `;
 
-export const List = styled.div``;
+export const List = styled.div`
+  display: flex;
+  gap: 10px;
+`;

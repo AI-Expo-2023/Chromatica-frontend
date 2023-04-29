@@ -16,7 +16,6 @@ interface PostType {
     photo: string;
     head: string;
     like: number;
-    createdAt?: string;
     User: {
         name: string;
         photo: string;
@@ -45,10 +44,10 @@ export default function Gallery() {
                 url: `${process.env.NEXT_PUBLIC_BASEURL}/rank`,
                 method: 'get'
             })
-            .then(function(response){
+            .then((response) => {
                 setData(response.data as ResponseType);
             })
-            .catch(function(error){
+            .catch((error) => {
                 alert(`오류가 발생했습니다(${error.status})`);
             })
         }
@@ -57,10 +56,10 @@ export default function Gallery() {
                 url: `${process.env.NEXT_PUBLIC_BASEURL}/gallery/${Page}`,
                 method: 'get',
             })
-            .then(function (response) {
+            .then((response) => {
                 setData(response.data as ResponseType);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 alert(`오류가 발생했습니다(${error.status})`);
             })
         }
