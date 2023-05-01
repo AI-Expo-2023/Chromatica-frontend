@@ -2,7 +2,7 @@ import { Theme } from '@/styles/theme/Theme';
 import styled from '@emotion/styled';
 
 export const Flex = styled.div`
-  width: 80%;
+  width: 1300px;
   height: 370px;
   background-color: ${Theme.Gray[5]};
   margin-top: 16px;
@@ -25,5 +25,5 @@ export const Work = styled.div`
 
 export const List = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 12px;
 `;

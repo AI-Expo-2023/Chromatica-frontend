@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Theme } from '@/styles/theme/Theme';
 
 export const Flex = styled.div`
-  width: 80%;
+  width: 1300px;
   height: 130px;
   background-color: ${Theme.Gray[5]};
   border-radius: 8px;
