@@ -19,6 +19,7 @@ type Props = {
 const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasSize, update }): JSX.Element => {
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined); //mouse down시 마우스 포인터 x,y 위치
   const [isPainting, setIsPainting] = useState<boolean>(false);  //현재 그림이 그려지는 상태인지 boolean으로 보여주기
+  const undo: string[] = [];
 
   /**mouse 포인터의 위치를 구하는 함수 */
   const getCoordinates = (e: MouseEvent): Coordinate | undefined => {
@@ -80,6 +81,8 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
       setIsPainting(true);
       setMousePosition(coordinates);
     }
+    undoSave();
+
   }, []);
 
 
@@ -137,6 +140,7 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
       pixelStack.push([x, y + 1]);
     }
   }
+
   const painting = useCallback((e: MouseEvent) => {
     if (isPainting && settingOptions.paint) {
       const newMousePosition = getCoordinates(e);
@@ -146,10 +150,35 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
     }
   }, [isPainting, mousePosition]);
 
-  const exitPaint = useCallback(() => {
+  const undoSave = () => {
+    undo.push(canvasRef.current!.toDataURL());
+    if (undo.length > 5)
+      undo.shift();
+  }
+
+  const undoFunction = (e: KeyboardEvent) => {
+    if (e.ctrlKey && e.key === "z") {
+      if (undo.length == 0) return;
+      let preCanvas = undo.pop();
+      let preImage = new Image();
+      preImage.src = preCanvas!;
+      preImage.onload = () => {
+        if (canvasRef.current) {
+          const ctx = canvasRef.current.getContext("2d");
+          ctx?.drawImage(preImage, 0, 0)
+        }
+      }
+    }
+  }
+
+  const finishPaint = useCallback((e: MouseEvent) => {
     setIsPainting(false);
   }, []);
-  
+
+  const exitPaint = useCallback((e: MouseEvent) => {
+    setIsPainting(false);
+  }, []);
+
   useEffect(() => {
     if (canvasRef.current && !update) {
       const canvas: HTMLCanvasElement = canvasRef.current;
@@ -168,17 +197,20 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.addEventListener('mousedown', startPaint);
     canvas.addEventListener('mousemove', paint);
-    canvas.addEventListener('mouseup', exitPaint);
+    canvas.addEventListener('mouseup', finishPaint);
     canvas.addEventListener('click', painting);
     canvas.addEventListener('mouseleave', exitPaint);
+    addEventListener('keydown', undoFunction)
     return () => {
       canvas.removeEventListener('mousedown', startPaint);
       canvas.removeEventListener('mousemove', paint);
-      canvas.removeEventListener('mouseup', exitPaint);
+      canvas.removeEventListener('mouseup', finishPaint);
       canvas.addEventListener('click', painting);
       canvas.removeEventListener('mouseleave', exitPaint);
+      addEventListener('keydown', undoFunction)
     };
   }, [startPaint, paint, exitPaint]);
+
 
   return (
     <>
