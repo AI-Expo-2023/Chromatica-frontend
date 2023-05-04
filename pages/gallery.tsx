@@ -70,7 +70,7 @@ export default function Gallery() {
             <PaddingContainer>
                 <SortSelecter sort={isPopular} setSort={setIsPopular} />
                 <PostListerWithSort sort={isPopular} data={Data.sortPhoto} />
-                {isPopular ? null : <CenterContainer><Pagination value={Page} change={setPage} /></CenterContainer>}
+                {isPopular ? null : <CenterContainer><Pagination value={Page} change={setPage} end={Math.ceil(Data?.manyImage/18)}/></CenterContainer>}
             </PaddingContainer>
         </CenterContainer>
     );
