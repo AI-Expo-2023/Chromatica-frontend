@@ -6,9 +6,10 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-interface ResponseType{
+interface ResponseType {
     message: string;
     sortPhoto: PostType[];
+    manyImage: number
 }
 
 interface PostType {
@@ -24,53 +25,54 @@ interface PostType {
 }
 
 export default function Gallery() {
-    const {query, isReady} = useRouter();
+    const { query, isReady } = useRouter();
     const [isPopular, setIsPopular] = useState<boolean>(false);
     const [Page, setPage] = useState<number>(1);
     const [Data, setData] = useState<ResponseType>({
         message: "",
-        sortPhoto:[]
+        sortPhoto: [],
+        manyImage: 0
     });
 
-    useEffect(()=>{
-        if(isReady===false) return;
-        if(query.sort === 'popular')
+    useEffect(() => {
+        if (isReady === false) return;
+        if (query.sort === 'popular')
             setIsPopular(true);
-    },[isReady])
+    }, [isReady])
 
-    useEffect(()=>{
-        if(isPopular){ //인기순
+    useEffect(() => {
+        if (isPopular) { //인기순
             axios({
                 url: `${process.env.NEXT_PUBLIC_BASEURL}/rank`,
                 method: 'get'
             })
-            .then((response) => {
-                setData(response.data as ResponseType);
-            })
-            .catch((error) => {
-                alert(`오류가 발생했습니다(${error.status})`);
-            })
+                .then((response) => {
+                    setData(response.data as ResponseType);
+                })
+                .catch((error) => {
+                    alert(`오류가 발생했습니다(${error.status})`);
+                })
         }
-        else{
+        else {
             axios({ //최신순
                 url: `${process.env.NEXT_PUBLIC_BASEURL}/gallery/${Page}`,
                 method: 'get',
             })
-            .then((response) => {
-                setData(response.data as ResponseType);
-            })
-            .catch((error) => {
-                alert(`오류가 발생했습니다(${error.status})`);
-            })
+                .then((response) => {
+                    setData(response.data as ResponseType);
+                })
+                .catch((error) => {
+                    alert(`오류가 발생했습니다(${error.status})`);
+                })
         }
-    },[Page, isPopular])
+    }, [Page, isPopular])
 
-    return(
+    return (
         <CenterContainer>
             <PaddingContainer>
                 <SortSelecter sort={isPopular} setSort={setIsPopular} />
                 <PostListerWithSort sort={isPopular} data={Data.sortPhoto} />
-                {isPopular ? null : <CenterContainer><Pagination value={Page} change={setPage} end={Math.ceil(Data?.manyImage/18)}/></CenterContainer>}
+                {isPopular ? null : <CenterContainer><Pagination value={Page} change={setPage} end={Math.ceil(Data?.manyImage / 18)} /></CenterContainer>}
             </PaddingContainer>
         </CenterContainer>
     );
