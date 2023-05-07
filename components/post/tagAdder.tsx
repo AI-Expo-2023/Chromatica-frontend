@@ -6,25 +6,25 @@ import TagSelector from "./tagAdderDropdown"
 import { useEffect, useState } from "react"
 import styled from "@emotion/styled"
 
-interface tagAdderProps{
+interface tagAdderProps {
     TagList: string[];
     setTagList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const TagAdder = ({TagList, setTagList}:tagAdderProps) => {
+export const TagAdder = ({ TagList, setTagList }: tagAdderProps) => {
     const [isTSenabled, setTSstatus] = useState<boolean>(false);
-    function handleOutsideClick(e){
+    function handleOutsideClick(e: any) {
         if (e.target.closest('.tag-selector') === null) {
             setTSstatus(false);
         }
     }
-    useEffect(()=> window.addEventListener('click', handleOutsideClick))
+    useEffect(() => window.addEventListener('click', handleOutsideClick))
 
-    return(
+    return (
         <Horizonal>
-            <Button Gray5 onClick={()=>setTSstatus(!isTSenabled)} className='tag-selector'><Add20Filled primaryFill={Theme.Black}  />태그 추가</Button>
+            <Button Gray5 onClick={() => setTSstatus(!isTSenabled)} className='tag-selector'><Add20Filled primaryFill={Theme.Black} />태그 추가</Button>
             {isTSenabled ? <TagSelector setTSstatus={setTSstatus} array={TagList} setArray={setTagList} /> : null}
-            {TagList.map((data)=>{
+            {TagList.map((data) => {
                 return <RemovableTag key={data} data={data} array={TagList} setArray={setTagList} />;
             })}
         </Horizonal>
