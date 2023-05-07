@@ -15,7 +15,7 @@ type user = {
 
 const ProfileChangeC = ({Name}:user): JSX.Element => {
 
-  const formData = new FormData();
+  // const formData = new FormData();
   const token = getAccessToken();
   const [nickName, setNickName] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null); // 서버 전송용
@@ -44,25 +44,25 @@ const ProfileChangeC = ({Name}:user): JSX.Element => {
   };
 
   const change = () => {
-    formData.append("name", nickName);
-    if(imgFile !== null){
-      formData.append("photo", imgFile);
-    }
-    axios({
-      method: "PATCH",
-      url: process.env.NEXT_PUBLIC_BASEURL + "/user/updateInfo",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      },
-      data: formData,
-    })
-    .then((result)=>{
-      console.log(result)
-      Router.push("/my")
-    })
-    .catch((error)=>{
-      console.error(error);
-    })
+    // formData.append("name", nickName);
+    // if(imgFile !== null){
+    //   formData.append("photo", imgFile);
+    // }
+    // axios({
+    //   method: "PATCH",
+    //   url: process.env.NEXT_PUBLIC_BASEURL + "/user/updateInfo",
+    //   headers: {
+    //     "Authorization": `Bearer ${token}`
+    //   },
+    //   data: formData,
+    // })
+    // .then((result)=>{
+    //   console.log(result)
+    //   Router.push("/my")
+    // })
+    // .catch((error)=>{
+    //   console.error(error);
+    // })
   }
 
   return (
