@@ -12,7 +12,7 @@ const ReceiveEmail = (): JSX.Element => {
 export default ReceiveEmail;
 
 const Contanier = styled.div`
-  height: calc(100vh - 64px);
+  height: calc(100vh - 164px);
   display: flex;
   justify-content: center;
   align-items: center;
