@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as _ from './style';
 import BlankProfile from '@/public/assets/image/personIcon.png';
-import { ErrorCircle20Regular, Heart20Filled } from '@fluentui/react-icons';
+import { ArrowDownload20Filled, ErrorCircle20Regular, Heart20Filled } from '@fluentui/react-icons';
 import { Theme } from '@/styles/theme/Theme';
 import { useRouter } from 'next/router';
 import ReportView from './reportView';
 import Tag from '../common/tag';
 import axios from "axios";
+import { Button } from '../common/button/style';
+import DownloabModal from '../img2img/downloabModal';
 
 interface DetailProps {
   word: string | string[] | undefined;
@@ -30,6 +32,7 @@ const Detail = ({ word }: DetailProps) => {
   const [Like, setLike] = useState<boolean>(false);
   const [Data, setData] = useState<resProps | undefined>();
   const [report, setReport] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const Time = useRef<NodeJS.Timer | undefined>();
   const router = useRouter();
 
@@ -153,53 +156,58 @@ const Detail = ({ word }: DetailProps) => {
     else router.push(`/my/${Data?.user.userID}`)
   }
 
+
   return (
-    <_.Container>
-      {
-        report &&
-        <ReportView
-          Toggle={() => setReport(false)}
-          Report={PostReport}
-        />
-      }
-      <_.Main>
-        <_.ImgContainer>
-          <_.Img src={Data?.photo} alt='사진을 불러오는데 실패했습니다.' />
-        </_.ImgContainer>
-        <_.Text weight={800} size={24}>{Data?.head}</_.Text>
-        <_.GapBox>
-          {
-            Data?.tag.map((data, index) =>
-              <div onClick={() => router.push(`/search/${data}`)}>
-                <Tag
-                  key={index}
-                  basic={true}
-                >
-                  {data}
-                </Tag>
-              </div>
-            )
-          }
-        </_.GapBox>
-        <_.GapBox onClick={() => changePage()}>
-          <_.ImgCircle width={28} height={28} src={Data?.user.photo} alt='' onError={onErrorImg} />
-          <_.Text>{Data?.user.name}</_.Text>
-        </_.GapBox>
-        <_.Text>{Data?.description}</_.Text>
-        <_.GapBox>
-          <_.LikeBtn onClick={() => isLike()}>
-            <Heart20Filled primaryFill={Like ? Theme.Red : Theme.Black} />
-            <_.LikeText bool={Like}>{Data?.like}</_.LikeText>
-          </_.LikeBtn>
-        </_.GapBox>
-        <_.GapBox>
-          <_.ErrorBox onClick={() => readyReport()}>
-            <ErrorCircle20Regular primaryFill={Theme.Red} />
-            <_.ErrorText>신고</_.ErrorText>
-          </_.ErrorBox>
-        </_.GapBox>
-      </_.Main>
-    </_.Container>
+    <>
+      <DownloabModal openDownloadModal={openModal} setOpenDownloadModal={setOpenModal} imgData={Data?.photo} />
+      <_.Container>
+        {
+          report &&
+          <ReportView
+            Toggle={() => setReport(false)}
+            Report={PostReport}
+          />
+        }
+        <_.Main>
+          <_.ImgContainer>
+            <_.Img src={Data?.photo} alt='사진을 불러오는데 실패했습니다.' />
+          </_.ImgContainer>
+          <_.Text weight={800} size={24}>{Data?.head}</_.Text>
+          <_.GapBox>
+            {
+              Data?.tag.map((data, index) =>
+                <div onClick={() => router.push(`/search/${data}`)}>
+                  <Tag
+                    key={index}
+                    basic={true}
+                  >
+                    {data}
+                  </Tag>
+                </div>
+              )
+            }
+          </_.GapBox>
+          <_.GapBox onClick={() => changePage()}>
+            <_.ImgCircle width={28} height={28} src={Data?.user.photo} alt='' onError={onErrorImg} />
+            <_.Text>{Data?.user.name}</_.Text>
+          </_.GapBox>
+          <_.Text>{Data?.description}</_.Text>
+          <_.GapBox>
+            <_.LikeBtn onClick={() => isLike()}>
+              <Heart20Filled primaryFill={Like ? Theme.Red : Theme.Black} />
+              <_.LikeText bool={Like}>{Data?.like}</_.LikeText>
+            </_.LikeBtn>
+            <Button Gray5 onClick={() => setOpenModal(!openModal)}> <ArrowDownload20Filled primaryFill='black' /> 다운로드</Button>
+          </_.GapBox>
+          <_.GapBox>
+            <_.ErrorBox onClick={() => readyReport()}>
+              <ErrorCircle20Regular primaryFill={Theme.Red} />
+              <_.ErrorText>신고</_.ErrorText>
+            </_.ErrorBox>
+          </_.GapBox>
+        </_.Main>
+      </_.Container>
+    </>
   )
 }
 

@@ -6,7 +6,7 @@ import Modal from "../common/modal";
 type Props = {
   openDownloadModal: boolean;
   setOpenDownloadModal: React.Dispatch<React.SetStateAction<boolean>>;
-  imgData: string;
+  imgData?: string;
 };
 
 const DownloabModal = ({ openDownloadModal, setOpenDownloadModal, imgData }: Props) => {
@@ -16,7 +16,7 @@ const DownloabModal = ({ openDownloadModal, setOpenDownloadModal, imgData }: Pro
   const [selectKind, setSelectKind] = useState(1);
 
   const downLoad = () => {
-    imgUrltoBase64(imgData).then(base64 => {
+    imgUrltoBase64(imgData!).then(base64 => {
       const a = document.createElement("a");
         a.href = base64;
         if (selectKind == 0) {
