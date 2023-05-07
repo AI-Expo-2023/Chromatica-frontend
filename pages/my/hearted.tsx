@@ -1,5 +1,5 @@
 import { PostLister } from "@/components/my/PostLister";
-import { Title } from "./style";
+import { Title } from "../../styles/page/myStyle";
 import Pagination from "@/components/common/pagination/pagination";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";

@@ -1,4 +1,4 @@
-import * as _ from "./style";
+import * as _ from "../../styles/page/i2iStyle";
 import { useEffect, useRef, useState } from "react";
 import AIResponse from "@/components/img2img/aiKeyword";
 import Canvas from "@/components/img2img/canvas";

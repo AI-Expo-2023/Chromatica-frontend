@@ -1,6 +1,6 @@
 import Canvas from "@/components/img2img/canvas";
 import { useEffect, useRef, useState } from "react";
-import * as _ from "./style";
+import * as _ from "../../styles/page/aiUpdateStyle";
 import CanvasSetting from "@/components/img2img/canvasSetting";
 import AIResponse from "@/components/img2img/aiKeyword";
 import styled from "@emotion/styled";

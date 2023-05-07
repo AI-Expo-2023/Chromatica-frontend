@@ -3,7 +3,7 @@ import { PostListerSaved } from "@/components/my/saved/postlistersaved";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { Title } from "./style";
+import { Title } from "../../styles/page/myStyle";
 
 interface responseType {
     manyImage: number;
