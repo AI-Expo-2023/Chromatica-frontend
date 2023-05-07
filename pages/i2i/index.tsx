@@ -1,5 +1,5 @@
 import * as _ from "./style";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AIResponse from "@/components/img2img/aiKeyword";
 import Canvas from "@/components/img2img/canvas";
 import CanvasSetting from "@/components/img2img/canvasSetting";
@@ -8,6 +8,7 @@ import ToolSize from "@/components/img2img/toolSize";
 import ColorPalette from "@/components/img2img/colorPalette";
 import Tool from "@/components/img2img/tool";
 import SizeModal from "@/components/img2img/sizeModal";
+import Router from "next/router";
 
 const I2i = (): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -28,6 +29,13 @@ const I2i = (): JSX.Element => {
   const [aiSetting, setAiSetting] = useState<AiSetting>({
     quality: 20,
     count: 2
+  })
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      alert("로그인 후 사용 가능합니다");
+      Router.push('/auth/login')
+    }
   })
 
   return (

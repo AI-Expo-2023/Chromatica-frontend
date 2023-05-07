@@ -127,7 +127,6 @@ const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, c
     if (!Router.ready) return;
     const { image } = Router.query;
 
-    console.log(image);
     if (image && image != "undefined") {
       axios({
         url: `${BASEURL}/design/${image}`,
