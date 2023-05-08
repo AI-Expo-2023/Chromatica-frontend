@@ -71,6 +71,7 @@ const Detail = ({ word }: DetailProps) => {
   const PostLike = () => {
     const token = window.localStorage.getItem('token');
     if (token === null) return;
+    console.log(token)
     axios({
       method: 'POST',
       url: `${process.env.NEXT_PUBLIC_BASEURL}/photo/${(keyWord as string)}/like`,
@@ -78,7 +79,8 @@ const Detail = ({ word }: DetailProps) => {
         "Authorization": `Bearer ${token}`
       }
     })
-      .then(() => {
+      .then((e) => {
+        console.log(e)
         setLike(!Like);
         if (Data) {
           setData({
@@ -99,7 +101,8 @@ const Detail = ({ word }: DetailProps) => {
 
   const isLike = () => {
     const token = window.localStorage.getItem('token');
-    if (token === null) return;
+    console.log(token)
+    if (token === null) { alert("로그인 후 이용 가능합니다"); return; };
     if (Time.current) {
       clearInterval(Time.current);
       Time.current = undefined;

@@ -26,7 +26,7 @@ const BASEURL = process.env.NEXT_PUBLIC_BASEURL;
 /** 키워드를 입력하고 AI에게 전송하여 사진을 받아오는 곳 */
 const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, canvasSize }: Props): JSX.Element => {
   const [aiKeyword, setAiKeyword] = useState<string>("");
-  const [aiImg, setAiImg] = useState<string[]>([]);
+  const [aiImg, setAiImg] = useState<string[]>(["http://localhost:230/fredrf/34"]);
   const [selectImg, setSelectImg] = useState<number>(1);
   const [openDownloadModal, setOpenDownloadModal] = useState<boolean>(false);
   const [loading, setLoding] = useState(false);
@@ -119,7 +119,15 @@ const AIResponse = ({ getImage, filter, imgData, canvasRef, aiSetting, update, c
   const upload = () => {
     if (update) localStorage.setItem("imgData", String(aiImg));
     else localStorage.setItem("imgData", aiImg[selectImg - 1]);
-    Router.push(`post`);
+
+    if (!Router.ready) return;
+    const { image } = Router.query;
+
+    if (image && image != "undefined") {
+      Router.push(`post?imgId=${image}`)
+    } else {
+      Router.push('post')
+    }
   }
 
   const saveImg = () => {

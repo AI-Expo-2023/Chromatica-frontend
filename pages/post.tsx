@@ -25,26 +25,52 @@ export default function PostPage() {
             alert('내용과 제목은 필수 사항입니다');
             return;
         }
-        axios({
-            url: `${process.env.NEXT_PUBLIC_BASEURL}/photo`,
-            method: 'post',
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`,
-            },
-            data: {
-                photo: Photo,
-                head: title,
-                tag: TagList,
-                description: Desc,
-            }
-        })
-            .then(() => {
+        if (!Router.ready) return;
+        const { imgId } = Router.query;
+
+        if (imgId && imgId != "undefined") {
+            axios({
+                url: `${process.env.NEXT_PUBLIC_BASEURL}/photo`,
+                method: 'post',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`,
+                },
+                data: {
+                    imgId: imgId,
+                    photo: Photo,
+                    head: title,
+                    tag: TagList,
+                    description: Desc,
+                }
+            }).then(() => {
                 alert('성공적으로 게시되었습니다.');
                 router.push('/');
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 console.log(error);
             });
+
+        } else {
+            axios({
+                url: `${process.env.NEXT_PUBLIC_BASEURL}/photo/new`,
+                method: 'post',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`,
+                },
+                data: {
+                    photo: Photo,
+                    head: title,
+                    tag: TagList,
+                    description: Desc,
+                }
+            }).then(() => {
+                alert('성공적으로 게시되었습니다.');
+                router.push('/');
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+
+
     }
 
     return (
