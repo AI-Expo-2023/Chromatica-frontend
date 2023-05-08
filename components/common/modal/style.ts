@@ -10,8 +10,7 @@ export const BackGround = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
-
+  z-index: 1000;
 `;
 
 export const ChildrenContainer = styled.div<{
@@ -38,4 +37,3 @@ export const ChildrenContainer = styled.div<{
   align-items: ${(props) => props.alignItems ?? ''};
   flex-direction: ${(props) => props.flexDirection ?? ''};
 `;
-

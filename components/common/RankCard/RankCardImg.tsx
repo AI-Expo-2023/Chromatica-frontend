@@ -18,7 +18,7 @@ const RankCardImg = ({ photoID, photo }: ImgProps) => {
   }
   const post = () => {
     localStorage.setItem('imgData', photo);
-    router.push(`/post`);
+    router.push(`/post?imgId=${photoID}`);
   }
   const [openModal, setOpenModal] = useState(false);
   const onClickToModal = () => {
