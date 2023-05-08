@@ -43,7 +43,7 @@ const DownloabModal = ({ openDownloadModal, setOpenDownloadModal, imgData }: Pro
                 <Button Width="189" Gray5 onClick={() => setSelectKind(0)}>JPG</Button>
               </> : <>
                 <Button Width="189" Gray5 onClick={() => setSelectKind(1)}>PNG</Button>
-                <Button Width="189" Gray25>JPEG</Button>
+                <Button Width="189" Gray25>JPG</Button>
               </>
             }
           </ButtonKind>
