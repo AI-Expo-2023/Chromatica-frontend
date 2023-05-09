@@ -188,7 +188,7 @@ const Canvas: React.FC<Props> = ({ canvasRef, settingOptions, toolWidth, canvasS
         ctx.fillRect(0, 0, canvas.width, canvas.height)
       }
     }
-  }, [settingOptions.backgroundColor]);
+  }, [settingOptions.backgroundColor, canvasSize.height, canvasSize.width]);
 
   useEffect(() => {
     if (!canvasRef.current) {

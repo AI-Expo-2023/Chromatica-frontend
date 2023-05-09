@@ -2,7 +2,7 @@ import Modal from "@/components/common/modal";
 import Range from "@/components/common/range";
 import { Button } from "../common/button/style";
 import styled from "@emotion/styled";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Theme } from "@/styles/theme/Theme";
 import ColorSelect from "./colorSelect";
 
@@ -20,12 +20,25 @@ const SizeModal = ({ canvasSize, setCanvasSize, settingOptions, setSettingOption
     setIsOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
+  const [sizeData, setSizeData] = useState({
+    width: 512,
+    height: 512
+  });
+
+  const [colorData, setColorData] = useState<CanvasOptions>({
+    color: "#000000",
+    tool: true,
+    paint: false,
+    backgroundColor: "#ffffff"
+  })
+
   const onChangeWidth = (e: any) => {
-    setCanvasSize({ ...canvasSize, width: e.target.value })
+    setSizeData({ ...sizeData, width: e.target.value })
   }
   const onChangeHeight = (e: any) => {
-    setCanvasSize({ ...canvasSize, height: e.target.value })
+    setSizeData({ ...sizeData, height: e.target.value })
   }
+
 
   return (
     <>
@@ -37,26 +50,32 @@ const SizeModal = ({ canvasSize, setCanvasSize, settingOptions, setSettingOption
             <p>스케치할 그림판의 크기, 컬러 설정</p>
           </Title>
           <SizeContainer>
-            <Range onChange={onChangeWidth} min={512} max={1024} label="너비" value={canvasSize.width} />
+            <Range onChange={onChangeWidth} min={512} max={1024} label="너비" value={sizeData.width} />
             <SizeSelect>
-              <Button Black onClick={() => setCanvasSize({ ...canvasSize, width: 512 })}>512px</Button>
-              <Button Black onClick={() => setCanvasSize({ ...canvasSize, width: 768 })}>768px</Button>
-              <Button Black onClick={() => setCanvasSize({ ...canvasSize, width: 1024 })}>1024px</Button>
+              <Button Black onClick={() => setSizeData({ ...sizeData, width: 512 })}>512px</Button>
+              <Button Black onClick={() => setSizeData({ ...sizeData, width: 768 })}>768px</Button>
+              <Button Black onClick={() => setSizeData({ ...sizeData, width: 1024 })}>1024px</Button>
             </SizeSelect>
           </SizeContainer>
           <SizeContainer>
-            <Range onChange={onChangeHeight} min={512} max={1024} label="높이" value={canvasSize.height} />
+            <Range onChange={onChangeHeight} min={512} max={1024} label="높이" value={sizeData.height} />
             <SizeSelect>
-              <Button Black onClick={() => setCanvasSize({ ...canvasSize, height: 512 })}>512px</Button>
-              <Button Black onClick={() => setCanvasSize({ ...canvasSize, height: 768 })}>768px</Button>
-              <Button Black onClick={() => setCanvasSize({ ...canvasSize, height: 1024 })}>1024px</Button>
+              <Button Black onClick={() => setSizeData({ ...sizeData, height: 512 })}>512px</Button>
+              <Button Black onClick={() => setSizeData({ ...sizeData, height: 768 })}>768px</Button>
+              <Button Black onClick={() => setSizeData({ ...sizeData, height: 1024 })}>1024px</Button>
             </SizeSelect>
           </SizeContainer>
-          <ColorContainer>
-            <p>배경색</p>
-            <ColorSelect settingOptions={settingOptions} setSettingOptions={setSettingOptions} background />
-          </ColorContainer>
-          <Button MainColor onClick={() => setIsOpenModal(false)}>확인</Button>
+          <GapBox>
+            <ColorContainer>
+              <p>배경색</p>
+              <ColorSelect settingOptions={colorData} setSettingOptions={setColorData} background />
+            </ColorContainer>
+            <ColorContainer>
+              <p>예상 캔버스</p>
+              <TemBox width={sizeData.width} height={sizeData.height} color={colorData.backgroundColor} />
+            </ColorContainer>
+          </GapBox>
+          <Button MainColor onClick={() => { setIsOpenModal(false); setCanvasSize({ ...sizeData }); setSettingOptions({ ...colorData }) }}>확인</Button>
         </Modal>
       }
     </>
@@ -81,11 +100,26 @@ const SizeSelect = styled.div`
 `
 const ColorContainer = styled.div`
   display: flex;
-  gap: 4px;
+  gap: 10px;
   align-items: center;
   >p{
     color: ${Theme.Gray[50]};
     font-weight: bold;
     font-size: 18px;
   }
+`;
+
+const GapBox = styled.div`
+  display: flex;
+  height: 102.4px;
+  align-items: center;
+  gap: 60px
+`
+
+const TemBox = styled.div<{ width: number, height: number, color: string }>`
+  width: ${props => `${props.width * 0.1}px`};
+  height: ${props => `${props.height * 0.1}px`};
+  background-color: ${props => `${props.color}`};
+  border-radius: 4px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.5);
 `
